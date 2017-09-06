@@ -15,5 +15,5 @@ Requirements:
  - tmux
  - vim (type :PlugInstall in vim to install the plugins.)
  - compton
- - cli-visualiser ([https://github.com/dpayne/cli-visualizer])
- - base16 ([https://github.com/chriskempson/base16-shell])
+ - cli-visualiser (https://github.com/dpayne/cli-visualizer)
+ - base16 (https://github.com/chriskempson/base16-shell)
