@@ -20,16 +20,21 @@ Plug 'tpope/vim-fugitive'              " git handling.
 Plug 'tpope/vim-surround'              " surround text with delimiters.
 Plug 'scrooloose/nerdtree'             " file list on the right.
 Plug 'scrooloose/syntastic'            " spell checker.
-Plug 'xuyuanp/nerdtree-git-plugin'     " git gutter in NERDtree.
+"Plug 'w0rp/ale'                        " spell checker.
+" The following plugin is disabled as it prevents syntastic from working.
+"Plug 'xuyuanp/nerdtree-git-plugin'     " git gutter in NERDtree.
 Plug 'bling/vim-airline'               " a bar.
 Plug 'vim-airline/vim-airline-themes'  " and themes.
 Plug 'airblade/vim-gitgutter'          " shows changes in gutter.
 Plug 'christoomey/vim-tmux-navigator'  " intuitive Tmux integration.
 Plug 'benmills/vimux'                  " open tmux pane to run scripts.
-"Plug 'Valloric/YouCompleteMe'          " spell completion.
-Plug 'raimondi/delimitmate'            " auto close brackets, parentheses...
+Plug 'Valloric/YouCompleteMe'          " spell completion.
+"Plug 'raimondi/delimitmate'            " auto close brackets, parentheses...
+Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
 Plug 'yuttie/comfortable-motion.vim'   " natural scroll.
 "Plug 'junegunn/vim-easy-align'         " align code to the same column easily.
+Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
+Plug 'mileszs/ack.vim'                 " fast search in project.
 
 
 " Other plugins require curl
@@ -45,6 +50,7 @@ filetype plugin indent on  " required!
 call plug#end()
 
 " Applied colorscheme
+" Will work with Termite.
 set t_Co=256  " for 256 terminal colors
 let g:base16colorspace=256
 colorscheme base16-ocean
@@ -106,9 +112,10 @@ set hidden  " a buffer becomes hidden when it is abandonned.
 map <leader>T :enew<cr>             " open a new empty buffer.
 map <s-l> :bnext<cr>                " move to next buffer.
 map <s-h> :bprevious<cr>            " move to previous buffer.
-map <leader>bk :bp <bar> bd #<cr>   " close the buffer and move to the previous
-map <leader>bK :bufdo bd<cr>        " close all buffers in the current tab.
+map <leader>k :bp <bar> bd #<cr>   " close the buffer and move to the previous
+map <leader>K :bufdo bd<cr>        " close all buffers in the current tab.
 map <leader>bs :ls<cr>              " show all opened buffers and their status.
+
 
 " Moving
 " =================================================
@@ -137,8 +144,10 @@ if has("autocmd")
     autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 
+
 " General shortcuts
 map <leader>pp :setlocal paste!<cr>  " togle paste mode.
+
 
 " Python stuff
 " ============================
@@ -161,6 +170,9 @@ au FileType python map <buffer> <leader>D ?def
 au FileType python set cindent
 au FileType python set cinkeys-=0#
 au FileType python set indentkeys-=0#
+" Macro to insert pdb line.
+let @p = 'Oimport pdb; pdb.set_trace()pass,rr'
+let @P = 'Otry:j>>o€kb	except:import pdb; pdb.set_trace()passkkk,rr'
 
 " Tmux stuff
 " ============================
@@ -172,12 +184,13 @@ if exists('$TMUX')
     endif
 endif
 
+
 " NerdTree
 " ============================
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden = 0
-let NERDTreeIgnore = ['`.pyc$', '__pycache__']
-let g:NERDTreeWinSize = 30
+let NERDTreeIgnore = ['.pyc$', '__pycache__']
+let g:NERDTreeWinSize = 33
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nf :NERDTreeFind<cr>
 autocmd vimenter * NERDTree  " automatically opens NERDTree when vim starts.
@@ -185,9 +198,10 @@ autocmd VimEnter * wincmd p  " the focus was on NERDTree. Now it's on the code.
 " Closes NERDTree if only 1 vim pane is remaining.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+
 " Syntastic
 " ============================
-let g:syntastic_python_checkers=['pyflakes', 'pep8', 'pycodestyle']
+let g:syntastic_python_checkers=['pyflakes']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -197,18 +211,39 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
+
 " Airline
 " ============================
 let g:airline_theme='base16_ocean'
 let g:airline#extensions#tabline#enabled = 1  " shows the buffer name at the top.
 let g:airline#extensions#tabline#fnamemod = ':t'  " just keep the name of the file
 
+
 " Vimux
 " ============================
 let g:VimuxHeight = "15"  " change the default size of the window.
 " Run the current script with python.
-map <leader>rr :call VimuxRunCommand("clear; ipython " . bufname("%"))<cr>
+map <leader>rc :call VimuxRunCommand("clear; ipython " . bufname("%"))<cr>
 " Run a given command
 map <leader>rg :VimuxPromptCommand<cr>
 " Repeat last command
-map <leader>ra :VimuxRunLastCommand<cr>
+map <leader>rr :VimuxRunLastCommand<cr>
+
+
+" PyDocstring
+" ============================
+nmap <silent> <leader>d <Plug>(pydocstring)
+
+" Ack
+" ============================
+" Use ag instead of ack
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+" Don't jump to first result automatically
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+
+" YouCompleteMe
+" ============================
+nnoremap <C-]> :YcmCompleter GoToDefinition<cr>
