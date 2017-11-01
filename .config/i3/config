@@ -10,7 +10,8 @@
 set $mod Mod1
 set $term termite
 
-set $default_gaps_inner 30
+#set $default_gaps_inner 30
+set $default_gaps_inner 0
 set $default_gaps_outer 0
 
 
@@ -85,8 +86,8 @@ client.placeholder		#2b303b	#2b303b #c0c5ce #2b303b
 # open apps. NOTE: make sure the name option for your chosen terminal emulator is correct!
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+Return exec $term --name __scratchpad
-#bindsym $mod+Control+l exec --no-startup-id $HOME/scripts/lock.sh
-bindsym $mod+Control+l exec --no-startup-id i3lock -c 000000
+bindsym $mod+Control+l exec --no-startup-id $HOME/scripts/lock.sh
+#bindsym $mod+Control+l exec --no-startup-id i3lock -c 000000
 
 # media mode: using Chrom(e/ium), put YouTube into fullscreen and execute this. Thanks Airblader! Wish it worked with Firefox though.
 # Values set for 1366x768 laptop since I have 2 screens on my desktop and thus don't really need it there.
@@ -183,13 +184,13 @@ bindsym $mod+Shift+r restart
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
 
 # volume stuff
-#bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 1%- && pkill -RTMIN+12 i3blocks
-#bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 1%+ && pkill -RTMIN+12 i3blocks
-#bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+12 i3blocks
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 1%- && pkill -RTMIN+12 i3blocks
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 1%+ && pkill -RTMIN+12 i3blocks
+bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+12 i3blocks
 
-bindsym XF86AudioLowerVolume exec pactl set-sink-mute 1 false && pactl set-sink-volume 1 -1% && pkill -RTMIN+12 i3blocks
-bindsym XF86AudioRaiseVolume exec pactl set-sink-mute 1 false && pactl set-sink-volume 1 +1% && pkill -RTMIN+12 i3blocks
-bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle && pkill -RTMIN+12 i3blocks
+#bindsym XF86AudioLowerVolume exec pactl set-sink-mute 1 false && pactl set-sink-volume 1 -1% && pkill -RTMIN+12 i3blocks
+#bindsym XF86AudioRaiseVolume exec pactl set-sink-mute 1 false && pactl set-sink-volume 1 +1% && pkill -RTMIN+12 i3blocks
+#bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle && pkill -RTMIN+12 i3blocks
 
 # == MODES ==
 # ###########
@@ -270,17 +271,17 @@ mode $mode_gaps_inner {
 }
 bindsym $mod+i mode $mode_gaps_inner, exec echo $mode_gaps_inner > $HOME/.i3mode
 
-# SCREENS MODE
-# comment this mode if you don't have multiple screens, and swap in your own xrandr scripts if you do
-set $screens "screens: (s) single screen (d) dual screens"
-mode $screens {
-	bindsym s		exec $HOME/.screenlayout/single.sh, exec echo "" > $HOME/.i3mode, mode "default"
-	bindsym d		exec $HOME/.screenlayout/default.sh, exec echo "" > $HOME/.i3mode, mode "default"
-
-	bindsym Return	exec echo "" > $HOME/.i3mode, mode "default"
-	bindsym Escape	exec echo "" > $HOME/.i3mode, mode "default"
-}
-bindsym $mod+s mode $screens, exec echo $screens > $HOME/.i3mode
+## SCREENS MODE
+## comment this mode if you don't have multiple screens, and swap in your own xrandr scripts if you do
+#set $screens "screens: (s) single screen (d) dual screens"
+#mode $screens {
+#	bindsym s		exec $HOME/.screenlayout/single.sh, exec echo "" > $HOME/.i3mode, mode "default"
+#	bindsym d		exec $HOME/.screenlayout/default.sh, exec echo "" > $HOME/.i3mode, mode "default"
+#
+#	bindsym Return	exec echo "" > $HOME/.i3mode, mode "default"
+#	bindsym Escape	exec echo "" > $HOME/.i3mode, mode "default"
+#}
+#bindsym $mod+s mode $screens, exec echo $screens > $HOME/.i3mode
 
 
 

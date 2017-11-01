@@ -33,8 +33,11 @@ Plug 'Valloric/YouCompleteMe'          " spell completion.
 Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
 Plug 'yuttie/comfortable-motion.vim'   " natural scroll.
 "Plug 'junegunn/vim-easy-align'         " align code to the same column easily.
+Plug 'junegunn/goyo.vim'               " zen mode.
 Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
 Plug 'mileszs/ack.vim'                 " fast search in project.
+Plug 'mhinz/vim-startify'              " a splash screen with recent files.
+Plug 'kien/ctrlp.vim'                  " jump to files easily.
 
 
 " Other plugins require curl
@@ -69,6 +72,7 @@ syntax enable  " enable syntax highlighting.
 set number  " display the line number.
 let &colorcolumn=80  " shows the column 80
 set foldcolumn=1  " add a bit of extra margin to the left.
+set number relativenumber  " enables relative line numbers in the gutter.
 
 " Precise stuff
 set encoding=utf-8  " utf9 as standard encoding and en_US as standard language.
@@ -172,7 +176,7 @@ au FileType python set cinkeys-=0#
 au FileType python set indentkeys-=0#
 " Macro to insert pdb line.
 let @p = 'Oimport pdb; pdb.set_trace()pass,rr'
-let @P = 'Otry:j>>o€kb	except:import pdb; pdb.set_trace()passkkk,rr'
+"et @P = 'Otry:j>>o€kb	except:import pdb; pdb.set_trace()passkkk,rr'
 
 " Tmux stuff
 " ============================
@@ -211,6 +215,8 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
+let g:syntastic_loc_list_height=3  " smaller list of errors
+
 
 " Airline
 " ============================
@@ -247,3 +253,8 @@ nnoremap <Leader>a :Ack!<Space>
 " YouCompleteMe
 " ============================
 nnoremap <C-]> :YcmCompleter GoToDefinition<cr>
+
+
+" Fugitive
+" ============================
+set diffopt+=vertical  " vertical Gdiff
