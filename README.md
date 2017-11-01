@@ -22,3 +22,7 @@ Requirements:
  - cli-visualiser (https://github.com/dpayne/cli-visualizer)
  - base16 (https://github.com/chriskempson/base16-shell)
  - gpicview (default viewer for images)
+
+Optional:
+ - firefox (Arc Dark theme)
+ - GTK (Arc Dark theme)
