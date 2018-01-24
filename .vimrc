@@ -14,13 +14,15 @@ call plug#begin('~/.vim/plugged')
 
 " Colorschemes
 Plug 'chriskempson/base16-vim'
+Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
 
 " Others
 Plug 'tpope/vim-fugitive'              " git handling.
 Plug 'tpope/vim-surround'              " surround text with delimiters.
 Plug 'scrooloose/nerdtree'             " file list on the right.
-Plug 'scrooloose/syntastic'            " spell checker.
-"Plug 'w0rp/ale'                        " spell checker.
+"Plug 'scrooloose/syntastic'            " spell checker.
+Plug 'w0rp/ale'                        " spell checker.
 " The following plugin is disabled as it prevents syntastic from working.
 "Plug 'xuyuanp/nerdtree-git-plugin'     " git gutter in NERDtree.
 Plug 'bling/vim-airline'               " a bar.
@@ -38,6 +40,9 @@ Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
 Plug 'mileszs/ack.vim'                 " fast search in project.
 Plug 'mhinz/vim-startify'              " a splash screen with recent files.
 Plug 'kien/ctrlp.vim'                  " jump to files easily.
+"Plug 'idbrii/AsyncCommand'             " run asynchronous commands.
+"Plug 'stgpetrovic/syntastic-async'     " async Syntastic.
+Plug 'thiagoalessio/rainbow_levels.vim'
 
 
 " Other plugins require curl
@@ -55,8 +60,10 @@ call plug#end()
 " Applied colorscheme
 " Will work with Termite.
 set t_Co=256  " for 256 terminal colors
-let g:base16colorspace=256
-colorscheme base16-ocean
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 set background=dark
 
 " General stuff
@@ -174,9 +181,6 @@ au FileType python map <buffer> <leader>D ?def
 au FileType python set cindent
 au FileType python set cinkeys-=0#
 au FileType python set indentkeys-=0#
-" Macro to insert pdb line.
-let @p = 'Oimport pdb; pdb.set_trace()pass,rr'
-"et @P = 'Otry:j>>o€kb	except:import pdb; pdb.set_trace()passkkk,rr'
 
 " Tmux stuff
 " ============================
@@ -203,19 +207,19 @@ autocmd VimEnter * wincmd p  " the focus was on NERDTree. Now it's on the code.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
-" Syntastic
+" Syntastic --- Has been replaced by Ale for this rice.
 " ============================
-let g:syntastic_python_checkers=['pyflakes']
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_loc_list_height=3  " smaller list of errors
+"let g:syntastic_python_checkers=['pylint']
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 1
+"
+"let g:syntastic_loc_list_height=3  " smaller list of errors
 
 
 " Airline
@@ -223,6 +227,16 @@ let g:syntastic_loc_list_height=3  " smaller list of errors
 let g:airline_theme='base16_ocean'
 let g:airline#extensions#tabline#enabled = 1  " shows the buffer name at the top.
 let g:airline#extensions#tabline#fnamemod = ':t'  " just keep the name of the file
+
+
+"Ale
+" ============================
+let g:airline#extensions#ale#enabled = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
+nmap <silent> <leader>n <Plug>(ale_next_wrap)
+nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 
 
 " Vimux
@@ -242,10 +256,6 @@ nmap <silent> <leader>d <Plug>(pydocstring)
 
 " Ack
 " ============================
-" Use ag instead of ack
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
 " Don't jump to first result automatically
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
@@ -258,3 +268,4 @@ nnoremap <C-]> :YcmCompleter GoToDefinition<cr>
 " Fugitive
 " ============================
 set diffopt+=vertical  " vertical Gdiff
+

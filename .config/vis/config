@@ -9,7 +9,7 @@ audio.sources=pulse
 ##vis tries to find the correct pulseaudio sink, however this will not work on all systems.
 ##If pulse audio is not working with vis try switching the audio source. A list can be found by running the
 ##command pacmd list-sinks  | grep -e 'name:'  -e 'index'
-audio.pulse.source=1
+#audio.pulse.source=7
 
 ##Defaults to "/tmp/mpd.fifo"
 #mpd.fifo.path=/tmp/audio
@@ -56,7 +56,7 @@ visualizer.monstercat.smoothing.factor=1.25
 
 ##Configures how fast the falloff character falls. This is an exponential falloff so values usually look
 ##best 0.9+ and small changes in this value can have a large effect. Defaults to 0.95
-#visualizer.spectrum.falloff.weight=0.999
+#visualizer.spectrum.falloff.weight=1.5
 
 ##Margins in percent of total screen for spectrum visualizer. All margins default to 0
 #visualizer.spectrum.top.margin=0.30

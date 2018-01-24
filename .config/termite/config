@@ -3,28 +3,76 @@ audible_bell = false
 browser = firefox
 clickable_url = true
 dynamic_title = true
-font = Source Code Pro 10
+font = FantasqueSansMono 10
 scrollback_lines = 99999
 scroll_on_keystroke = true
 scroll_on_output = false
 urgent_on_bell = true
 
 [colors]
+foreground = #c0c5ce
 background = #2b303b
-foreground = #dcdcdc
-color0  = #282828
-color8  = #928374
-color1  = #cc241d
-color9  = #fb4934
-color2  = #98971a
-color10 = #b8bb26
-color3  = #d79921
-color11 = #fabd2f
-color4  = #458588
-color12 = #83a598
-color5  = #b16286
-color13 = #d3869b
-color6  = #689d6a
-color14 = #8ec07c
-color7  = #a89984
-color15 = #ebdbb2
+color0 = #2b303b
+color8 = #65737e
+color1 = #bf616a
+color9 = #bf616a
+color2 = #a3be8c
+color10 = #a3be8c
+color3 = #ebcb8b
+color11 = #ebcb8b
+color4 = #8fa1b3
+color12 = #8fa1b3
+color5 = #b48ead
+color13 = #b48ead
+color6 = #96b5b4
+color14 = #96b5b4
+color7 = #c0c5ce
+color15 = #eff1f5
+[colors]
+# Base16 Default Dark
+# Author: Chris Kempson (http://chriskempson.com)
+
+foreground      = #d8d8d8
+foreground_bold = #e8e8e8
+cursor          = #e8e8e8
+background      = #181818
+
+# 16 color space
+
+# Black, Gray, Silver, White
+color0  = #181818
+color8  = #585858
+color7  = #d8d8d8
+color15 = #f8f8f8
+
+# Red
+color1  = #ab4642
+color9  = #ab4642
+
+# Green
+color2  = #a1b56c
+color10 = #a1b56c
+
+# Yellow
+color3  = #f7ca88
+color11 = #f7ca88
+
+# Blue
+color4  = #7cafc2
+color12 = #7cafc2
+
+# Purple
+color5  = #ba8baf
+color13 = #ba8baf
+
+# Teal
+color6  = #86c1b9
+color14 = #86c1b9
+
+# Extra colors
+color16 = #dc9656
+color17 = #a16946
+color18 = #282828
+color19 = #383838
+color20 = #b8b8b8
+color21 = #e8e8e8
