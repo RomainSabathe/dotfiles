@@ -173,6 +173,11 @@ function untar () {
     tar -xvf $1;
     rm -r $1;
 }
+# like `forward gpuuser2 5002`
+function forward () {
+    pkill -f $2
+    ssh -N -f -L localhost:"$2":localhost:"$2" $1
+}
 alias cd=cs
 alias ..='cd ..'
 alias ...='cd ../..'
