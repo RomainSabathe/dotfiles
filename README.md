@@ -7,13 +7,14 @@ Inspired by:
  - https://github.com/suchtie/dotfiles/
 
 TODO:
- - color folders in zsh
  - parametrise the default applications on vifm
 
 
 Requirements:
  - i3
  - i3gaps
+ - zsh
+ - oh-my-zsh
  - polybar
  - termite
  - tmux

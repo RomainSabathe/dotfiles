@@ -33,7 +33,7 @@ Plug 'benmills/vimux'                  " open tmux pane to run scripts.
 Plug 'Valloric/YouCompleteMe'          " spell completion.
 "Plug 'raimondi/delimitmate'            " auto close brackets, parentheses...
 Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
-Plug 'yuttie/comfortable-motion.vim'   " natural scroll.
+"Plug 'yuttie/comfortable-motion.vim'   " natural scroll.
 "Plug 'junegunn/vim-easy-align'         " align code to the same column easily.
 Plug 'junegunn/goyo.vim'               " zen mode.
 Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
@@ -42,7 +42,9 @@ Plug 'mhinz/vim-startify'              " a splash screen with recent files.
 Plug 'kien/ctrlp.vim'                  " jump to files easily.
 "Plug 'idbrii/AsyncCommand'             " run asynchronous commands.
 "Plug 'stgpetrovic/syntastic-async'     " async Syntastic.
-Plug 'thiagoalessio/rainbow_levels.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'majutsushi/tagbar'               " navigation panel
+Plug 'tpope/vim-obsession'             " save vim sessions
 
 
 " Other plugins require curl
@@ -192,6 +194,11 @@ if exists('$TMUX')
     endif
 endif
 
+" Tagbar
+" ============================
+set updatetime=100  " Increase the refresh rate (default is 5000)
+autocmd VimEnter * nested :TagbarOpen  " Autoopen tagbar
+let g:tagbar_left = 1  " Put the bar on the left
 
 " NerdTree
 " ============================
@@ -269,3 +276,7 @@ nnoremap <C-]> :YcmCompleter GoToDefinition<cr>
 " ============================
 set diffopt+=vertical  " vertical Gdiff
 
+
+" Ctrl-p
+" ============================
+set wildignore+=*.pyc
