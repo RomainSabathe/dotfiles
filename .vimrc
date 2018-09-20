@@ -45,6 +45,7 @@ Plug 'kien/ctrlp.vim'                  " jump to files easily.
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'majutsushi/tagbar'               " navigation panel
 Plug 'tpope/vim-obsession'             " save vim sessions
+Plug 'janko-m/vim-test'                " utility to run tests
 
 
 " Other plugins require curl
@@ -280,3 +281,15 @@ set diffopt+=vertical  " vertical Gdiff
 " Ctrl-p
 " ============================
 set wildignore+=*.pyc
+
+
+" Vim test
+" ============================
+let test#strategy = "vimux"  " run the tests in the Vimux window
+let test#python#runner = 'pytest'
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR> 
+nmap <silent> <leader>ts :TestSuite<CR> 
+nmap <silent> <leader>tl :TestLast<CR> 
+nmap <silent> <leader>tv :TestVisit<CR>
+
