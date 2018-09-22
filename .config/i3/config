@@ -11,7 +11,7 @@ set $mod Mod1
 set $term termite
 
 #set $default_gaps_inner 30
-set $default_gaps_inner 0
+set $default_gaps_inner 25
 set $default_gaps_outer 0
 
 
@@ -188,6 +188,9 @@ bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 1%- && pkill -R
 bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 1%+ && pkill -RTMIN+12 i3blocks
 bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+12 i3blocks
 
+bindsym XF86MonBrightnessUp exec xbacklight -inc 15
+bindsym XF86MonBrightnessDown exec xbacklight -dec 15
+
 #bindsym XF86AudioLowerVolume exec pactl set-sink-mute 1 false && pactl set-sink-volume 1 -1% && pkill -RTMIN+12 i3blocks
 #bindsym XF86AudioRaiseVolume exec pactl set-sink-mute 1 false && pactl set-sink-volume 1 +1% && pkill -RTMIN+12 i3blocks
 #bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle && pkill -RTMIN+12 i3blocks
@@ -332,3 +335,7 @@ exec --no-startup-id dunst
 # this script sets a wallpaper based on battery level, for my laptop
 #exec --no-startup-id $HOME/scripts/wallpaper.sh
 exec_always --no-startup-id nitrogen --restore
+
+# Disable capslock system-wide
+exec_always --no-startup-id xmodmap -e "clear lock" #disable caps lock switch
+exec_always --no-startup-id xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape

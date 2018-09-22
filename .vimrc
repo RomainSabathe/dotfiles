@@ -287,9 +287,9 @@ set wildignore+=*.pyc
 " ============================
 let test#strategy = "vimux"  " run the tests in the Vimux window
 let test#python#runner = 'pytest'
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR> 
-nmap <silent> <leader>ts :TestSuite<CR> 
+nmap <silent> <leader>tn :TestNearest --tb=short -l -s --looponfail<CR>
+nmap <silent> <leader>tf :TestFile --tb=line -l -n auto --looponfail<CR> 
+nmap <silent> <leader>ts :TestSuite --tb=line -l -n auto<CR> 
 nmap <silent> <leader>tl :TestLast<CR> 
 nmap <silent> <leader>tv :TestVisit<CR>
 
