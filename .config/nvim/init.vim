@@ -13,6 +13,8 @@ Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'KeitaNakamura/neodark.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'jacoborus/tender.vim'
 
 " Typing assistance
 Plug 'tpope/vim-surround'              " surround text with delimiters.
