@@ -86,6 +86,19 @@ let g:neoformat_enabled_python = ['autopep8']
 
 Plug 'ludovicchabant/vim-gutentags'
 
+" Track the engine.
+Plug 'SirVer/ultisnips'
+"
+" " Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+ let g:UltiSnipsEditSplit="vertical"
+
 " ----------------------------------------------------------------------------
 " ----------------------------------------------------------------------------
 " ----------------------------------------------------------------------------
