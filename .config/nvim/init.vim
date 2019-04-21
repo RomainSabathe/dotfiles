@@ -72,8 +72,6 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 autocmd CompleteDone * silent! pclose!
-" deoplete tab-complete (default doesn't use tab)
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " Use jedi engine inside deoplete
 Plug 'deoplete-plugins/deoplete-jedi'
 " Use tabnine engine inside deoplete (supposed to use machine learning)"
@@ -86,18 +84,18 @@ let g:neoformat_enabled_python = ['autopep8']
 
 Plug 'ludovicchabant/vim-gutentags'
 
-" Track the engine.
 Plug 'SirVer/ultisnips'
-"
-" " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
-"
-let g:UltiSnipsExpandTrigger="<tab>"
+
+let g:UltiSnipsExpandTrigger="<c-o>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
- let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit="vertical"
+
+" deoplete tab-complete (default doesn't use tab)
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " ----------------------------------------------------------------------------
 " ----------------------------------------------------------------------------
