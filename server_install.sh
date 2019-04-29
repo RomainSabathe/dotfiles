@@ -111,10 +111,10 @@ sudo apt-get install -y \
       ipython \
       ipdb
 
-## Downloading the dot files and placing them
-#RUN git clone https://github.com/RomainSabathe/dotfiles_ocean.git /tmp/resources && \
-    #cp -r /tmp/resources/.config $HOME && \
-    #cp -r /tmp/resources/.tmux.conf $HOME
+### Downloading the dot files and placing them
+##RUN git clone https://github.com/RomainSabathe/dotfiles_ocean.git /tmp/resources && \
+#    #cp -r /tmp/resources/.config $HOME && \
+#    #cp -r /tmp/resources/.tmux.conf $HOME
 
 ## Installing Vim Plug  and the plugins
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \

@@ -88,11 +88,14 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 let g:UltiSnipsExpandTrigger="<c-o>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpForwardTrigger="<c-o>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
+let g:UltiSnipsEnableSnipMate = 0
 
 " deoplete tab-complete (default doesn't use tab)
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
@@ -188,7 +191,8 @@ syntax on
 let g:neodark#use_256color = 1
 let g:neodark#solid_vertsplit = 1
 let g:neodark#background = '#202020'
-colorscheme neodark
+"colorscheme neodark
+colorscheme OceanicNext
 "if filereadable(expand("~/.vimrc_background"))
 "  let base16colorspace=256
 "  source ~/.vimrc_background
@@ -412,6 +416,7 @@ set wildignore+=*.pyc
 
 let test#strategy = "vimux"  " run the tests in the Vimux window
 let test#python#runner = 'pytest'
+let test#python#pytest#executable = 'pipenv run pytest'
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tf :TestFile<CR> 
 nmap <silent> <leader>ts :TestSuite<CR> 
