@@ -68,6 +68,7 @@ RUN apt-get install -y \
       vim \
       neovim \
       tmux \
+      zsh \
       i3 \
       ranger \
       vifm \
@@ -80,6 +81,7 @@ RUN apt-get install -y \
       flake8-isort \
       isort \
       autopep8 \
+      pyment \
       pep8-naming && \
     pip3 install --no-cache-dir \
       neovim \
@@ -91,7 +93,8 @@ RUN apt-get install -y \
       isort \
       autopep8 \
       pep8-naming \
-      black
+      black \
+      pyment
 
 # Other librairies to work with machine learning and computer vision
 # Plus a few handy python tools
@@ -133,6 +136,9 @@ RUN git clone --recursive https://github.com/thestinger/termite.git /tmp/termite
     mkdir -p /lib/terminfo/x && \
     ln -s /usr/local/share/terminfo/x/xterm-termite /lib/terminfo/x/xterm-termite && \
     update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/termite 60
+
+# Installing oh-my-zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # Downloading the dot files and placing them
 RUN git clone https://github.com/RomainSabathe/dotfiles_ocean.git /tmp/resources && \

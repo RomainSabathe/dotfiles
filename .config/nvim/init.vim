@@ -80,7 +80,21 @@ Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 " Python stuff
 Plug 'davidhalter/jedi-vim'  " Awesome functionality (go to definition, print docstrings etc)
 Plug 'sbdchd/neoformat'
-let g:neoformat_enabled_python = ['autopep8']
+let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8', 'pyment']
+let g:neoformat_python_yapf = {
+            \ 'exe': 'yapf',
+            \ 'args': ["--style='{column_limit: 79}'"],
+            \ }
+let g:neoformat_python_black = {
+            \ 'exe': 'black',
+            \ 'stdin': 1,
+            \ 'args': ['-t py36', '-l 79', '-q', '-'],
+            \ }
+let g:neoformat_python_pyment = {
+            \ 'exe': 'pyment',
+            \ 'stdin': 1,
+            \ 'args': ['-w', '-o google', '-'],
+            \ }
 
 Plug 'ludovicchabant/vim-gutentags'
 
@@ -97,8 +111,17 @@ let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
 let g:UltiSnipsEnableSnipMate = 0
 
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
 " deoplete tab-complete (default doesn't use tab)
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+" Escape terminal model with Esc
+tnoremap <Esc> <C-\><C-n>
+
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 " ----------------------------------------------------------------------------
 " ----------------------------------------------------------------------------
