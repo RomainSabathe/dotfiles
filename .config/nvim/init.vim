@@ -15,19 +15,20 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'jacoborus/tender.vim'
+Plug 'nightsense/snow'
 
 " Typing assistance
 Plug 'tpope/vim-surround'              " surround text with delimiters.
 "Plug 'Valloric/YouCompleteMe'          " spell completion.
 Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
-Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
+"Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
 Plug 'w0rp/ale'                        " spell checker.
 Plug 'scrooloose/nerdcommenter'        "
 
 " Git
 Plug 'tpope/vim-fugitive'              " git handling.
 Plug 'airblade/vim-gitgutter'          " shows changes in gutter.
-Plug 'tommcdo/vim-fubitive'            " support for bitbucket
+"Plug 'tommcdo/vim-fubitive'            " support for bitbucket
 
 " Look
 Plug 'bling/vim-airline'               " a bar.
@@ -42,7 +43,7 @@ Plug 'tpope/vim-obsession'             " save vim sessions
 
 " Search, navigation
 Plug 'scrooloose/nerdtree'             " file list on the right.
-Plug 'majutsushi/tagbar'               " navigation panel
+"Plug 'majutsushi/tagbar'               " navigation panel
 Plug 'mileszs/ack.vim'                 " fast search in project.
 Plug 'kien/ctrlp.vim'                  " jump to files easily.
 
@@ -96,7 +97,7 @@ let g:neoformat_python_pyment = {
             \ 'args': ['-w', '-o google', '-'],
             \ }
 
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -291,13 +292,13 @@ au FileType python syn keyword pythonDecorator True None False self
 au BufNewFile,BufRead *.jinja set syntax=htmljinja
 au BufNewFile,BufRead *.mako set ft=mako
 
-au FileType python map <buffer> F :set foldmethod=indent<cr>
+"au FileType python map <buffer> F :set foldmethod=indent<cr>
 
 au FileType python set cindent
 au FileType python set cinkeys-=0#
 au FileType python set indentkeys-=0#
-au FileType python set foldmethod=indent
-au FileType python set foldlevel=0
+"au FileType python set foldmethod=indent
+"au FileType python set foldlevel=0
 "au FileType python set foldclose=all
 
 
@@ -318,9 +319,9 @@ endif
 " Tagbar
 " ----------------------------------------------------------------------------
 
-set updatetime=100  " Increase the refresh rate (default is 5000)
-autocmd VimEnter * nested :TagbarOpen  " Autoopen tagbar
-let g:tagbar_left = 1  " Put the bar on the left
+"set updatetime=100  " Increase the refresh rate (default is 5000)
+"autocmd VimEnter * nested :TagbarOpen  " Autoopen tagbar
+"let g:tagbar_left = 1  " Put the bar on the left
 
 
 " ----------------------------------------------------------------------------
@@ -450,3 +451,7 @@ nmap <silent> <leader>P oimport ipdb; ipdb.set_trace()<Enter>pass<Esc>:w<CR>
 nmap <silent> <leader>tr Otry:<Esc>jI    <Esc>o<Del>except:<Enter>import ipdb; ipdb.set_trace()<Enter>pass<Enter><Esc>:w<CR>
 ""nmap <silent> <leader>tr Otry:j>>okbexcept:import ipdb; ipdb.set_trace()passkkk:w
 nmap <silent> <leader>tt OOfrom contexttimer import Timerowith Timer() as my_timer:gv>gvookbprint(my_timer
+
+
+" Neoformat
+nmap <silent> <leader>ne :Neoformat<CR>:w<CR>
