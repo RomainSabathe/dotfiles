@@ -158,6 +158,7 @@ RUN mkdir $HOME/.fonts && \
 # The python apt_pkg package doesn't play well with Python 3.6
 RUN apt-get install -y python-apt python3-apt &&
     ln -s /usr/lib/python3/dist-packages/apt_pkg.cpython-{35m,36m}-x86_64-linux-gnu.so
+    ln -s /usr/lib/python3/dist-packages/apt_inst.cpython-{35m,36m}-x86_64-linux-gnu.so
 
 
 ENV TERM=xterm-256color
