@@ -187,3 +187,5 @@ alias c='clear'
 alias gc='git commit'
 alias gca='git commit --amend --no-edit'
 alias rm='sudo rm -r'
+
+setxkbmap -layout us -option caps:escape
