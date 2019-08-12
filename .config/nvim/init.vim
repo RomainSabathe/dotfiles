@@ -23,7 +23,7 @@ Plug 'tpope/vim-surround'              " surround text with delimiters.
 Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
 "Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
 Plug 'w0rp/ale'                        " spell checker.
-Plug 'scrooloose/nerdcommenter'        "
+"Plug 'scrooloose/nerdcommenter'        "
 
 " Git
 Plug 'tpope/vim-fugitive'              " git handling.
@@ -39,7 +39,7 @@ Plug 'junegunn/goyo.vim'               " zen mode.
 " Tmux
 Plug 'christoomey/vim-tmux-navigator'  " intuitive Tmux integration.
 Plug 'benmills/vimux'                  " open tmux pane to run scripts.
-Plug 'tpope/vim-obsession'             " save vim sessions
+"Plug 'tpope/vim-obsession'             " save vim sessions
 
 " Search, navigation
 Plug 'scrooloose/nerdtree'             " file list on the right.
@@ -64,22 +64,22 @@ Plug 'raimondi/delimitmate'           " auto close brackets, parentheses...
 "Plug 'stgpetrovic/syntastic-async'    " async Syntastic.
 
 " Async autocomplete module.
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
+"if has('nvim')
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+"  Plug 'Shougo/deoplete.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+"let g:deoplete#enable_at_startup = 1
 autocmd CompleteDone * silent! pclose!
 " Use jedi engine inside deoplete
-Plug 'deoplete-plugins/deoplete-jedi'
-" Use tabnine engine inside deoplete (supposed to use machine learning)"
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+"Plug 'deoplete-plugins/deoplete-jedi'
+"" Use tabnine engine inside deoplete (supposed to use machine learning)"
+"Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 " Python stuff
-Plug 'davidhalter/jedi-vim'  " Awesome functionality (go to definition, print docstrings etc)
+"Plug 'davidhalter/jedi-vim'  " Awesome functionality (go to definition, print docstrings etc)
 Plug 'sbdchd/neoformat'
 let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8', 'pyment']
 let g:neoformat_python_yapf = {
@@ -105,7 +105,7 @@ Plug 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger="<c-o>"
 let g:UltiSnipsJumpForwardTrigger="<c-o>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
+"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
@@ -123,6 +123,7 @@ tnoremap <Esc> <C-\><C-n>
 
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+
 
 " ----------------------------------------------------------------------------
 " ----------------------------------------------------------------------------
@@ -215,8 +216,8 @@ syntax on
 let g:neodark#use_256color = 1
 let g:neodark#solid_vertsplit = 1
 let g:neodark#background = '#202020'
-"colorscheme neodark
-colorscheme OceanicNext
+colorscheme base16-gruvbox-dark-hard
+"colorscheme snow
 "if filereadable(expand("~/.vimrc_background"))
 "  let base16colorspace=256
 "  source ~/.vimrc_background
@@ -449,9 +450,7 @@ nmap <silent> <leader>tv :TestVisit<CR>
 
 nmap <silent> <leader>P oimport ipdb; ipdb.set_trace()<Enter>pass<Esc>:w<CR>
 nmap <silent> <leader>tr Otry:<Esc>jI    <Esc>o<Del>except:<Enter>import ipdb; ipdb.set_trace()<Enter>pass<Enter><Esc>:w<CR>
-""nmap <silent> <leader>tr Otry:j>>okbexcept:
-import ipdb; ipdb.set_trace()
-passkkk:w
+""nmap <silent> <leader>tr Otry:j>>okbexcept:import ipdb; ipdb.set_trace()passkkk:w
 nmap <silent> <leader>tt OOfrom contexttimer import Timerowith Timer() as my_timer:gv>gvookbprint(my_timer
 
 
@@ -459,4 +458,4 @@ nmap <silent> <leader>tt OOfrom contexttimer import Timerowith Timer() as my_t
 nmap <silent> <leader>ne :Neoformat<CR>:w<CR>
 
 " DVC
-autocmd! BufNewFile,BufRead Dvcfile,*.dvc setfiletype yaml
+autocmd! BufNewFile,BufRead Dvcfile,*.dvc setfiletype yaml<Paste>
