@@ -161,6 +161,6 @@ RUN apt-get install -y python-apt python3-apt && \
     ln -s /usr/lib/python3/dist-packages/apt_inst.cpython-{35m,36m}-x86_64-linux-gnu.so
 
 
-ENV TERM=xterm-256color
+ENV TERM=
 WORKDIR $HOME
 CMD ["/bin/bash"]
