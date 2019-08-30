@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER Romain Sabathe <RSabathe@gmail.com>
 
+ARG USER_EMAIL
 ENV HOME='/root'
 
 # Essentials
@@ -159,6 +160,10 @@ RUN mkdir $HOME/.fonts && \
 RUN apt-get install -y python-apt python3-apt && \
     ln -s /usr/lib/python3/dist-packages/apt_pkg.cpython-{35m,36m}-x86_64-linux-gnu.so \
     ln -s /usr/lib/python3/dist-packages/apt_inst.cpython-{35m,36m}-x86_64-linux-gnu.so
+    
+# Configuring git to commit directly from the container
+RUN git config --global user.name "Romain Sabathe" && \
+    git config --global user.email $USER_EMAIL
 
 
 ENV TERM=
