@@ -64,19 +64,19 @@ Plug 'raimondi/delimitmate'           " auto close brackets, parentheses...
 "Plug 'stgpetrovic/syntastic-async'    " async Syntastic.
 
 " Async autocomplete module.
-"if has('nvim')
-"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-"  Plug 'Shougo/deoplete.nvim'
-"  Plug 'roxma/nvim-yarp'
-"  Plug 'roxma/vim-hug-neovim-rpc'
-"endif
-"let g:deoplete#enable_at_startup = 1
-"autocmd CompleteDone * silent! pclose!
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+autocmd CompleteDone * silent! pclose!
 " Use jedi engine inside deoplete
 "Plug 'deoplete-plugins/deoplete-jedi'
 "" Use tabnine engine inside deoplete (supposed to use machine learning)"
-"Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 " Python stuff
 "Plug 'davidhalter/jedi-vim'  " Awesome functionality (go to definition, print docstrings etc)
