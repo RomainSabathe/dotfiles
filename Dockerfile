@@ -1,17 +1,14 @@
 FROM ubuntu:16.04
 MAINTAINER Romain Sabathe <RSabathe@gmail.com>
 
-ARG USER_EMAIL
 ENV HOME='/root'
 
 # Essentials
 RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-utils \
     git \
-    curl \
     unzip \
     openssh-client \
-    wget \
     build-essential \
     cmake \
     libopenblas-dev \
@@ -28,7 +25,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgnutls28-dev \
     libgirepository1.0-dev \
     libxml2-utils \
-    gperf
+    gperf \ 
+    make \
+    build-essential \
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    wget \
+    curl \
+    llvm \
+    libncurses5-dev \
+    libncursesw5-dev \
+    xz-utils \
+    tk-dev \
+    libffi-dev \
+    liblzma-dev \
+    python-openssl \
+    git
+
 
 # Adding repositories (neovim, python3.6, vim 8)
 RUN add-apt-repository -y ppa:neovim-ppa/stable && \
@@ -36,23 +52,18 @@ RUN add-apt-repository -y ppa:neovim-ppa/stable && \
     add-apt-repository -y ppa:jonathonf/vim && \
     apt-get update
 
-# Python
-RUN apt-get install -y --no-install-recommends \
-    python-setuptools \
-    python3-setuptools \
-	python-dev \
-	python-pip \
-    python3-pip \
-    python3-dev \
-    python3-tk  \
-	python3.6 \
-    python3.6-dev && \
-    # Making sure python3.6 is called when invoking python 3
-    # And python 2.7 is invoked otherwise.
-    ln -s -f $(which python3.6) $(which python3) && \
-    ln -s -f $(which python2.7) $(which python) && \
-    ln -s -f $(which pip2) $(which pip)
-    #pip3 install --no-cache-dir --upgrade pip setuptools
+# Pyenv
+RUN git clone --recursive \
+        https://github.com/pyenv/pyenv.git /home/app/.pyenv && \
+    cd /home/app/.pyenv && \
+    cd /root
+ENV PATH="/home/app/.pyenv/bin:${PATH}"
+ENV PYENV_ROOT="/home/app/.pyenv"
+RUN eval "$(pyenv init -)" && \
+    pyenv install 3.6.9 && \
+    pyenv global 3.6.9
+ENV PATH="/home/app/.pyenv/shims:${PATH}"
+
 
 # Other tools and requirements for linters, autocompleters etc.
 RUN apt-get install -y \
@@ -141,11 +152,15 @@ RUN git clone --recursive https://github.com/thestinger/termite.git /tmp/termite
 # Installing oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+# Forcing git to pull data relative to Linux and not Windows
+# (Needed for Vundle & using my .nvim/init file)
+RUN git config --global core.autocrlf input
+
 # Downloading the dot files and placing them
 RUN git clone https://github.com/RomainSabathe/dotfiles_ocean.git /tmp/resources && \
     cp -r /tmp/resources/.config $HOME && \
     cp -r /tmp/resources/.tmux.conf $HOME
-    
+
 # Installing Vim Plug  and the plugins
 RUN curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
@@ -156,16 +171,12 @@ RUN mkdir $HOME/.fonts && \
     cp -r /tmp/resources/.fonts $HOME/.fonts && \
     fc-cache -f -v
     
-# The python apt_pkg package doesn't play well with Python 3.6
-RUN apt-get install -y python-apt python3-apt && \
-    ln -s /usr/lib/python3/dist-packages/apt_pkg.cpython-{35m,36m}-x86_64-linux-gnu.so \
-    ln -s /usr/lib/python3/dist-packages/apt_inst.cpython-{35m,36m}-x86_64-linux-gnu.so
-    
 # Configuring git to commit directly from the container
+ARG USER_EMAIL
 RUN git config --global user.name "Romain Sabathe" && \
     git config --global user.email $USER_EMAIL
 
 
 ENV TERM=
 WORKDIR $HOME
-CMD ["/bin/bash"]
+CMD ["/bin/zsh"]

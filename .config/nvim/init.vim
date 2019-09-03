@@ -2,7 +2,7 @@
 " =============
 
 call plug#begin('~/.local/share/nvim/plugged')
-
+"
 " ----------------------------------------------------------------------------
 " ----------------------------------------------------------------------------
 " ----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ Plug 'raimondi/delimitmate'           " auto close brackets, parentheses...
 "  Plug 'roxma/vim-hug-neovim-rpc'
 "endif
 "let g:deoplete#enable_at_startup = 1
-autocmd CompleteDone * silent! pclose!
+"autocmd CompleteDone * silent! pclose!
 " Use jedi engine inside deoplete
 "Plug 'deoplete-plugins/deoplete-jedi'
 "" Use tabnine engine inside deoplete (supposed to use machine learning)"
@@ -450,9 +450,6 @@ nmap <silent> <leader>tv :TestVisit<CR>
 
 nmap <silent> <leader>P oimport ipdb; ipdb.set_trace()<Enter>pass<Esc>:w<CR>
 nmap <silent> <leader>tr Otry:<Esc>jI    <Esc>o<Del>except:<Enter>import ipdb; ipdb.set_trace()<Enter>pass<Enter><Esc>:w<CR>
-""nmap <silent> <leader>tr Otry:j>>okbexcept:
-import ipdb; ipdb.set_trace()
-passkkk:w
 nmap <silent> <leader>tt OOfrom contexttimer import Timerowith Timer() as my_timer:gv>gvookbprint(my_timer
 
 
