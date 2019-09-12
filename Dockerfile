@@ -50,6 +50,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN add-apt-repository -y ppa:neovim-ppa/stable && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     add-apt-repository -y ppa:jonathonf/vim && \
+    add-apt-repository -y ppa:twodopeshaggy/jarun && \
     apt-get update
 
 # Pyenv
@@ -63,7 +64,6 @@ RUN eval "$(pyenv init -)" && \
     pyenv install 3.6.9 && \
     pyenv global 3.6.9
 ENV PATH="/home/app/.pyenv/shims:${PATH}"
-
 
 # Other tools and requirements for linters, autocompleters etc.
 RUN apt-get install -y \
@@ -84,7 +84,8 @@ RUN apt-get install -y \
       i3 \
       ranger \
       vifm \
-      feh && \
+      feh \
+      nnn && \
     pip install --no-cache-dir \
       neovim \
       jedi \
@@ -150,33 +151,30 @@ RUN git clone --recursive https://github.com/thestinger/termite.git /tmp/termite
     update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/termite 60
 
 # Installing oh-my-zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-# Forcing git to pull data relative to Linux and not Windows
-# (Needed for Vundle & using my .nvim/init file)
-RUN git config --global core.autocrlf input
-
-# Downloading the dot files and placing them
-RUN git clone https://github.com/RomainSabathe/dotfiles_ocean.git /tmp/resources && \
-    cp -r /tmp/resources/.config $HOME && \
-    cp -r /tmp/resources/.tmux.conf $HOME
-
-# Installing Vim Plug  and the plugins
-RUN curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-    nvim -i NONE -c PlugInstall -c quitall
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
+    # Installing VimPlug
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+    # Forcing git to pull data relative to Linux and not Windows
+    # (Needed for Vundle & using my .nvim/init file)
+    git config --global core.autocrlf input
 
 # Installing fonts
-RUN mkdir $HOME/.fonts && \
-    cp -r /tmp/resources/.fonts $HOME/.fonts && \
-    fc-cache -f -v
+COPY .fonts $HOME/.fonts
+RUN fc-cache -f -v
+
+# Placing the dot files
+COPY .config $HOME/.config
+COPY .tmux.conf $HOME/.tmux.conf
+
+# Installing the plugins he plugins
+RUN nvim -i NONE -c PlugInstall -c quitall
     
 # Configuring git to commit directly from the container
 ARG USER_EMAIL
 RUN git config --global user.name "Romain Sabathe" && \
     git config --global user.email $USER_EMAIL
 
-
-ENV TERM=
+ENV TERM=xterm-256color
 WORKDIR $HOME
 CMD ["/bin/zsh"]

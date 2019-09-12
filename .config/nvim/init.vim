@@ -62,24 +62,25 @@ Plug 'raimondi/delimitmate'           " auto close brackets, parentheses...
 "Plug 'junegunn/vim-easy-align'        " align code to the same column easily.
 "Plug 'idbrii/AsyncCommand'            " run asynchronous commands.
 "Plug 'stgpetrovic/syntastic-async'    " async Syntastic.
+Plug 'mcchrish/nnn.vim'                " Integrates nnn
 
 " Async autocomplete module.
-"if has('nvim')
-"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-"  Plug 'Shougo/deoplete.nvim'
-"  Plug 'roxma/nvim-yarp'
-"  Plug 'roxma/vim-hug-neovim-rpc'
-"endif
-"let g:deoplete#enable_at_startup = 1
-"autocmd CompleteDone * silent! pclose!
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+autocmd CompleteDone * silent! pclose!
 " Use jedi engine inside deoplete
 "Plug 'deoplete-plugins/deoplete-jedi'
 "" Use tabnine engine inside deoplete (supposed to use machine learning)"
-"Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 " Python stuff
-"Plug 'davidhalter/jedi-vim'  " Awesome functionality (go to definition, print docstrings etc)
+Plug 'davidhalter/jedi-vim'  " Awesome functionality (go to definition, print docstrings etc)
 Plug 'sbdchd/neoformat'
 let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8', 'pyment']
 let g:neoformat_python_yapf = {
