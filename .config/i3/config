@@ -130,7 +130,7 @@ bindsym $mod+z layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+#bindsym $mod+space focus mode_toggle
 
 # toggle sticky mode
 bindsym $mod+Shift+s sticky toggle
@@ -250,7 +250,7 @@ mode $power {
 	bindsym Return exec echo "" > $HOME/.i3mode, mode "default"
 	bindsym Escape exec echo "" > $HOME/.i3mode, mode "default"
 }
-bindsym $mod+p exec echo $power > $HOME/.i3mode, mode $power
+#bindsym $mod+p exec echo $power > $HOME/.i3mode, mode $power
 
 # OUTER GAPS MODE
 set $mode_gaps_outer "outer gaps: (+/-) resize (0) none (d) default"
@@ -317,6 +317,11 @@ bar {
 		binding_mode		#00000000	#dcdcdcff	#262626ff
 	}
 }
+
+# Spotify shortcuts -- Make sure to install https://github.com/pwittchen/spotify-cli-linux
+bindsym $mod+n exec spotifycli --next
+bindsym $mod+p exec spotifycli --prev
+bindsym $mod+space exec spotifycli --playpause
 
 # == AUTOSTART ==
 # ===============
