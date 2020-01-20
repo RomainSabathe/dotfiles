@@ -188,4 +188,30 @@ alias gc='git commit'
 alias gca='git commit --amend --no-edit'
 alias rm='sudo rm -r'
 
+function gsync () {
+    git stash && \
+    git fetch origin && \
+    git reset --hard origin/$(git branch | grep \* | cut -d ' ' -f2)
+}
+
+function dualmonitor () {
+     xrandr --output DP-1 --mode 1920x1080 && \
+     xrandr --output eDP-1 --mode 1920x1080 && \
+     xrandr --output DP-1 --left-of eDP-1 && \
+     i3-msg '[workspace="1"]' move workspace to output DP-1 && \
+     i3-msg '[workspace="2"]' move workspace to output DP-1 && \
+     i3-msg '[workspace="3"]' move workspace to output DP-1 && \
+     i3-msg '[workspace="8"]' move workspace to output eDP-1 && \
+     i3-msg '[workspace="9"]' move workspace to output eDP-1 && \
+     i3-msg '[workspace="10"]' move workspace to output eDP-1
+}
+
+function onemonitor () {
+     xrandr --output eDP-1 --mode 1920x1080 && \
+     xrandr --output DP-1 --mode 1920x1080 && \
+     xrandr --output DP-1 --same-as eDP-1
+}
+
 setxkbmap -layout us -option caps:escape
+setxkbmap -device 10 -layout us -option caps:escape
+setxkbmap -device 11 -layout us -option caps:escape
