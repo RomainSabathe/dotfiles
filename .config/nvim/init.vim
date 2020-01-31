@@ -16,6 +16,7 @@ Plug 'KeitaNakamura/neodark.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'jacoborus/tender.vim'
 Plug 'nightsense/snow'
+"Plug 'arcticicestudio/nord-vim'
 
 " Typing assistance
 Plug 'tpope/vim-surround'              " surround text with delimiters.
@@ -45,7 +46,9 @@ Plug 'benmills/vimux'                  " open tmux pane to run scripts.
 Plug 'scrooloose/nerdtree'             " file list on the right.
 "Plug 'majutsushi/tagbar'               " navigation panel
 Plug 'mileszs/ack.vim'                 " fast search in project.
-Plug 'kien/ctrlp.vim'                  " jump to files easily.
+"Plug 'kien/ctrlp.vim'                  " jump to files easily.
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
 
 " To categorize
 Plug 'nathanaelkane/vim-indent-guides'
@@ -64,6 +67,12 @@ Plug 'raimondi/delimitmate'           " auto close brackets, parentheses...
 "Plug 'stgpetrovic/syntastic-async'    " async Syntastic.
 Plug 'mcchrish/nnn.vim'                " Integrates nnn
 
+" Better python color syntaxing
+if has('nvim')
+  Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+endif
+
+
 " Async autocomplete module.
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -73,24 +82,38 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 500  " Compatibility with semshi
 autocmd CompleteDone * silent! pclose!
 " Use jedi engine inside deoplete
 "Plug 'deoplete-plugins/deoplete-jedi'
 "" Use tabnine engine inside deoplete (supposed to use machine learning)"
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
+"Plug 'metakirby5/codi.vim'
+Plug 'vimwiki/vimwiki'
+
+" Necessary for vimwiki
+set nocompatible
+filetype plugin on
+syntax on
+
+let g:vimwiki_list = [{'path': '/efs/Users/romain/vimwiki/vimwiki', 'path_html': '/efs/Users/romain/vimwiki/documentation'}]
+
+"Plug 'easymotion/vim-easymotion'
+"Plug 'dhruvasagar/vim-table-mode'
+
 " Python stuff
-Plug 'davidhalter/jedi-vim'  " Awesome functionality (go to definition, print docstrings etc)
+"Plug 'davidhalter/jedi-vim'  " Awesome functionality (go to definition, print docstrings etc)
 Plug 'sbdchd/neoformat'
 let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8', 'pyment']
 let g:neoformat_python_yapf = {
             \ 'exe': 'yapf',
-            \ 'args': ["--style='{column_limit: 79}'"],
+            \ 'args': ["--style='{column_limit: 88}'"],
             \ }
 let g:neoformat_python_black = {
             \ 'exe': 'black',
             \ 'stdin': 1,
-            \ 'args': ['-t py36', '-l 79', '-q', '-'],
+            \ 'args': ['-t py36', '-l 88', '-q', '-'],
             \ }
 let g:neoformat_python_pyment = {
             \ 'exe': 'pyment',
@@ -154,7 +177,7 @@ set showmatch  " show the corresponding bracket.
 set mat=2  " how many tenths of a second to blink when matching brackets
 syntax enable  " enable syntax highlighting.
 set number  " display the line number.
-let &colorcolumn=80  " shows the column 80
+let &colorcolumn=88  " shows the column 88
 set foldcolumn=1  " add a bit of extra margin to the left.
 set number relativenumber  " enables relative line numbers in the gutter.
 
@@ -384,7 +407,6 @@ let b:ale_linters = ['flake8', 'pylint']
 let b:ale_fixers = ['autopep8', 'yapf']
 ""let g:ale_python_flake8_executable = 'pipenv run'
 ""let g:ale_python_pylint_executable = 'pipenv run'
-
 
 " ----------------------------------------------------------------------------
 " Vimux

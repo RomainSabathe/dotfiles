@@ -4,54 +4,90 @@ MAINTAINER Romain Sabathe <RSabathe@gmail.com>
 ENV HOME='/root'
 
 # Essentials
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    apt-utils \
-    git \
-    unzip \
-    openssh-client \
-    build-essential \
-    cmake \
-    libopenblas-dev \
-    man-db \
-    software-properties-common \
-    # Requirements to install termite
-    g++ \
-    libgtk-3-dev \
-    gtk-doc-tools gnutls-bin \
-    valac \
-    intltool \
-    libpcre2-dev \
-    libglib3.0-cil-dev \
-    libgnutls28-dev \
-    libgirepository1.0-dev \
-    libxml2-utils \
-    gperf \ 
-    make \
-    build-essential \
-    libssl-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    wget \
-    curl \
-    llvm \
-    libncurses5-dev \
-    libncursesw5-dev \
-    xz-utils \
-    tk-dev \
-    libffi-dev \
-    liblzma-dev \
-    python-openssl \
-    git
-
-
-# Adding repositories (neovim, python3.6, vim 8)
-RUN add-apt-repository -y ppa:neovim-ppa/stable && \
+RUN apt-get update && \
+    # Adding repositories (neovim, python3.6, vim 8)
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:neovim-ppa/stable && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     add-apt-repository -y ppa:jonathonf/vim && \
     add-apt-repository -y ppa:twodopeshaggy/jarun && \
-    apt-get update
+    apt-get update && \
+    apt-get install -y \
+     apt-utils \
+     git \
+     unzip \
+     openssh-client \
+     build-essential \
+     cmake \
+     libopenblas-dev \
+     man-db \
+     software-properties-common \
+     # Requirements to install termite
+     g++ \
+     libgtk-3-dev \
+     gtk-doc-tools gnutls-bin \
+     valac \
+     intltool \
+     libpcre2-dev \
+     libglib3.0-cil-dev \
+     libgnutls28-dev \
+     libgirepository1.0-dev \
+     libxml2-utils \
+     gperf \ 
+     make \
+     build-essential \
+     libssl-dev \
+     zlib1g-dev \
+     libbz2-dev \
+     libreadline-dev \
+     libsqlite3-dev \
+     wget \
+     curl \
+     llvm \
+     libncurses5-dev \
+     libncursesw5-dev \
+     xz-utils \
+     tk-dev \
+     libffi-dev \
+     liblzma-dev \
+     python-openssl \
+     xclip \
+     # Other tools and requirements for linters, autocompleters etc.
+     htop \
+     iotop \
+     iftop \
+     bash \
+     ctags \
+     shellcheck \
+     netcat \
+     ack-grep \
+     unzip \
+     exuberant-ctags \
+     vim \
+     neovim \
+     tmux \
+     zsh \
+     i3 \
+     ranger \
+     vifm \
+     feh \
+     nnn \
+     # Other librairies to work with machine learning and computer vision
+     # Plus a few handy python tools
+     libjpeg-dev \
+     libjpeg8-dev \
+     libtiff5-dev \
+     libjasper-dev \
+     libpng12-dev \
+     libavcodec-dev \
+     libavformat-dev \
+     libswscale-dev \
+     libv4l-dev \
+     libgtk2.0-dev \
+     liblapacke-dev \
+     checkinstall \
+     zlib1g-dev
+
 
 # Pyenv
 RUN git clone --recursive \
@@ -66,27 +102,7 @@ RUN eval "$(pyenv init -)" && \
 ENV PATH="/home/app/.pyenv/shims:${PATH}"
 
 # Other tools and requirements for linters, autocompleters etc.
-RUN apt-get install -y \
-      htop \
-      iotop \
-      iftop \
-      bash \
-      ctags \
-      shellcheck \
-      netcat \
-      ack-grep \
-      unzip \
-      exuberant-ctags \
-      vim \
-      neovim \
-      tmux \
-      zsh \
-      i3 \
-      ranger \
-      vifm \
-      feh \
-      nnn && \
-    pip install --no-cache-dir \
+RUN  pip install --no-cache-dir \
       neovim \
       jedi \
       flake8 \
@@ -96,7 +112,7 @@ RUN apt-get install -y \
       autopep8 \
       pyment \
       pep8-naming && \
-    pip3 install --no-cache-dir \
+    pip3 install --no-cache-dir --upgrade \
       neovim \
       jedi \
       flake8 \
@@ -107,30 +123,16 @@ RUN apt-get install -y \
       autopep8 \
       pep8-naming \
       black \
-      pyment
-
-# Other librairies to work with machine learning and computer vision
-# Plus a few handy python tools
-RUN apt-get install -y \
-      libjpeg-dev \
-      libjpeg8-dev \
-      libtiff5-dev \
-      libjasper-dev \
-      libpng12-dev \
-      libavcodec-dev \
-      libavformat-dev \
-      libswscale-dev \
-      libv4l-dev \
-      libgtk2.0-dev \
-      liblapacke-dev \
-      checkinstall \
-      zlib1g-dev && \
-    pip3 --no-cache-dir install \
+      pyment \
+      pynvim \
+     # Other librairies to work with machine learning and computer vision
+     # Plus a few handy python tools
       numpy \
       pandas \
       jupyter \
       ipython \
-      ipdb
+      ipdb \
+      dvc
 
 # Installing VTE (requirement for Termite)
 RUN git clone https://github.com/thestinger/vte-ng.git /tmp/vte && \
