@@ -1,73 +1,97 @@
 # Essentials
-sudo apt-get update && apt-get install -y --no-install-recommends \
-    apt-utils \
-    git \
-    curl \
-    unzip \
-    openssh-client \
-    wget \
-    build-essential \
-    cmake \
-    libopenblas-dev \
-    man-db \
-    software-properties-common \
-    # Requirements to install termite
-    g++ \
-    libgtk-3-dev \
-    gtk-doc-tools gnutls-bin \
-    valac \
-    intltool \
-    libpcre2-dev \
-    libglib3.0-cil-dev \
-    libgnutls28-dev \
-    libgirepository1.0-dev \
-    libxml2-utils \
-    gperf
-
-# Adding repositories (neovim, python3.6, vim 8)
-sudo add-apt-repository -y ppa:neovim-ppa/stable && \
+sudo apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:neovim-ppa/stable && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     add-apt-repository -y ppa:jonathonf/vim && \
-    apt-get update
+    add-apt-repository -y ppa:twodopeshaggy/jarun && \
+    apt-get update && \
+    apt-get install -y \
+     apt-utils \
+     git \
+     unzip \
+     openssh-client \
+     build-essential \
+     cmake \
+     libopenblas-dev \
+     man-db \
+     software-properties-common \
+     g++ \
+     libgtk-3-dev \
+     gtk-doc-tools gnutls-bin \
+     valac \
+     intltool \
+     libpcre2-dev \
+     libglib3.0-cil-dev \
+     libgnutls28-dev \
+     libgirepository1.0-dev \
+     libxml2-utils \
+     gperf \
+     make \
+     build-essential \
+     libssl-dev \
+     zlib1g-dev \
+     libbz2-dev \
+     libreadline-dev \
+     libsqlite3-dev \
+     wget \
+     curl \
+     llvm \
+     libncurses5-dev \
+     libncursesw5-dev \
+     xz-utils \
+     tk-dev \
+     libffi-dev \
+     liblzma-dev \
+     python-openssl \
+     xclip \
+     htop \
+     iotop \
+     iftop \
+     bash \
+     ctags \
+     shellcheck \
+     netcat \
+     ack-grep \
+     unzip \
+     exuberant-ctags \
+     vim \
+     neovim \
+     tmux \
+     zsh \
+     i3 \
+     ranger \
+     vifm \
+     feh \
+     nnn \
+     libjpeg-dev \
+     libjpeg8-dev \
+     libtiff5-dev \
+     libjasper-dev \
+     libpng12-dev \
+     libavcodec-dev \
+     libavformat-dev \
+     libswscale-dev \
+     libv4l-dev \
+     libgtk2.0-dev \
+     liblapacke-dev \
+     checkinstall \
+     zlib1g-dev
 
-# Python
-sudo apt-get install -y --no-install-recommends \
-    python-setuptools \
-    python3-setuptools \
-	python-dev \
-	python-pip \
-    python3-pip \
-    python3-dev \
-    python3-tk  \
-	python3.6 \
-    python3.6-dev
-    # Making sure python3.6 is called when invoking python 3
-    # And python 2.7 is invoked otherwise.
-    ln -s -f $(which python3.6) $(which python3) && \
-    ln -s -f $(which python2.7) $(which python) && \
-    ln -s -f $(which pip2) $(which pip)
-    #pip3 install --no-cache-dir --upgrade pip setuptools
 
-# Other tools and requirements for linters, autocompleters etc.
-sudo apt-get install -y \
-      htop \
-      iotop \
-      iftop \
-      bash \
-      ctags \
-      shellcheck \
-      netcat \
-      ack-grep \
-      unzip \
-      exuberant-ctags \
-      vim \
-      neovim \
-      tmux \
-      i3 \
-      ranger \
-      vifm \
-      feh && \
-    pip install --no-cache-dir \
+# Pyenv
+git clone --recursive \
+        https://github.com/pyenv/pyenv.git /home/app/.pyenv && \
+    cd /home/app/.pyenv && \
+    cd /root
+export PATH="/home/app/.pyenv/bin:${PATH}"
+export PYENV_ROOT="/home/app/.pyenv"
+eval "$(pyenv init -)" && \
+    pyenv install 3.6.9 && \
+    pyenv global 3.6.9
+export PATH="/home/app/.pyenv/shims:${PATH}"
+
+pip install --no-cache-dir \
       neovim \
       jedi \
       flake8 \
@@ -75,8 +99,9 @@ sudo apt-get install -y \
       flake8-isort \
       isort \
       autopep8 \
+      pyment \
       pep8-naming && \
-    pip3 install --no-cache-dir \
+    pip3 install --no-cache-dir --upgrade \
       neovim \
       jedi \
       flake8 \
@@ -86,39 +111,38 @@ sudo apt-get install -y \
       isort \
       autopep8 \
       pep8-naming \
-      black
-
-# Other librairies to work with machine learning and computer vision
-# Plus a few handy python tools
-sudo apt-get install -y \
-      libjpeg-dev \
-      libjpeg8-dev \
-      libtiff5-dev \
-      libjasper-dev \
-      libpng12-dev \
-      libavcodec-dev \
-      libavformat-dev \
-      libswscale-dev \
-      libv4l-dev \
-      libgtk2.0-dev \
-      liblapacke-dev \
-      checkinstall \
-      zlib1g-dev && \
-    pip3 --no-cache-dir install \
+      black \
+      pyment \
+      pynvim \
       numpy \
       pandas \
       jupyter \
       ipython \
-      ipdb
+      ipdb \
+      dvc
 
-### Downloading the dot files and placing them
-##RUN git clone https://github.com/RomainSabathe/dotfiles_ocean.git /tmp/resources && \
-#    #cp -r /tmp/resources/.config $HOME && \
-#    #cp -r /tmp/resources/.tmux.conf $HOME
+# Installing VTE (requirement for Termite)
+git clone https://github.com/thestinger/vte-ng.git /tmp/vte && \
+    echo export LIBRARY_PATH="/usr/include/gtk-3.0:$LIBRARY_PATH" && \
+	cd /tmp/vte && \
+    ./autogen.sh && \
+	make && \
+    make install
 
-## Installing Vim Plug  and the plugins
+# Building Termite
+git clone --recursive https://github.com/thestinger/termite.git /tmp/termite && \
+    cd /tmp/termite && \
+    make && \
+    make install && \
+    ldconfig && \
+    mkdir -p /lib/terminfo/x && \
+    ln -s /usr/local/share/terminfo/x/xterm-termite /lib/terminfo/x/xterm-termite && \
+    update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/termite 60
+
+# Installing oh-my-zsh
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-nvim -i NONE -c PlugInstall -c quitall
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+    git config --global core.autocrlf input
 
-export TERM=xterm-256color
+# Installing the plugins he plugins
+nvim -i NONE -c PlugInstall -c quitall
