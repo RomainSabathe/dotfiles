@@ -161,6 +161,16 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh
     # (Needed for Vundle & using my .nvim/init file)
     git config --global core.autocrlf input
 
+# Installing Git LFS
+RUN curl -LJ https://github.com/git-lfs/git-lfs/releases/download/v2.10.0/git-lfs-linux-amd64-v2.10.0.tar.gz \
+    --create-dirs \
+    -o /tmp/git_lfs.tar.gz && \
+    mkdir /tmp/git_lfs/ && \
+    tar -C /tmp/git_lfs/ -xvf /tmp/git_lfs.tar.gz && \
+    sh -c /tmp/git_lfs/install.sh && \
+    rm -r /tmp/git_lfs/ && \
+    rm /tmp/git_lfs.tar.gz
+
 # Installing fonts
 COPY .fonts $HOME/.fonts
 RUN fc-cache -f -v
@@ -175,8 +185,9 @@ RUN nvim -i NONE -c PlugInstall -c quitall
 # Configuring git to commit directly from the container
 ARG USER_EMAIL
 RUN git config --global user.name "Romain Sabathe" && \
-    git config --global user.email $USER_EMAIL
+    git config --global user.email $USER_EMAIL && \
+    git config --global push.default simple
 
 ENV TERM=xterm-256color
 WORKDIR $HOME
-CMD ["/bin/zsh"]
+ENTRYPOINT ["/bin/zsh"]
