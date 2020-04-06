@@ -97,8 +97,8 @@ RUN git clone --recursive \
 ENV PATH="/home/app/.pyenv/bin:${PATH}"
 ENV PYENV_ROOT="/home/app/.pyenv"
 RUN eval "$(pyenv init -)" && \
-    pyenv install 3.6.9 && \
-    pyenv global 3.6.9
+    pyenv install 3.7.4 && \
+    pyenv global 3.7.4
 ENV PATH="/home/app/.pyenv/shims:${PATH}"
 
 # Other tools and requirements for linters, autocompleters etc.
@@ -171,6 +171,17 @@ RUN curl -LJ https://github.com/git-lfs/git-lfs/releases/download/v2.10.0/git-lf
     rm -r /tmp/git_lfs/ && \
     rm /tmp/git_lfs.tar.gz
 
+# Installing node (to use with coc).
+RUN apt-get install -y nodejs npm && \
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh)" && \
+    export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
+    echo 'export NVM_DIR=$HOME/.nvm' >> ~/.zshrc && \
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.zshrc  && \
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.zshrc && \
+    nvm install --lts && nvm use --lts
+
 # Installing fonts
 COPY .fonts $HOME/.fonts
 RUN fc-cache -f -v
@@ -180,7 +191,11 @@ COPY .config $HOME/.config
 COPY .tmux.conf $HOME/.tmux.conf
 
 # Installing the plugins he plugins
-RUN nvim -i NONE -c PlugInstall -c quitall
+RUN export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
+    nvim -i NONE -c PlugInstall -c quitall && \
+    nvim -i NONE -c "CocInstall coc-python" -c "sleep 5" -c quitall
     
 # Configuring git to commit directly from the container
 ARG USER_EMAIL

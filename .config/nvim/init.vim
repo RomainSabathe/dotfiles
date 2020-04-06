@@ -21,7 +21,8 @@ Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
 Plug 'w0rp/ale'                        " spell checker.
 Plug 'SirVer/ultisnips'                " autoexpand preconfigured keystrokes
 Plug 'honza/vim-snippets'              " bank of defaults for ultisnips
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }   " autocomplete
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }   " autocomplete
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " }}}
 " Git {{{
 Plug 'tpope/vim-fugitive'              " git handling.
@@ -41,7 +42,6 @@ Plug 'benmills/vimux'                  " open tmux pane to run scripts.
 Plug 'scrooloose/nerdtree'             " file list on the right.
 Plug 'mileszs/ack.vim'                 " fast search in project.
 Plug 'kien/ctrlp.vim'                  " jump to files easily.
-Plug 'francoiscabrol/ranger.vim'       " ranger from vim (as terminal pane)
 " }}}
 " Language specific {{{
 Plug 'sbdchd/neoformat'                " use black or yapf or else (python)
@@ -87,7 +87,7 @@ set showmatch  " show the corresponding bracket.
 set mat=2  " how many tenths of a second to blink when matching brackets
 syntax enable  " enable syntax highlighting.
 set number  " display the line number.
-let &colorcolumn=80  " shows the column 80
+let &colorcolumn=88  " shows the column 88
 set foldcolumn=1  " add a bit of extra margin to the left.
 set number relativenumber  " enables relative line numbers in the gutter.
 " }}}
@@ -103,7 +103,7 @@ set smarttab  " be smart about tabs.
 set shiftwidth=4
 set tabstop=4  " 1 tab = 4 spaces
 set lbr  " linebreak on 500 characters
-set tw=500
+set tw=88
 set ai  " auto indent.
 set si  " smart indent.
 set wrap  " wrap lines.
@@ -204,10 +204,50 @@ let b:ale_linters = ['flake8', 'pylint']
 let b:ale_fixers = ['autopep8', 'yapf']
 " }}}
 " Deoplete {{{
-let g:deoplete#enable_at_startup = 1
-autocmd CompleteDone * silent! pclose!
-" deoplete tab-complete (default doesn't use tab)
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" let g:deoplete#enable_at_startup = 1
+" autocmd CompleteDone * silent! pclose!
+" " deoplete tab-complete (default doesn't use tab)
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" }}}
+" Coc {{{
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+ 
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " }}}
 " }}}
  
@@ -239,9 +279,6 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " Remap Vim's 0 to first non blank character
 map 0 ^
-" }}}
-" Ranger {{{
-map <leader>f :Ranger<CR>
 " }}}
 " NERDTree {{{
 let g:NERDTreeWinPos = "right"
