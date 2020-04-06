@@ -1,6 +1,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
  
-"-- Colorschemes --------------------------------------------------------------
+" Plugins {{{
+" Colorschemes {{{
 Plug 'chriskempson/base16-vim'
 Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
@@ -13,81 +14,68 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
 Plug 'drewtempelmeyer/palenight.vim'
-
-"-- Typing assistance ---------------------------------------------------------
+" }}}
+" Typing assistance {{{
 Plug 'machakann/vim-sandwich'          " surround text with delimiters.
 Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
 Plug 'w0rp/ale'                        " spell checker.
 Plug 'SirVer/ultisnips'                " autoexpand preconfigured keystrokes
 Plug 'honza/vim-snippets'              " bank of defaults for ultisnips
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }   " autocomplete
- 
-"-- Git -----------------------------------------------------------------------
+" }}}
+" Git {{{
 Plug 'tpope/vim-fugitive'              " git handling.
 Plug 'airblade/vim-gitgutter'          " shows changes in gutter.
-
-"-- Look ----------------------------------------------------------------------
+" }}}
+" Look {{{
 Plug 'bling/vim-airline'               " a bar.
 Plug 'vim-airline/vim-airline-themes'  " and themes.
 Plug 'mhinz/vim-startify'              " a splash screen with recent files.
 Plug 'junegunn/goyo.vim'               " zen mode.
-
-"-- Tmux ----------------------------------------------------------------------
+" }}}
+" Tmux {{{
 Plug 'christoomey/vim-tmux-navigator'  " intuitive Tmux integration.
 Plug 'benmills/vimux'                  " open tmux pane to run scripts.
-
-"-- Search, navigation --------------------------------------------------------
+" }}}
+" Search, navigation {{{
 Plug 'scrooloose/nerdtree'             " file list on the right.
 Plug 'mileszs/ack.vim'                 " fast search in project.
 Plug 'kien/ctrlp.vim'                  " jump to files easily.
 Plug 'francoiscabrol/ranger.vim'       " ranger from vim (as terminal pane)
- 
-"-- Language specific ---------------------------------------------------------
+" }}}
+" Language specific {{{
 Plug 'sbdchd/neoformat'                " use black or yapf or else (python)
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " color syntax (python)
 Plug 'lervag/vimtex'                   " general tools for LaTeX
 Plug 'plasticboy/vim-markdown'         " general tools for Markdown
 Plug 'PotatoesMaster/i3-vim-syntax'    " color syntaxing for .config/i3/config
 Plug 'ekalinin/Dockerfile.vim'         " color syntaxing for Dockerfiles
-
-"-- Journaling ---------------------------------------------------------------
+" }}}
+" Journaling {{{
 Plug 'vimwiki/vimwiki'                 " manage a personal wiki from Vim
 Plug 'mattn/calendar-vim'              " pop up a calendar for daily journaling
 Plug 'vim-pandoc/vim-pandoc'           " interface for Pandoc
 Plug 'vim-pandoc/vim-pandoc-syntax'    " color-syntax files supported by Pandoc
  
-
-"-- To categorize -------------------------------------------------------------
+" }}}
+" To categorize {{{
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'janko-m/vim-test'                " utility to run tests
 Plug 'tpope/vim-sensible'              " universal set of defaults
 Plug 'google/vim-searchindex'          " display count of search
 Plug 'sheerun/vim-polyglot'            " support for many languages
-
-"-- What is that? -------------------------------------------------------------
+" }}}
+" What is that? {{{
 Plug 'raimondi/delimitmate'            " auto close brackets, parentheses...
 Plug 'rbgrouleff/bclose.vim'           " closing a buffer doesn't close window
 Plug 'godlygeek/tabular'
+" }}}
 
 call plug#end()
+" }}}
 
-" Other plugins require curl
-if executable("curl")
-    " Webapi: Dependency of Gist-vim
-    Plug 'mattn/webapi-vim'
-
-    " Gist: Post text to gist.github
-    Plug 'mattn/gist-vim'
-endif
-
-filetype plugin indent on  " required!
-
-" ***************************************************************************
-" ***************************************************************************
-" ***************************************************************************
-
-"-- General options  --------------------------------------------------------
-"---- general  ---------------------------------------------------------------
+" General options  {{{
+" general  {{{
 set history=1000
 set autoread  " set to autoread when a file is changed from the outside.
 let mapleader = ","  " change the leader key.
@@ -102,12 +90,14 @@ set number  " display the line number.
 let &colorcolumn=80  " shows the column 80
 set foldcolumn=1  " add a bit of extra margin to the left.
 set number relativenumber  " enables relative line numbers in the gutter.
-"---- Sounds  ---------------------------------------------------------------
+" }}}
+" Sounds  {{{
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
-"---- Editing  ---------------------------------------------------------------
+" }}}
+" Editing  {{{
 set expandtab  " spaces instead of tabs.
 set smarttab  " be smart about tabs.
 set shiftwidth=4
@@ -122,12 +112,15 @@ try  " try to undo even when we closed the file earlier.
     set undofile
 catch
 endtry
-"---- Other  ---------------------------------------------------------------
+" }}}
+" Other  {{{
 set encoding=utf-8  " utf9 as standard encoding and en_US as standard language.
 set ffs=unix,dos,mac  " unix as standard file type.
-
-"-- General mappings  --------------------------------------------------------
-"---- Buffers  ---------------------------------------------------------------
+" }}}
+" }}}
+ 
+" General mappings  {{{
+" Buffers  {{{
 set hidden                          " a buffer becomes hidden when it is abandonned.
 map <leader>T :enew<cr>             " open a new empty buffer.
 map <s-l> :bnext<cr>                " move to next buffer.
@@ -135,13 +128,16 @@ map <s-h> :bprevious<cr>            " move to previous buffer.
 map <leader>k :bp <bar> bd #<cr>    " close the buffer and move to the previous
 map <leader>K :bp <bar> bd! #<cr>   " close all buffers in the current tab.
 map <leader>bs :ls<cr>              " show all opened buffers and their status.
-"---- Other  ---------------------------------------------------------------
+" }}}
+" Other  {{{
 tnoremap <Esc> <C-\><C-n>            " escape terminal mode with Esc
 map <leader>pp :setlocal paste!<cr>  " togle paste mode.
-
-"-- Language specific -------------------------------------------------------
-"---- Python ----------------------------------------------------------------
-"------ General --------------------------------------------------------------
+" }}}
+" }}}
+ 
+" Language specific {{{
+" Python {{{
+" General {{{
 let python_highlight_all = 1
 au FileType python syn keyword pythonDecorator True None False self
 
@@ -151,7 +147,8 @@ au BufNewFile,BufRead *.mako set ft=mako
 au FileType python set cindent
 au FileType python set cinkeys-=0#
 au FileType python set indentkeys-=0#
-"------ Neoformat --------------------------------------------------------------
+" }}}
+" Neoformat {{{
 nmap <silent> <leader>ne :Neoformat<CR>:w<CR>
 let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8', 'pyment']
 let g:neoformat_python_yapf = {
@@ -168,18 +165,23 @@ let g:neoformat_python_pyment = {
             \ 'stdin': 1,
             \ 'args': ['-w', '-o google', '-'],
             \ }
-"------ DVC --------------------------------------------------------------
+" }}}
+" DVC {{{
 autocmd! BufNewFile,BufRead Dvcfile,*.dvc setfiletype yaml<Paste>
-"------ Latex -----------------------
+" }}}
+" }}}
+" Latex {{{
 let g:vimtex_view_method="zathura"
+" }}}
+" }}}
  
-
-"-- Typing assistance  --------------------------------------------------------
-"---- General  --------------------------------------------------------------
+" Typing assistance  {{{
+" General  {{{
 nmap <silent> <leader>P oimport ipdb; ipdb.set_trace()<Enter>pass<Esc>:w<CR>
 nmap <silent> <leader>tr Otry:<Esc>jI    <Esc>o<Del>except:<Enter>import ipdb; ipdb.set_trace()<Enter>pass<Enter><Esc>:w<CR>
 nmap <silent> <leader>tt OOfrom contexttimer import Timerowith Timer() as my_timer:gv>gvookbprint(my_timer
-"---- Ultisnips  --------------------------------------------------------------
+" }}}
+" Ultisnips  {{{
 let g:UltiSnipsExpandTrigger="<c-o>"
 let g:UltiSnipsJumpForwardTrigger="<c-o>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
@@ -188,7 +190,8 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
 let g:UltiSnipsEnableSnipMate = 0
-"---- Ale  --------------------------------------------------------------
+" }}}
+" Ale  {{{
 let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
@@ -199,24 +202,27 @@ nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 let b:ale_linters = ['flake8', 'pylint']
 " Fix Python files with autopep8 and yapf.
 let b:ale_fixers = ['autopep8', 'yapf']
-"---- Deoplete ----------------------------------------------------------------
+" }}}
+" Deoplete {{{
 let g:deoplete#enable_at_startup = 1
 autocmd CompleteDone * silent! pclose!
 " deoplete tab-complete (default doesn't use tab)
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" }}}
+" }}}
  
- 
-"-- Journaling -------------------------------------------------------
-"---- Vimwiki -------------------------------------------------------
+" Journaling {{{
+" Vimwiki {{{
 set nocompatible
 filetype plugin on
 syntax on
 let g:vimwiki_list = [{'path': '~/git/notes/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
+" }}}
+" }}}
  
-
-"-- Search, navigation --------------------------------------------------------
-"---- General -----------------------------------------------------------------
+" Search, navigation {{{
+" General {{{
 set ignorecase   " ignore case whem searching
 set smartcase    " be smart about case when searching.
 set hlsearch     " highlight the search as it goes
@@ -233,9 +239,11 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " Remap Vim's 0 to first non blank character
 map 0 ^
-"---- Ranger -----------------------------------------------------------------
+" }}}
+" Ranger {{{
 map <leader>f :Ranger<CR>
-"---- NERDTree -----------------------------------------------------------------
+" }}}
+" NERDTree {{{
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden = 0
 let NERDTreeIgnore = ['.pyc$', '__pycache__']
@@ -246,20 +254,23 @@ autocmd vimenter * NERDTree  " automatically opens NERDTree when vim starts.
 autocmd VimEnter * wincmd p  " the focus was on NERDTree. Now it's on the code.
 " Closes NERDTree if only 1 vim pane is remaining.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-"---- Ack -----------------------------------------------------------------
+" }}}
+" Ack {{{
 " Don't jump to first result automatically
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
-"---- CTRL-P -----------------------------------------------------------------
+" }}}
+" CTRL-P {{{
 set wildignore+=*.pyc
-
-
-"-- Look ---------------------------------------------------------------------
-"---- Airline ----------------------------------------------------------------
+" }}}
+ 
+" Look {{{
+" Airline {{{
 let g:airline_theme='base16_ocean'
 let g:airline#extensions#tabline#enabled = 1  " shows the buffer name at the top.
 let g:airline#extensions#tabline#fnamemod = ':t'  " just keep the name of the file
-"---- Colorscheme ----------------------------------------------------------------
+" }}}
+" Colorscheme {{{
 set t_Co=256  " for 256 terminal colors
 let g:neodark#use_256color = 1
 let g:neodark#solid_vertsplit = 1
@@ -268,7 +279,7 @@ let g:neodark#background = '#202020'
 colorscheme ayu
 syntax on
 set background=dark
-
+" }}}
 if (empty($TMUX))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   if (has("termguicolors"))
@@ -282,10 +293,11 @@ if exists('$TMUX')
         set term=screen-256color 
     endif
 endif
+" }}}
+" }}}
  
-
-"-- Tmux --------------------------------------------------------
-"---- Vimux --------------------------------------------------------
+" Tmux {{{
+" Vimux {{{
 let g:VimuxHeight = "15"  " change the default size of the window.
 " Run the current script with python.
 map <leader>rc :call VimuxRunCommand("clear; ipython " . bufname("%"))<cr>
@@ -293,7 +305,8 @@ map <leader>rc :call VimuxRunCommand("clear; ipython " . bufname("%"))<cr>
 map <leader>rg :VimuxPromptCommand<cr>
 " Repeat last command
 map <leader>rr :VimuxRunLastCommand<cr>
- 
+" }}}
+" }}}
  
 " Git {{{
 " General {{{
@@ -307,8 +320,8 @@ set diffopt+=vertical  " vertical Gdiff
 " }}}
 " }}}
  
-"-- Other  --------------------------------------------------------
-"---- Vimtest  --------------------------------------------------------
+" Other  {{{
+" Vimtest  {{{
 let test#strategy = "vimux"  " run the tests in the Vimux window
 let test#python#runner = 'pytest'
 let test#python#pytest#executable = 'poetry run pytest'
@@ -317,7 +330,7 @@ nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR> 
 nmap <silent> <leader>tl :TestLast<CR> 
 nmap <silent> <leader>tv :TestVisit<CR>
-"---- Useful functions  ------------------------------------------------------
+" Useful functions  {{{
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -329,7 +342,10 @@ endfun
 if has("autocmd")
     autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
-
+" }}}
+" }}}
+" }}}
+ 
 " Folds sections of this vimrc file.
 set modelines=1
 " vim:foldmethod=marker:foldlevel=0
