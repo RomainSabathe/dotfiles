@@ -108,6 +108,7 @@ RUN  pip install --no-cache-dir \
       flake8 \
       flake8-docstrings \
       flake8-isort \
+      pylint \
       isort \
       autopep8 \
       pyment \
@@ -119,6 +120,7 @@ RUN  pip install --no-cache-dir \
       flake8-docstrings \
       flake8-isort \
       flake8-bugbear \
+      pylint \
       isort \
       autopep8 \
       pep8-naming \

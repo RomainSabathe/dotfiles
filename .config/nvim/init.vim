@@ -14,6 +14,8 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'jdsimcoe/abstract.vim'
+Plug 'zacanger/angr.vim'
 " }}}
 " Typing assistance {{{
 Plug 'machakann/vim-sandwich'          " surround text with delimiters.
@@ -41,7 +43,10 @@ Plug 'benmills/vimux'                  " open tmux pane to run scripts.
 " Search, navigation {{{
 Plug 'scrooloose/nerdtree'             " file list on the right.
 Plug 'mileszs/ack.vim'                 " fast search in project.
-Plug 'kien/ctrlp.vim'                  " jump to files easily.
+Plug 'junegunn/fzf', { 'do': './install --all' }  " faster ctrl-p
+Plug 'junegunn/fzf.vim'
+Plug 'easymotion/vim-easymotion'                  " like emac's snipe
+Plug 'chaoren/vim-wordmotion'                     " HelloYou counts as 2 words
 " }}}
 " Language specific {{{
 Plug 'sbdchd/neoformat'                " use black or yapf or else (python)
@@ -202,6 +207,7 @@ nmap <silent> <leader>N <Plug>(ale_previous_wrap)
 let b:ale_linters = ['flake8', 'pylint']
 " Fix Python files with autopep8 and yapf.
 let b:ale_fixers = ['autopep8', 'yapf']
+let g:ale_python_pylint_options = '--rcfile tox.ini'
 " }}}
 " Deoplete {{{
 " let g:deoplete#enable_at_startup = 1
@@ -297,8 +303,12 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 " }}}
-" CTRL-P {{{
-set wildignore+=*.pyc
+" fzf {{{
+nmap <leader>F <plug>(fzf-maps-n)                                                       
+xmap <leader>F <plug>(fzf-maps-x)                                                       
+omap <leader>F <plug>(fzf-maps-o)                                                       
+nmap <leader>f :Files .<CR>                                                             
+nmap <leader>b :Buffers <CR>  
 " }}}
  
 " Look {{{
@@ -312,8 +322,7 @@ set t_Co=256  " for 256 terminal colors
 let g:neodark#use_256color = 1
 let g:neodark#solid_vertsplit = 1
 let g:neodark#background = '#202020'
-"colorscheme base16-gruvbox-dark-hard
-colorscheme ayu
+colorscheme base16-gruvbox-dark-hard
 syntax on
 set background=dark
 " }}}
