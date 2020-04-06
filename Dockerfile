@@ -71,7 +71,7 @@ RUN apt-get update && \
      ranger \
      vifm \
      feh \
-     nnn \
+     pandoc \
      # Other librairies to work with machine learning and computer vision
      # Plus a few handy python tools
      libjpeg-dev \
