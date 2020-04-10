@@ -200,7 +200,8 @@ RUN export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
     nvim -i NONE -c PlugInstall -c quitall && \
-    nvim -i NONE -c "CocInstall coc-python" -c "sleep 5" -c quitall
+    nvim -i NONE -c "CocInstall coc-python" -c "sleep 5" -c quitall && \
+    nvim -i NONE -c "CocInstall coc-tabnine" -c "sleep 5" -c quitall
     
 # Configuring git to commit directly from the container
 ARG USER_EMAIL
