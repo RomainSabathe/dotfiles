@@ -52,6 +52,9 @@ RUN apt-get update && \
      liblzma-dev \
      python-openssl \
      xclip \
+     # Requirements for coc
+     nodejs \
+     npm \
      # Other tools and requirements for linters, autocompleters etc.
      htop \
      iotop \
@@ -61,6 +64,7 @@ RUN apt-get update && \
      shellcheck \
      netcat \
      ack-grep \
+     silversearcher-ag \
      unzip \
      exuberant-ctags \
      vim \
@@ -173,9 +177,8 @@ RUN curl -LJ https://github.com/git-lfs/git-lfs/releases/download/v2.10.0/git-lf
     rm -r /tmp/git_lfs/ && \
     rm /tmp/git_lfs.tar.gz
 
-# Installing node (to use with coc).
-RUN apt-get install -y nodejs npm && \
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh)" && \
+# Updating node (to use with coc).
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh)" && \
     export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \

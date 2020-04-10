@@ -302,6 +302,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Don't jump to first result automatically
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
+let g:ackprg = 'ag --nogroup --nocolor --column'  " Actually replacing Ack by Ag
 " }}}
 " fzf {{{
 nmap <leader>F <plug>(fzf-maps-n)                                                       
