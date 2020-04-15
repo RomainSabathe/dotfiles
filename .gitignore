@@ -1,1 +1,3 @@
 .tmux/resurrect/*
+.vifm/vifminfo
+.vifm/Teash

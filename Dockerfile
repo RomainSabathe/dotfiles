@@ -194,6 +194,7 @@ RUN fc-cache -f -v
 
 # Placing the dot files
 COPY .config $HOME/.config
+COPY .vifm $HOME/.vifm
 COPY .tmux.conf $HOME/.tmux.conf
 
 # Installing the plugins he plugins
