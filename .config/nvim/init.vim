@@ -21,10 +21,22 @@ Plug 'zacanger/angr.vim'
 Plug 'machakann/vim-sandwich'          " surround text with delimiters.
 Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
 Plug 'w0rp/ale'                        " spell checker.
-Plug 'SirVer/ultisnips'                " autoexpand preconfigured keystrokes
-Plug 'honza/vim-snippets'              " bank of defaults for ultisnips
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }   " autocomplete
+" Plug 'SirVer/ultisnips'                " autoexpand preconfigured keystrokes
+" Plug 'honza/vim-snippets'              " bank of defaults for ultisnips
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }   " replaced by Coc
+" Coc {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
+Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
+Plug 'voldikss/coc-todolist', {'do': 'yarn install --frozen-lockfile'}
+" }}}
 " }}}
 " Git {{{
 Plug 'tpope/vim-fugitive'              " git handling.
@@ -52,9 +64,9 @@ Plug 'chaoren/vim-wordmotion'                     " HelloYou counts as 2 words
 Plug 'sbdchd/neoformat'                " use black or yapf or else (python)
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " color syntax (python)
 Plug 'lervag/vimtex'                   " general tools for LaTeX
-Plug 'plasticboy/vim-markdown'         " general tools for Markdown
 Plug 'PotatoesMaster/i3-vim-syntax'    " color syntaxing for .config/i3/config
 Plug 'ekalinin/Dockerfile.vim'         " color syntaxing for Dockerfiles
+Plug 'plasticboy/vim-markdown'         " general tools for Markdown
 " }}}
 " Journaling {{{
 Plug 'vimwiki/vimwiki'                 " manage a personal wiki from Vim
@@ -93,7 +105,7 @@ set mat=2  " how many tenths of a second to blink when matching brackets
 syntax enable  " enable syntax highlighting.
 set number  " display the line number.
 let &colorcolumn=88  " shows the column 88
-set foldcolumn=1  " add a bit of extra margin to the left.
+"set foldcolumn=1  " add a bit of extra margin to the left.
 set number relativenumber  " enables relative line numbers in the gutter.
 " }}}
 " Sounds  {{{
@@ -178,6 +190,11 @@ autocmd! BufNewFile,BufRead Dvcfile,*.dvc setfiletype yaml<Paste>
 " Latex {{{
 let g:vimtex_view_method="zathura"
 " }}}
+" Markdown {{{
+let g:markdown_folding = 1
+let g:vim_markdown_folding_level = 3
+let g:vim_markdown_folding_disabled = 1
+" }}}
 " }}}
  
 " Typing assistance  {{{
@@ -216,6 +233,7 @@ let g:ale_python_pylint_options = '--rcfile tox.ini'
 " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " }}}
 " Coc {{{
+" General {{{
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -255,6 +273,40 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " }}}
+" Explorer {{{
+nmap <space>e :CocCommand explorer --toggle --position right --width 33<CR>
+
+let g:coc_explorer_global_presets = {
+\   '.vim': {
+\      'root-uri': '~/.vim',
+\   },
+\   'floating': {
+\      'position': 'floating',
+\   },
+\   'floatingLeftside': {
+\      'position': 'floating',
+\      'floating-position': 'left-center',
+\      'floating-width': 50,
+\   },
+\   'floatingRightside': {
+\      'position': 'floating',
+\      'floating-position': 'left-center',
+\      'floating-width': 50,
+\   },
+\   'simplify': {
+\     'file.child.template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
+\   }
+\ }
+
+" Use preset argument to open it
+nmap <space>ed :CocCommand explorer --preset .vim<CR>
+nmap <space>ef :CocCommand explorer --preset floating<CR>
+
+" List all presets
+nmap <space>el :CocList explPresets
+
+" }}}
+" }}}
 " }}}
  
 " Journaling {{{
@@ -264,6 +316,19 @@ filetype plugin on
 syntax on
 let g:vimwiki_list = [{'path': '~/git/notes/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
+" Allowing for folds. Oh boy that was a ride :smirk:
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"] 
+let g:pandoc#filetypes#pandoc_markdown = 1
+let g:pandoc#folding#mode = ["syntax"]
+let g:pandoc#modules#enabled = ["formatting", "folding"]
+let g:pandoc#formatting#mode = "h"
+                                                        
+let g:vimwiki_folding='expr'                            
+au FileType vimwiki set filetype=vimwiki.markdown       
+
+autocmd FileType vimwiki.markdown setlocal foldenable foldlevel=3
+
+let g:vimwiki_global_ext = 0
 " }}}
 " }}}
  
@@ -293,10 +358,8 @@ let NERDTreeIgnore = ['.pyc$', '__pycache__']
 let g:NERDTreeWinSize = 33
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nf :NERDTreeFind<cr>
-autocmd vimenter * NERDTree  " automatically opens NERDTree when vim starts.
-autocmd VimEnter * wincmd p  " the focus was on NERDTree. Now it's on the code.
-" Closes NERDTree if only 1 vim pane is remaining.
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"autocmd vimenter * NERDTree  " automatically opens NERDTree when vim starts.
+"autocmd VimEnter * wincmd p  " the focus was on NERDTree. Now it's on the code.
 " }}}
 " Ack {{{
 " Don't jump to first result automatically

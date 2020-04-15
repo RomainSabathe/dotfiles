@@ -177,7 +177,7 @@ RUN curl -LJ https://github.com/git-lfs/git-lfs/releases/download/v2.10.0/git-lf
     rm -r /tmp/git_lfs/ && \
     rm /tmp/git_lfs.tar.gz
 
-# Updating node (to use with coc).
+# Updating node & yarn (to use with coc).
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh)" && \
     export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
@@ -185,7 +185,8 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.33.8
     echo 'export NVM_DIR=$HOME/.nvm' >> ~/.zshrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.zshrc  && \
     echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.zshrc && \
-    nvm install --lts && nvm use --lts
+    nvm install --lts && nvm use --lts && \
+    npm install -g yarn
 
 # Installing fonts
 COPY .fonts $HOME/.fonts
@@ -199,9 +200,7 @@ COPY .tmux.conf $HOME/.tmux.conf
 RUN export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
-    nvim -i NONE -c PlugInstall -c quitall && \
-    nvim -i NONE -c "CocInstall coc-python" -c "sleep 5" -c quitall && \
-    nvim -i NONE -c "CocInstall coc-tabnine" -c "sleep 5" -c quitall
+    nvim -i NONE -c PlugInstall -c quitall
     
 # Configuring git to commit directly from the container
 ARG USER_EMAIL
