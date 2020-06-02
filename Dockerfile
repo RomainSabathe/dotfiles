@@ -76,6 +76,10 @@ RUN apt-get update && \
      vifm \
      feh \
      pandoc \
+     jq \
+     # Latex,...
+     texlive-full \
+     inotify-tools \
      # Other librairies to work with machine learning and computer vision
      # Plus a few handy python tools
      libjpeg-dev \
@@ -137,7 +141,13 @@ RUN  pip install --no-cache-dir \
       pandas \
       jupyter \
       ipython \
+      matplotlib \
+      scikit-learn \
       ipdb \
+      click \
+      pytest \
+      Pillow \
+      imageio \
       dvc
 
 # Installing VTE (requirement for Termite)
@@ -167,16 +177,6 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh
     # (Needed for Vundle & using my .nvim/init file)
     git config --global core.autocrlf input
 
-# Installing Git LFS
-RUN curl -LJ https://github.com/git-lfs/git-lfs/releases/download/v2.10.0/git-lfs-linux-amd64-v2.10.0.tar.gz \
-    --create-dirs \
-    -o /tmp/git_lfs.tar.gz && \
-    mkdir /tmp/git_lfs/ && \
-    tar -C /tmp/git_lfs/ -xvf /tmp/git_lfs.tar.gz && \
-    sh -c /tmp/git_lfs/install.sh && \
-    rm -r /tmp/git_lfs/ && \
-    rm /tmp/git_lfs.tar.gz
-
 # Updating node & yarn (to use with coc).
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh)" && \
     export NVM_DIR="$HOME/.nvm" && \
@@ -187,6 +187,29 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.33.8
     echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.zshrc && \
     nvm install --lts && nvm use --lts && \
     npm install -g yarn
+
+# Installing Git LFS
+RUN curl -LJ https://github.com/git-lfs/git-lfs/releases/download/v2.10.0/git-lfs-linux-amd64-v2.10.0.tar.gz \
+    --create-dirs \
+    -o /tmp/git_lfs.tar.gz && \
+    mkdir /tmp/git_lfs/ && \
+    tar -C /tmp/git_lfs/ -xvf /tmp/git_lfs.tar.gz && \
+    sh -c /tmp/git_lfs/install.sh && \
+    rm -r /tmp/git_lfs/ && \
+    rm /tmp/git_lfs.tar.gz
+
+# Installing awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip" &&\
+    unzip /tmp/awscliv2.zip -d /tmp && \
+    tmp/aws/install && \
+    rm -r /tmp/aws /tmp/awscliv2.zip  
+
+# Installing prettier
+RUN export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
+    npm install prettier --save-dev --save-exact && \
+    npm install pretty-quick husky --save-dev 
 
 # Installing fonts
 COPY .fonts $HOME/.fonts
