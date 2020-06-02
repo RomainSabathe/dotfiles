@@ -120,7 +120,7 @@ set smarttab  " be smart about tabs.
 set shiftwidth=4
 set tabstop=4  " 1 tab = 4 spaces
 set lbr  " linebreak on 500 characters
-set tw=88
+" set tw=88
 set ai  " auto indent.
 set si  " smart indent.
 set wrap  " wrap lines.
@@ -350,6 +350,9 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " Remap Vim's 0 to first non blank character
 map 0 ^
+" Easy navigation through long lines
+nmap j gj
+nmap k gk
 " }}}
 " NERDTree {{{
 let g:NERDTreeWinPos = "right"
