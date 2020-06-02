@@ -3,23 +3,23 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Plugins {{{
 " Colorschemes {{{
 Plug 'chriskempson/base16-vim'
-Plug 'rakr/vim-one'
-Plug 'joshdick/onedark.vim'
-Plug 'nanotech/jellybeans.vim'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'mhartington/oceanic-next'
-Plug 'jacoborus/tender.vim'
-Plug 'nightsense/snow'
-Plug 'arcticicestudio/nord-vim'
+"Plug 'rakr/vim-one'
+"Plug 'joshdick/onedark.vim'
+"Plug 'nanotech/jellybeans.vim'
+"Plug 'KeitaNakamura/neodark.vim'
+"Plug 'mhartington/oceanic-next'
+"Plug 'jacoborus/tender.vim'
+"Plug 'nightsense/snow'
+"Plug 'arcticicestudio/nord-vim'
 Plug 'morhetz/gruvbox'
-Plug 'ayu-theme/ayu-vim'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'jdsimcoe/abstract.vim'
-Plug 'zacanger/angr.vim'
+"Plug 'ayu-theme/ayu-vim'
+"Plug 'drewtempelmeyer/palenight.vim'
+"Plug 'jdsimcoe/abstract.vim'
+"Plug 'zacanger/angr.vim'
 " }}}
 " Typing assistance {{{
-Plug 'machakann/vim-sandwich'          " surround text with delimiters.
-Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
+"Plug 'machakann/vim-sandwich'          " surround text with delimiters.
+"Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
 Plug 'w0rp/ale'                        " spell checker.
 " Plug 'SirVer/ultisnips'                " autoexpand preconfigured keystrokes
 " Plug 'honza/vim-snippets'              " bank of defaults for ultisnips
@@ -27,65 +27,65 @@ Plug 'w0rp/ale'                        " spell checker.
 " Coc {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
-Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
-Plug 'voldikss/coc-todolist', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'voldikss/coc-todolist', {'do': 'yarn install --frozen-lockfile'}
 " }}}
 " }}}
 " Git {{{
 Plug 'tpope/vim-fugitive'              " git handling.
-Plug 'airblade/vim-gitgutter'          " shows changes in gutter.
+"Plug 'airblade/vim-gitgutter'          " shows changes in gutter.
 " }}}
 " Look {{{
 Plug 'bling/vim-airline'               " a bar.
 Plug 'vim-airline/vim-airline-themes'  " and themes.
-Plug 'mhinz/vim-startify'              " a splash screen with recent files.
-Plug 'junegunn/goyo.vim'               " zen mode.
+"Plug 'mhinz/vim-startify'              " a splash screen with recent files.
+"Plug 'junegunn/goyo.vim'               " zen mode.
 " }}}
 " Tmux {{{
-Plug 'christoomey/vim-tmux-navigator'  " intuitive Tmux integration.
-Plug 'benmills/vimux'                  " open tmux pane to run scripts.
+"Plug 'christoomey/vim-tmux-navigator'  " intuitive Tmux integration.
+"Plug 'benmills/vimux'                  " open tmux pane to run scripts.
 " }}}
 " Search, navigation {{{
 Plug 'scrooloose/nerdtree'             " file list on the right.
 Plug 'mileszs/ack.vim'                 " fast search in project.
 Plug 'junegunn/fzf', { 'do': './install --all' }  " faster ctrl-p
 Plug 'junegunn/fzf.vim'
-Plug 'easymotion/vim-easymotion'                  " like emac's snipe
-Plug 'chaoren/vim-wordmotion'                     " HelloYou counts as 2 words
+"Plug 'easymotion/vim-easymotion'                  " like emac's snipe
+"Plug 'chaoren/vim-wordmotion'                     " HelloYou counts as 2 words
 " }}}
 " Language specific {{{
 Plug 'sbdchd/neoformat'                " use black or yapf or else (python)
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " color syntax (python)
-Plug 'lervag/vimtex'                   " general tools for LaTeX
-Plug 'PotatoesMaster/i3-vim-syntax'    " color syntaxing for .config/i3/config
-Plug 'ekalinin/Dockerfile.vim'         " color syntaxing for Dockerfiles
-Plug 'plasticboy/vim-markdown'         " general tools for Markdown
+"Plug 'lervag/vimtex'                   " general tools for LaTeX
+"Plug 'PotatoesMaster/i3-vim-syntax'    " color syntaxing for .config/i3/config
+"Plug 'ekalinin/Dockerfile.vim'         " color syntaxing for Dockerfiles
+"Plug 'plasticboy/vim-markdown'         " general tools for Markdown
 " }}}
 " Journaling {{{
 Plug 'vimwiki/vimwiki'                 " manage a personal wiki from Vim
-Plug 'mattn/calendar-vim'              " pop up a calendar for daily journaling
-Plug 'vim-pandoc/vim-pandoc'           " interface for Pandoc
-Plug 'vim-pandoc/vim-pandoc-syntax'    " color-syntax files supported by Pandoc
+"Plug 'mattn/calendar-vim'              " pop up a calendar for daily journaling
+"Plug 'vim-pandoc/vim-pandoc'           " interface for Pandoc
+"Plug 'vim-pandoc/vim-pandoc-syntax'    " color-syntax files supported by Pandoc
  
 " }}}
 " To categorize {{{
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'janko-m/vim-test'                " utility to run tests
+"Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'janko-m/vim-test'                " utility to run tests
 Plug 'tpope/vim-sensible'              " universal set of defaults
 Plug 'google/vim-searchindex'          " display count of search
 Plug 'sheerun/vim-polyglot'            " support for many languages
 " }}}
 " What is that? {{{
-Plug 'raimondi/delimitmate'            " auto close brackets, parentheses...
+"Plug 'raimondi/delimitmate'            " auto close brackets, parentheses...
 Plug 'rbgrouleff/bclose.vim'           " closing a buffer doesn't close window
-Plug 'godlygeek/tabular'
+"Plug 'godlygeek/tabular'
 " }}}
 
 call plug#end()
