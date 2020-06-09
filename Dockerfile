@@ -96,6 +96,14 @@ RUN apt-get update && \
      checkinstall \
      zlib1g-dev
 
+# Installing Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rust.sh && \
+    sh /tmp/rust.sh -y && \
+    export PATH="$PATH:$HOME/.cargo/bin" && \
+    echo 'export PATH="$PATH:$HOME/.cargo/bin"' >> .bashrc && \
+    cargo install exa ripgrep && \
+    rm /tmp/rust.sh
+
 
 # Pyenv
 RUN git clone --recursive \
