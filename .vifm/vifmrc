@@ -11,7 +11,7 @@
 " If you would like to use another vi clone such Elvis or Vile
 " you will need to change this setting.
 
-set vicmd=vim
+set vicmd=nvim
 " set vicmd=elvis\ -G\ termcap
 " set vicmd=vile
 
@@ -163,7 +163,10 @@ command! reload :write | restart
 " program.
 
 " Pdf
-filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
+" "filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
+filextype *.pdf
+        \ {View in zathura}
+        \ zathura %f,
 fileviewer *.pdf pdftotext -nopgbrk %c -
 
 " PostScript
@@ -192,10 +195,10 @@ fileviewer *.flac soxi
 
 " Video
 filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.vob,*.flv,*.m2v,*.mov,*.webm,*.ts,*.m4v
+        \ {View using ffplay}
+        \ ffplay -autoexit -loop 0 -stats -an %c,
         \ {View using vlc}
         \ vlc %c,
-        \ {View using ffplay}
-        \ ffplay -fs %c,
         \ {View using Dragon}
         \ dragon %f,
         \ {View using mplayer}
@@ -222,7 +225,8 @@ fileviewer *.[1-8] gtbl %c | groff -Tascii -man | col -b
 
 " Image
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
-        \ eog  %c,
+        \ geeqie %f,
+        \ eog %c,
         \ {View in viewnior}
         \ viewnior %c,
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm convert -identify %f -verbose /dev/null
@@ -424,13 +428,16 @@ nnoremap <f8> :delete<cr>
 " nnoremap <left> <nop>
 
 " yank current directory path into the clipboard
-nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>
+" nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>
+nnoremap yd :!echo -n %d | xclip -i -selection clipboard<cr>
  
 " yank current file path into the clipboard
-nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>
+" nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>
+nnoremap yf :!echo -n %d/%f | xclip -i -selection clipboard<cr>
  
 " yank current filename without path into the clipboard
-nnoremap yn :!echo -n %c | xclip -selection clipboard %i<cr>
+" nnoremap yn :!echo -n %c | xclip -selection clipboard %i<cr>
+nnoremap yn :!echo -n %f | xclip -i -selection clipboard<cr>
  
 " yank root of current file's name into the clipboard
-nnoremap yr :!echo -n %c:r | xclip -selection clipboard %i<cr>
+" nnoremap yr :!echo -n %c:r | xclip -selection clipboard %i<cr>

@@ -8,13 +8,14 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-if xrandr --query | grep "^DP1 connected";
+if xrandr --query | grep "^DP-1 connected";
 then
   sed -i '/Xft.dpi/c\Xft.dpi: 96' $HOME/.Xresources
   sed -i '/dpi = /c\dpi = 96' $HOME/.config/polybar/config
   sed -i '/height = /c\height = 27' $HOME/.config/polybar/config
-  xrandr --output DP1 --pos 1920x0 --primary
-  xrandr --output eDP1 --mode 1920x1080
+  xrandr --output DP-1 --pos 1920x0 --primary
+  xrandr --output eDP-1 --mode 1920x1080
+  xrandr --output DP-1 --left-of eDP-1
 else
   sed -i '/Xft.dpi/c\Xft.dpi: 196' $HOME/.Xresources
   sed -i '/dpi = /c\dpi = 196' $HOME/.config/polybar/config
@@ -31,3 +32,7 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.nvm/bin:$PATH"

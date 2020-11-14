@@ -1,25 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
+export TERM=xterm-256color
 
-# Path to your oh-my-zsh installation.
-  export ZSH="/home/romain/.oh-my-zsh"
-
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="mh"
-#ZSH_THEME="agnoster"
-ZSH_THEME="powerlevel9k/powerlevel9k"
-
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+source $HOME/.config/zsh/antigen.zsh
+antigen init ~/.config/zsh/antigenrc
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -68,7 +55,6 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     pipenv
-    tmux
     command-not-found
     dirhistory
     docker
@@ -122,25 +108,8 @@ HISTFILE=~/.zsh_history
 #
 ####################################
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs virtualenv)
-
-####################################
-
-source ~/.ssh/onelogin
-
-#####################################
-
-#IF USING PYWAL:
-
-#    (cat ~/.cache/wal/sequences &)
-#
-#    # Alternative (blocks terminal for 0-3ms)
-#    cat ~/.cache/wal/sequences
-#
-#    # To add support for TTYs this line can be optionally added.
-#    source ~/.cache/wal/colors-tty.sh
-
-#IF USING BASE16:
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs virtualenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery dir vcs)
 
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
@@ -151,7 +120,7 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 
 export LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/gcc/x86_64-linux-gnu/5.4.0:/usr/lib/x86_64-linux-gnu/ 
 
-export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
+export PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 ####################################
@@ -160,23 +129,9 @@ alias gs='git status'
 function att() {
     tmux attach -t $1
 }
-function cs () {
-    cd $1
-    ls
-}
-function gr () {
-    git fetch origin
-    git checkout development
-    git reset --hard origin/development
-}
 function untar () {
     tar -xvf $1;
     rm -r $1;
-}
-# like `forward gpuuser2 5002`
-function forward () {
-    pkill -f $2
-    ssh -N -f -L localhost:"$2":localhost:"$2" $1
 }
 alias cd=cs
 alias ..='cd ..'
@@ -187,17 +142,34 @@ alias c='clear'
 alias gc='git commit'
 alias gca='git commit --amend --no-edit'
 alias rm='sudo rm -r'
+#alias ls='exa --icons --classify'
+
+
+# If I ever want to put that in a script: https://askubuntu.com/questions/337411/how-to-permanently-assign-a-different-keyboard-layout-to-a-usb-keyboard
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# Import colorscheme from 'wal' asynchronously
+# &   # Run the process in the background.
+# ( ) # Hide shell job control messages.
+(cat ~/.cache/wal/sequences &)
+
+# To add support for TTYs this line can be optionally added.
+source ~/.cache/wal/colors-tty.sh
 
 function gsync () {
-    git stash && \
-    git fetch origin && \
-    git reset --hard origin/$(git branch | grep \* | cut -d ' ' -f2)
+    git stash && git fetch origin && git reset --hard origin/$(git branch | grep \* | cut -d ' ' -f2)
 }
 
 function dualmonitor () {
      xrandr --output DP-1 --mode 1920x1080 && \
      xrandr --output eDP-1 --mode 1920x1080 && \
-     xrandr --output DP-1 --left-of eDP-1 && \
+     xrandr --output DP-1 --right-of eDP-1 && \
      i3-msg '[workspace="1"]' move workspace to output DP-1 && \
      i3-msg '[workspace="2"]' move workspace to output DP-1 && \
      i3-msg '[workspace="3"]' move workspace to output DP-1 && \
@@ -206,12 +178,23 @@ function dualmonitor () {
      i3-msg '[workspace="10"]' move workspace to output eDP-1
 }
 
-function onemonitor () {
+function citrix () {
+    mv ~/Downloads/"$(ls -tr ~/Downloads | tail -n 1)" /tmp/citrix.ica && \
+        sed 's/HDXoverUDP=Preferred/HDXoverUDP=false/g' /tmp/citrix.ica > /tmp/citrix_fixed.ica && \
+        /opt/Citrix/ICAClient/util/nslaunch /tmp/citrix_fixed.ica & 
+}
+
+function monomonitor () {
      xrandr --output eDP-1 --mode 1920x1080 && \
      xrandr --output DP-1 --mode 1920x1080 && \
      xrandr --output DP-1 --same-as eDP-1
 }
 
-setxkbmap -layout us -option caps:escape
-setxkbmap -device 10 -layout us -option caps:escape
-setxkbmap -device 11 -layout us -option caps:escape
+# setxkbmap -layout us -option caps:escape
+# setxkbmap -device 10 -layout us -option caps:escape
+# setxkbmap -device 11 -layout us -option caps:escape
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export NVM_DIR=$HOME/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"

@@ -12,65 +12,38 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" ----------------------------------------------------------------------------
-" ----------------------------------------------------------------------------
-" ----------------------------------------------------------------------------
-
 " Colorschemes
 Plug 'chriskempson/base16-vim'
 Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
-Plug 'nanotech/jellybeans.vim'
 
-" Typing assistance
-Plug 'tpope/vim-surround'              " surround text with delimiters.
-Plug 'Valloric/YouCompleteMe'          " spell completion.
-Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
-Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
-Plug 'w0rp/ale'                        " spell checker.
-Plug 'scrooloose/nerdcommenter'        "
-
-" Git
+" Others
 Plug 'tpope/vim-fugitive'              " git handling.
-Plug 'airblade/vim-gitgutter'          " shows changes in gutter.
-Plug 'tommcdo/vim-fubitive'            " support for bitbucket
-
-" Look
-Plug 'bling/vim-airline'               " a bar.
+Plug 'tpope/vim-surround'              " surround text with delimiters.
+Plug 'scrooloose/nerdtree'             " file list on the right.
+"Plug 'scrooloose/syntastic'            " spell checker.
+Plug 'w0rp/ale'                        " spell checker.
+" The following plugin is disabled as it prevents syntastic from working.
+"Plug 'xuyuanp/nerdtree-git-plugin'     " git gutter in NERDtree.
+"Plug 'bling/vim-airline'               " a bar.
 Plug 'vim-airline/vim-airline-themes'  " and themes.
-Plug 'mhinz/vim-startify'              " a splash screen with recent files.
-Plug 'junegunn/goyo.vim'               " zen mode.
-
-" Tmux
+Plug 'airblade/vim-gitgutter'          " shows changes in gutter.
 Plug 'christoomey/vim-tmux-navigator'  " intuitive Tmux integration.
 Plug 'benmills/vimux'                  " open tmux pane to run scripts.
-Plug 'tpope/vim-obsession'             " save vim sessions
-
-" Search, navigation
-Plug 'scrooloose/nerdtree'             " file list on the right.
-Plug 'majutsushi/tagbar'               " navigation panel
+"Plug 'Valloric/YouCompleteMe'          " spell completion.
+"Plug 'raimondi/delimitmate'            " auto close brackets, parentheses...
+Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
+"Plug 'yuttie/comfortable-motion.vim'   " natural scroll.
+"Plug 'junegunn/vim-easy-align'         " align code to the same column easily.
+Plug 'junegunn/goyo.vim'               " zen mode.
+Plug 'heavenshell/vim-pydocstring'     " add python docstrings.
 Plug 'mileszs/ack.vim'                 " fast search in project.
+Plug 'mhinz/vim-startify'              " a splash screen with recent files.
 Plug 'kien/ctrlp.vim'                  " jump to files easily.
-
-" To categorize
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'janko-m/vim-test'                " utility to run tests
-Plug 'tpope/vim-sensible'              " universal set of defaults
-Plug 'google/vim-searchindex'          " display count of search
-Plug 'sheerun/vim-polyglot'            " support for many languages
-
-" Not used anymore
-"Plug 'xuyuanp/nerdtree-git-plugin'    " git gutter in NERDtree.
-"Plug 'scrooloose/syntastic'           " spell checker.
-"Plug 'raimondi/delimitmate'           " auto close brackets, parentheses...
-"Plug 'yuttie/comfortable-motion.vim'  " natural scroll.
-"Plug 'junegunn/vim-easy-align'        " align code to the same column easily.
-"Plug 'idbrii/AsyncCommand'            " run asynchronous commands.
-"Plug 'stgpetrovic/syntastic-async'    " async Syntastic.
-
-" ----------------------------------------------------------------------------
-" ----------------------------------------------------------------------------
-" ----------------------------------------------------------------------------
+"Plug 'idbrii/AsyncCommand'             " run asynchronous commands.
+"Plug 'stgpetrovic/syntastic-async'     " async Syntastic.
+"Plug 'thiagoalessio/rainbow_levels.vim'
+Plug 'yuratomo/w3m.vim'
 
 
 " Other plugins require curl
@@ -84,6 +57,16 @@ endif
 
 filetype plugin indent on  " required!
 call plug#end()
+
+" Applied colorscheme
+" Will work with Termite.
+colorscheme onedark
+"set t_Co=256  " for 256 terminal colors
+"if filereadable(expand("~/.vimrc_background"))
+"  let base16colorspace=256
+"  source ~/.vimrc_background
+"endif
+set background=dark
 
 " General stuff
 set history=1000
@@ -146,48 +129,9 @@ map <leader>k :bp <bar> bd #<cr>   " close the buffer and move to the previous
 map <leader>K :bufdo bd<cr>        " close all buffers in the current tab.
 map <leader>bs :ls<cr>              " show all opened buffers and their status.
 
-" ----------------------------------------------------------------------------
-" Colorscheme
-" ----------------------------------------------------------------------------
 
-" Applied colorscheme
-" Will work with Termite.
-set t_Co=256  " for 256 terminal colors
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
-set background=dark
-
-""Credit joshdick
-""Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-""If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-""(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-"if (empty($TMUX))
-"  if (has("nvim"))
-"  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-"  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"  endif
-"  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-"  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-"  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-"  if (has("termguicolors"))
-"    set termguicolors
-"  endif
-"endif
-
-
-"set background=dark " for the dark version
-"" set background=light " for the light version
-"" colorscheme one
-
-""set t_8b=^[[48;2;%lu;%lu;%lum
-""set t_8f=^[[38;2;%lu;%lu;%lum
-
-" ----------------------------------------------------------------------------
 " Moving
-" ----------------------------------------------------------------------------
-
+" =================================================
 " Intuitive way of changing windows.
 map <C-j> <C-W>j
 map <C-h> <C-W>h
@@ -218,10 +162,8 @@ endif
 map <leader>pp :setlocal paste!<cr>  " togle paste mode.
 
 
-" ----------------------------------------------------------------------------
 " Python stuff
-" ----------------------------------------------------------------------------
-
+" ============================
 let python_highlight_all = 1
 au FileType python syn keyword pythonDecorator True None False self
 
@@ -242,11 +184,8 @@ au FileType python set cindent
 au FileType python set cinkeys-=0#
 au FileType python set indentkeys-=0#
 
-
-" ----------------------------------------------------------------------------
 " Tmux stuff
-" ----------------------------------------------------------------------------
-
+" ============================
 if exists('$TMUX') 
     if has('nvim')
         set termguicolors
@@ -256,19 +195,8 @@ if exists('$TMUX')
 endif
 
 
-" ----------------------------------------------------------------------------
-" Tagbar
-" ----------------------------------------------------------------------------
-
-set updatetime=100  " Increase the refresh rate (default is 5000)
-autocmd VimEnter * nested :TagbarOpen  " Autoopen tagbar
-let g:tagbar_left = 1  " Put the bar on the left
-
-
-" ----------------------------------------------------------------------------
 " NerdTree
-" ----------------------------------------------------------------------------
-
+" ============================
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden = 0
 let NERDTreeIgnore = ['.pyc$', '__pycache__']
@@ -281,10 +209,8 @@ autocmd VimEnter * wincmd p  " the focus was on NERDTree. Now it's on the code.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
-" ----------------------------------------------------------------------------
 " Syntastic --- Has been replaced by Ale for this rice.
-" ----------------------------------------------------------------------------
-
+" ============================
 "let g:syntastic_python_checkers=['pylint']
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
@@ -298,31 +224,33 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "let g:syntastic_loc_list_height=3  " smaller list of errors
 
 
-" ----------------------------------------------------------------------------
 " Airline
-" ----------------------------------------------------------------------------
-
+" ============================
 let g:airline_theme='base16_ocean'
 let g:airline#extensions#tabline#enabled = 1  " shows the buffer name at the top.
 let g:airline#extensions#tabline#fnamemod = ':t'  " just keep the name of the file
 
 
-" ----------------------------------------------------------------------------
 "Ale
-" ----------------------------------------------------------------------------
-
+" ============================
 let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
 nmap <silent> <leader>n <Plug>(ale_next_wrap)
 nmap <silent> <leader>N <Plug>(ale_previous_wrap)
+let g:ale_python_flake8_executable = 'python3'   " or 'python' for Python 2
+"let g:ale_python_flake8_options = '-m flake8'
+" Check Python files with flake8 and pylint.
+let b:ale_linters = ['flake8', 'pylint']
+" Fix Python files with autopep8 and yapf.
+let b:ale_fixers = ['autopep8', 'yapf']
+" Disable warnings about trailing whitespace for Python files.
+let b:ale_warn_about_trailing_whitespace = 0
 
 
-" ----------------------------------------------------------------------------
 " Vimux
-" ----------------------------------------------------------------------------
-
+" ============================
 let g:VimuxHeight = "15"  " change the default size of the window.
 " Run the current script with python.
 map <leader>rc :call VimuxRunCommand("clear; ipython " . bufname("%"))<cr>
@@ -332,54 +260,22 @@ map <leader>rg :VimuxPromptCommand<cr>
 map <leader>rr :VimuxRunLastCommand<cr>
 
 
-" ----------------------------------------------------------------------------
 " PyDocstring
-" ----------------------------------------------------------------------------
-
+" ============================
 nmap <silent> <leader>d <Plug>(pydocstring)
 
-
-" ----------------------------------------------------------------------------
 " Ack
-" ----------------------------------------------------------------------------
-
+" ============================
 " Don't jump to first result automatically
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 
-
-" ----------------------------------------------------------------------------
 " YouCompleteMe
-" ----------------------------------------------------------------------------
-
+" ============================
 nnoremap <C-]> :YcmCompleter GoToDefinition<cr>
 
 
-" ----------------------------------------------------------------------------
 " Fugitive
-" ----------------------------------------------------------------------------
-
+" ============================
 set diffopt+=vertical  " vertical Gdiff
 
-
-" ----------------------------------------------------------------------------
-" Ctrl-p
-" ----------------------------------------------------------------------------
-
-set wildignore+=*.pyc
-
-
-" ----------------------------------------------------------------------------
-" Vim test
-" ----------------------------------------------------------------------------
-
-let test#strategy = "vimux"  " run the tests in the Vimux window
-let test#python#runner = 'pytest'
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR> 
-nmap <silent> <leader>ts :TestSuite<CR> 
-nmap <silent> <leader>tl :TestLast<CR> 
-nmap <silent> <leader>tv :TestVisit<CR>
-
-" DVC
-autocmd! BufNewFile,BufRead Dvcfile,*.dvc setfiletype yaml

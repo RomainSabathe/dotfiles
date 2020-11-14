@@ -1,3 +1,5 @@
 .tmux/resurrect/*
 .vifm/vifminfo
 .vifm/Teash
+tmp/
+*.confidential

@@ -12,32 +12,14 @@ scroll_on_output = false
 urgent_on_bell = true
 
 [colors]
-foreground = #c0c5ce
-background = #2b303b
-color0 = #2b303b
-color8 = #65737e
-color1 = #bf616a
-color9 = #bf616a
-color2 = #a3be8c
-color10 = #a3be8c
-color3 = #ebcb8b
-color11 = #ebcb8b
-color4 = #8fa1b3
-color12 = #8fa1b3
-color5 = #b48ead
-color13 = #b48ead
-color6 = #96b5b4
-color14 = #96b5b4
-color7 = #c0c5ce
-color15 = #eff1f5
-[colors]
 # Base16 Default Dark
 # Author: Chris Kempson (http://chriskempson.com)
 
-foreground      = #d8d8d8
-foreground_bold = #e8e8e8
+background      = rgba(24, 24, 24, 0.95)
+foreground      = rgba(24, 24, 24, 0.95)
+foreground_bold = rgba(24, 24, 24, 0.95)
 cursor          = #e8e8e8
-background      = #181818
+#background      = #181818
 
 # 16 color space
 

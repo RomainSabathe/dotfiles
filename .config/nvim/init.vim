@@ -1,95 +1,125 @@
-call plug#begin('~/.local/share/nvim/plugged')
- 
-" Plugins {{{
+" call plug#begin('~/.local/share/nvim/plugged')
+if &compatible
+  set nocompatible
+endif
+" Add the dein installation directory into runtimepath
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
+
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+  
+
+"  Plugins {{{
 " Colorschemes {{{
-Plug 'chriskempson/base16-vim'
-"Plug 'rakr/vim-one'
-"Plug 'joshdick/onedark.vim'
-"Plug 'nanotech/jellybeans.vim'
-"Plug 'KeitaNakamura/neodark.vim'
-"Plug 'mhartington/oceanic-next'
-"Plug 'jacoborus/tender.vim'
-"Plug 'nightsense/snow'
-"Plug 'arcticicestudio/nord-vim'
-Plug 'morhetz/gruvbox'
-"Plug 'ayu-theme/ayu-vim'
-"Plug 'drewtempelmeyer/palenight.vim'
-"Plug 'jdsimcoe/abstract.vim'
-"Plug 'zacanger/angr.vim'
-" }}}
-" Typing assistance {{{
-"Plug 'machakann/vim-sandwich'          " surround text with delimiters.
-"Plug 'jiangmiao/auto-pairs'            " auto close brackets, parentheses...
-Plug 'w0rp/ale'                        " spell checker.
-" Plug 'SirVer/ultisnips'                " autoexpand preconfigured keystrokes
-" Plug 'honza/vim-snippets'              " bank of defaults for ultisnips
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }   " replaced by Coc
-" Coc {{{
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'voldikss/coc-todolist', {'do': 'yarn install --frozen-lockfile'}
-" }}}
-" }}}
-" Git {{{
-Plug 'tpope/vim-fugitive'              " git handling.
-"Plug 'airblade/vim-gitgutter'          " shows changes in gutter.
-" }}}
-" Look {{{
-Plug 'bling/vim-airline'               " a bar.
-Plug 'vim-airline/vim-airline-themes'  " and themes.
-"Plug 'mhinz/vim-startify'              " a splash screen with recent files.
-"Plug 'junegunn/goyo.vim'               " zen mode.
-" }}}
-" Tmux {{{
-"Plug 'christoomey/vim-tmux-navigator'  " intuitive Tmux integration.
-"Plug 'benmills/vimux'                  " open tmux pane to run scripts.
-" }}}
-" Search, navigation {{{
-Plug 'scrooloose/nerdtree'             " file list on the right.
-Plug 'mileszs/ack.vim'                 " fast search in project.
-Plug 'junegunn/fzf', { 'do': './install --all' }  " faster ctrl-p
-Plug 'junegunn/fzf.vim'
-"Plug 'easymotion/vim-easymotion'                  " like emac's snipe
-"Plug 'chaoren/vim-wordmotion'                     " HelloYou counts as 2 words
-" }}}
-" Language specific {{{
-Plug 'sbdchd/neoformat'                " use black or yapf or else (python)
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " color syntax (python)
-"Plug 'lervag/vimtex'                   " general tools for LaTeX
-"Plug 'PotatoesMaster/i3-vim-syntax'    " color syntaxing for .config/i3/config
-"Plug 'ekalinin/Dockerfile.vim'         " color syntaxing for Dockerfiles
-"Plug 'plasticboy/vim-markdown'         " general tools for Markdown
-" }}}
-" Journaling {{{
-Plug 'vimwiki/vimwiki'                 " manage a personal wiki from Vim
-"Plug 'mattn/calendar-vim'              " pop up a calendar for daily journaling
-"Plug 'vim-pandoc/vim-pandoc'           " interface for Pandoc
-"Plug 'vim-pandoc/vim-pandoc-syntax'    " color-syntax files supported by Pandoc
- 
-" }}}
-" To categorize {{{
-"Plug 'nathanaelkane/vim-indent-guides'
-"Plug 'janko-m/vim-test'                " utility to run tests
-Plug 'tpope/vim-sensible'              " universal set of defaults
-Plug 'google/vim-searchindex'          " display count of search
-Plug 'sheerun/vim-polyglot'            " support for many languages
-" }}}
-" What is that? {{{
-"Plug 'raimondi/delimitmate'            " auto close brackets, parentheses...
-Plug 'rbgrouleff/bclose.vim'           " closing a buffer doesn't close window
-"Plug 'godlygeek/tabular'
+  call dein#add('chriskempson/base16-vim')
+"   call dein#add('rakr/vim-one')
+"   call dein#add('joshdick/onedark.vim')
+"   call dein#add('nanotech/jellybeans.vim')
+"   call dein#add('KeitaNakamura/neodark.vim')
+"   call dein#add('mhartington/oceanic-next')
+"   call dein#add('jacoborus/tender.vim')
+"   call dein#add('nightsense/snow')
+  call dein#add('arcticicestudio/nord-vim')
+  call dein#add('morhetz/gruvbox')
+  call dein#add('ayu-theme/ayu-vim')
+"   call dein#add('drewtempelmeyer/palenight.vim')
+"   call dein#add('jdsimcoe/abstract.vim')
+"   call dein#add('zacanger/angr.vim')
+"   call dein#add('dylanaraps/wal.vim')
+"  }}}
+
+
+"  Typing assistance {{{
+   call dein#add('machakann/vim-sandwich')          " surround text with delimiters.
+   call dein#add('jiangmiao/auto-pairs')            " auto close brackets, parentheses...
+   call dein#add('kkoomen/vim-doge') 
+"   call dein#add('w0rp/ale')                        " spell checker.
+"   call dein#add('SirVer/ultisnips')                " autoexpand preconfigured keystrokes
+"   call dein#add('honza/vim-snippets')              " bank of defaults for ultisnips
+"    call dein#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins') }   " replaced by Coc
+"  Coc {{{
+  call dein#add('neoclide/coc.nvim', {'merged': 0, 'rev': 'release'})
+  call dein#add('neoclide/coc-python') ", {'build': 'yarn install --frozen-lockfile'})
+"   call dein#add('neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'})
+"   call dein#add('neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'})
+"  call dein#add('neoclide/coc-git')  
+"   call dein#add('neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'})
+"   call dein#add('neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'})
+"   call dein#add('neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'})
+"   call dein#add('weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'})
+  "call dein#add('fannheyward/coc-pyright', {'merged': 0, 'rev': 'release'}) " , {'build': 'yarn install --frozen-lockfile'})
+"   call dein#add('voldikss/coc-todolist', {'do': 'yarn install --frozen-lockfile'})
+"  }}}
+"  }}}
+"  Git {{{
+   call dein#add('tpope/vim-fugitive')              " git handling.
+"   call dein#add('airblade/vim-gitgutter')          " shows changes in gutter.
+"  }}}
+"  Look {{{
+  call dein#add('bling/vim-airline')               " a bar.
+  call dein#add('vim-airline/vim-airline-themes')  " and themes.
+  call dein#add('mhinz/vim-startify')              " a splash screen with recent files.
+  call dein#add('junegunn/goyo.vim')               " zen mode.
+"  }}}
+"  Tmux {{{
+  call dein#add('christoomey/vim-tmux-navigator')  " intuitive Tmux integration.
+"   call dein#add('benmills/vimux')                  " open tmux pane to run scripts.
+"  }}}
+"  Search, navigation {{{
+  call dein#add('scrooloose/nerdtree')             " file list on the right.
+"   call dein#add('mileszs/ack.vim')                 " fast search in project.
+  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
+  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+  call dein#add('easymotion/vim-easymotion')                  " like emac')s snipe
+  call dein#add('chaoren/vim-wordmotion')                     " HelloYou counts as 2 words
+"   call dein#add('vifm/vifm.vim')                     " HelloYou counts as 2 words
+"  }}}
+"  Language specific {{{
+  call dein#add('sbdchd/neoformat')                " use black or yapf or else (python)
+  call dein#add('numirias/semshi')  " color syntax (python)
+  call dein#add('Integralist/vim-mypy')  " mypy support from vim
+  call dein#add('lervag/vimtex')                   " general tools for LaTeX
+"   call dein#add('PotatoesMaster/i3-vim-syntax')    " color syntaxing for .config/i3/config
+"   call dein#add('ekalinin/Dockerfile.vim')         " color syntaxing for Dockerfiles
+  call dein#add('plasticboy/vim-markdown')         " general tools for Markdown
+"  }}}
+"  Journaling {{{
+"   call dein#add('vimwiki/vimwiki')                 " manage a personal wiki from Vim
+"   call dein#add('mattn/calendar-vim')              " pop up a calendar for daily journaling
+"   call dein#add('vim-pandoc/vim-pandoc')           " interface for Pandoc
+"   call dein#add('vim-pandoc/vim-pandoc-syntax')    " color-syntax files supported by Pandoc
+"  
+"  }}}
+"  To categorize {{{
+  call dein#add('nathanaelkane/vim-indent-guides')
+"   call dein#add('janko-m/vim-test')                " utility to run tests
+  call dein#add('tpope/vim-sensible')              " universal set of defaults
+  call dein#add('google/vim-searchindex')          " display count of search
+  call dein#add('sheerun/vim-polyglot')            " support for many languages
+"  }}}
+  call dein#add('preservim/nerdcommenter')             " file list on the right.
+"  What is that? {{{
+  call dein#add('raimondi/delimitmate')            " auto close brackets, parentheses...
+  call dein#add('rbgrouleff/bclose.vim')           " closing a buffer doesn')t close window
+  call dein#add('godlygeek/tabular')
+"  }}}
+
+"call plug#end()
 " }}}
 
-call plug#end()
-" }}}
+  call dein#end()
+  call dein#save_state()
+endif
+
+filetype plugin indent on
+
 
 " General options  {{{
 " general  {{{
@@ -120,7 +150,7 @@ set smarttab  " be smart about tabs.
 set shiftwidth=4
 set tabstop=4  " 1 tab = 4 spaces
 set lbr  " linebreak on 500 characters
-" set tw=88
+"set tw=88  " linebreak after 88 chars
 set ai  " auto indent.
 set si  " smart indent.
 set wrap  " wrap lines.
@@ -170,12 +200,12 @@ nmap <silent> <leader>ne :Neoformat<CR>:w<CR>
 let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8', 'pyment']
 let g:neoformat_python_yapf = {
             \ 'exe': 'yapf',
-            \ 'args': ["--style='{column_limit: 79}'"],
+            \ 'args': ["--style='{column_limit: 88}'"],
             \ }
 let g:neoformat_python_black = {
             \ 'exe': 'black',
             \ 'stdin': 1,
-            \ 'args': ['-t py36', '-l 79', '-q', '-'],
+            \ 'args': ['-t py36', '-l 88', '-q', '-'],
             \ }
 let g:neoformat_python_pyment = {
             \ 'exe': 'pyment',
@@ -189,6 +219,10 @@ autocmd! BufNewFile,BufRead Dvcfile,*.dvc setfiletype yaml<Paste>
 " }}}
 " Latex {{{
 let g:vimtex_view_method="zathura"
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : '-pdf -verbose -bibtex -file-line-error -synctex=1 --interaction=nonstopmode',
+    \}
+let g:tex_flavor = 'latex'
 " }}}
 " Markdown {{{
 let g:markdown_folding = 1
@@ -203,15 +237,42 @@ nmap <silent> <leader>P oimport ipdb; ipdb.set_trace()<Enter>pass<Esc>:w<CR>
 nmap <silent> <leader>tr Otry:<Esc>jI    <Esc>o<Del>except:<Enter>import ipdb; ipdb.set_trace()<Enter>pass<Enter><Esc>:w<CR>
 nmap <silent> <leader>tt OOfrom contexttimer import Timerowith Timer() as my_timer:gv>gvookbprint(my_timer
 " }}}
-" Ultisnips  {{{
-let g:UltiSnipsExpandTrigger="<c-o>"
-let g:UltiSnipsJumpForwardTrigger="<c-o>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
-let g:UltiSnipsEnableSnipMate = 0
+"  Ultisnips  {{{
+" let g:UltiSnipsExpandTrigger="<c-o>"
+" let g:UltiSnipsJumpForwardTrigger="<c-o>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"  If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
+" let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
+" let g:UltiSnipsEnableSnipMate = 0
+"  Use <C-l> for trigger snippet expand.
+" imap <C-l> <Plug>(coc-snippets-expand)
+" 
+"  Use <C-j> for select text for visual placeholder of snippet.
+" vmap <C-j> <Plug>(coc-snippets-select)
+" 
+"  Use <C-j> for jump to next placeholder, it's default of coc.nvim
+" let g:coc_snippet_next = '<c-j>'
+" 
+"  Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+" let g:coc_snippet_prev = '<c-k>'
+" 
+"  Use <C-j> for both expand and jump (make expand higher priority.)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? coc#_select_confirm() :
+"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" 
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+" 
+" let g:coc_snippet_next = '<tab>'
+
 " }}}
 " Ale  {{{
 let g:airline#extensions#ale#enabled = 1
@@ -229,7 +290,7 @@ let g:ale_python_pylint_options = '--rcfile tox.ini'
 " Deoplete {{{
 " let g:deoplete#enable_at_startup = 1
 " autocmd CompleteDone * silent! pclose!
-" " deoplete tab-complete (default doesn't use tab)
+"  deoplete tab-complete (default doesn't use tab)
 " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " }}}
 " Coc {{{
@@ -256,54 +317,54 @@ set shortmess+=c
 set signcolumn=yes
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
- 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" inoremap <silent><expr> <c-space> coc#refresh()
+"  
+"  GoTo code navigation.
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+" 
+"  Use `[g` and `]g` to navigate diagnostics
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-" }}}
-" Explorer {{{
-nmap <space>e :CocCommand explorer --toggle --position right --width 33<CR>
-
-let g:coc_explorer_global_presets = {
-\   '.vim': {
-\      'root-uri': '~/.vim',
-\   },
-\   'floating': {
-\      'position': 'floating',
-\   },
-\   'floatingLeftside': {
-\      'position': 'floating',
-\      'floating-position': 'left-center',
-\      'floating-width': 50,
-\   },
-\   'floatingRightside': {
-\      'position': 'floating',
-\      'floating-position': 'left-center',
-\      'floating-width': 50,
-\   },
-\   'simplify': {
-\     'file.child.template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
-\   }
-\ }
-
-" Use preset argument to open it
-nmap <space>ed :CocCommand explorer --preset .vim<CR>
-nmap <space>ef :CocCommand explorer --preset floating<CR>
-
-" List all presets
-nmap <space>el :CocList explPresets
+"  Add (Neo)Vim's native statusline support.
+"" NOTE: Please see `:h coc-status` for integrations with external plugins that
+"" provide custom statusline: lightline.vim, vim-airline.
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"" }}}
+"" Explorer {{{
+"nmap <space>e :CocCommand explorer --toggle --position right --width 33<CR>
+"
+"let g:coc_explorer_global_presets = {
+"\   '.vim': {
+"\      'root-uri': '~/.vim',
+"\   },
+"\   'floating': {
+"\      'position': 'floating',
+"\   },
+"\   'floatingLeftside': {
+"\      'position': 'floating',
+"\      'floating-position': 'left-center',
+"\      'floating-width': 50,
+"\   },
+"\   'floatingRightside': {
+"\      'position': 'floating',
+"\      'floating-position': 'left-center',
+"\      'floating-width': 50,
+"\   },
+"\   'simplify': {
+"\     'file.child.template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
+"\   }
+"\ }
+"
+"" Use preset argument to open it
+"nmap <space>ed :CocCommand explorer --preset .vim<CR>
+"nmap <space>ef :CocCommand explorer --preset floating<CR>
+"
+"" List all presets
+"nmap <space>el :CocList explPresets
 
 " }}}
 " }}}
@@ -338,11 +399,16 @@ set ignorecase   " ignore case whem searching
 set smartcase    " be smart about case when searching.
 set hlsearch     " highlight the search as it goes
 set incsearch    " search directly from the comment we type.
-" Intuitive way of changing windows.
+" Intuitive way of changing splits.
 map <C-j> <C-W>j
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 map <C-k> <C-W>k
+" Easy resizing of the splits.
+noremap <silent> <C-Left> :vertical resize +5<CR>
+noremap <silent> <C-Right> :vertical resize -5<CR>
+noremap <silent> <C-Up> :resize +5<CR>
+noremap <silent> <C-Down> :resize -5<CR>
 map <leader>tn :tabnew<cr>
 " Opens a new tab with the current buffer's path
 map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
@@ -371,11 +437,10 @@ nnoremap <Leader>a :Ack!<Space>
 let g:ackprg = 'ag --nogroup --nocolor --column'  " Actually replacing Ack by Ag
 " }}}
 " fzf {{{
-nmap <leader>F <plug>(fzf-maps-n)                                                       
-xmap <leader>F <plug>(fzf-maps-x)                                                       
-omap <leader>F <plug>(fzf-maps-o)                                                       
-nmap <leader>f :Files .<CR>                                                             
-nmap <leader>b :Buffers <CR>  
+nmap <leader>f :GFiles<CR>                                                             
+nmap <leader>F :Lines<CR>                                                             
+nmap <leader>b :Buffers<CR>  
+nmap <leader>B :BLines<CR>  
 " }}}
  
 " Look {{{
@@ -389,18 +454,22 @@ set t_Co=256  " for 256 terminal colors
 let g:neodark#use_256color = 1
 let g:neodark#solid_vertsplit = 1
 let g:neodark#background = '#202020'
-colorscheme base16-gruvbox-dark-hard
+"colorscheme base16-gruvbox-dark-hard
+colorscheme ayu
+"colorscheme wal
 syntax on
 set background=dark
 " }}}
 if (empty($TMUX))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   if (has("termguicolors"))
+    " activate only when not using "wal" as colorscheme
     set termguicolors
   endif
 endif
 if exists('$TMUX') 
     if has('nvim')
+        " activate only when not using "wal" as colorscheme
         set termguicolors
     else
         set term=screen-256color 
@@ -443,6 +512,31 @@ nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR> 
 nmap <silent> <leader>tl :TestLast<CR> 
 nmap <silent> <leader>tv :TestVisit<CR>
+" Startify  {{{
+" returns all modified files of the current git repo
+" `2>/dev/null` makes the command fail quietly, so that when we are not
+" in a git repo, the list will be empty
+function! s:gitModified()
+    let files = systemlist('git ls-files -m 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore
+function! s:gitUntracked()
+    let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+let g:startify_lists = [
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+        \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ ]
+" }}}
 " Useful functions  {{{
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
@@ -459,6 +553,9 @@ endif
 " }}}
 " }}}
  
+let g:vifm_embed_term=1
 " Folds sections of this vimrc file.
 set modelines=1
 " vim:foldmethod=marker:foldlevel=0
+
+vnoremap yc "+y<cr>            " copy a selection to clipboard

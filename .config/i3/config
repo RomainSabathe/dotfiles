@@ -10,21 +10,12 @@
 set $mod Mod1
 set $term termite
 
-#set $default_gaps_inner 30
-set $default_gaps_inner 25
-set $default_gaps_outer 0
-
-
-# == SETTINGS ==
 # ==============
 
 floating_modifier $mod
 
 font pango:Source Code Pro, FontAwesome 8
 for_window [class="^.*"] border pixel 2
-
-gaps inner $default_gaps_inner
-gaps outer $default_gaps_outer
 
 workspace_auto_back_and_forth yes
 floating_minimum_size -1 x -1
@@ -43,26 +34,46 @@ for_window [class="Audacious"] border none
 for_window [instance="__scratchpad"] floating enable
 for_window [instance="__nmtui"] floating enable
 
-assign [class="(?i)thunderbird"] workspace 9
+workspace 1 output DP-1
+workspace 2 output DP-1
+assign [class="(?i)Wfica"] 2
 
-# == Display settings for desktop ==
+workspace 7 output eDP-1
+assign [class="(?i)slack"] 7
 
-workspace 1 output DP-4.8
-workspace 2 output HDMI-0
-workspace 3 output DP-4.8
-workspace 4 output HDMI-0
-workspace 5 output DP-4.8
-workspace 6 output HDMI-0
-workspace 7 output DP-4.8
-workspace 8 output HDMI-0
-workspace 9 output DP-4.8
-workspace 10 output HDMI-0
+workspace 8 output eDP-1
+assign [class="(?i)thunderbird"] 8
+
+workspace 9 output eDP-1
+assign [class="(?i)obs"] 9
+
+workspace 10 output eDP-1
+assign [class="spotify"] 10
+
+
 
 mouse_warping none
 
 
 # == COLORS ==
 # ============
+
+# Set colors from Xresources
+# Change 'color7' and 'color2' to whatever colors you want i3 to use 
+# from the generated scheme.
+# NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
+# it fails to get colors from Xresources.
+set_from_resource $fg i3wm.color7 #f0f0f0
+set_from_resource $bg i3wm.color2 #f0f0f0
+ 
+# # class                 border  backgr. text indicator
+# client.focused          $bg     $bg     $fg  $bg      
+# client.focused_inactive $bg     $bg     $fg  $bg      
+# client.unfocused        $bg     $bg     $fg  $bg      
+# client.urgent           $bg     $bg     $fg  $bg      
+# client.placeholder      $bg     $bg     $fg  $bg      
+# 
+# client.background       $bg
 
 # class                 border  backgr. text    indicator
 client.focused          #39c6fe #39c6fe #2b303b #39c6fe
@@ -72,22 +83,14 @@ client.urgent           #bf616a #bf616a #2b303b #bf616a
 client.placeholder		#2b303b	#2b303b #c0c5ce #2b303b
 
 
-# class                 border  backgr. text    indicator
-#client.focused          #39c6fe #39c6fe #282828 #39c6fe
-#client.focused_inactive #39c6fe #2b303b #dcdcdc #282828
-#client.unfocused        #39c6fe #2b303b #dcdcdc #282828
-#client.urgent           #cc241d #cc241d #dcdcdc #cc241d
-#client.placeholder		#2d2d2d	#2d2d2d #dcdcdc #2d2d2d
-
-
 # == KEYBINDS ==
 # ==============
 
 # open apps. NOTE: make sure the name option for your chosen terminal emulator is correct!
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+Return exec $term --name __scratchpad
-bindsym $mod+Control+l exec --no-startup-id $HOME/scripts/lock.sh
-#bindsym $mod+Control+l exec --no-startup-id i3lock -c 000000
+#bindsym $mod+Control+l exec --no-startup-id $HOME/scripts/lock.sh
+bindsym $mod+Control+l exec --no-startup-id i3lock -c 333366
 
 # media mode: using Chrom(e/ium), put YouTube into fullscreen and execute this. Thanks Airblader! Wish it worked with Firefox though.
 # Values set for 1366x768 laptop since I have 2 screens on my desktop and thus don't really need it there.
@@ -98,7 +101,8 @@ bindsym $mod+Control+l exec --no-startup-id $HOME/scripts/lock.sh
 #bindsym $mod+d exec --no-startup-id dmenu_run -i -nb \#2b303b -nf \#dcdcdc -sb \#dcdcdc -sf \#2b303b -dim 0.6 -fn "Source Code Pro-10:normal" -p "run:" -l 7 -h 16 -x 800 -y 600 -w 960
 # 2560x1440
 #bindsym $mod+d exec --no-startup-id dmenu_run -i -nb \#2b303b -nf \#dcdcdc -sb \#dcdcdc -sf \#2b303b -dim 0.6 -fn "Source Code Pro-12:normal" -p "run:" -l 9 -h 16 -x 800 -y 600 -w 960
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id rofi -show run
 
 # kill stuff
 bindsym $mod+Shift+q kill
@@ -124,13 +128,13 @@ bindsym $mod+f fullscreen toggle
 
 # change container layout
 bindsym $mod+t layout tabbed
-bindsym $mod+z layout toggle split
+bindsym $mod+s layout stacking bindsym $mod+z layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-#bindsym $mod+space focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
 # toggle sticky mode
 bindsym $mod+Shift+s sticky toggle
@@ -138,18 +142,6 @@ bindsym $mod+Shift+s sticky toggle
 # scratchpad
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+plus scratchpad show
-
-# Assigning workspaces to specific screens
-workspace 1 output DVI-D-1
-workspace 3 output DVI-D-1
-workspace 5 output DVI-D-1
-workspace 7 output DVI-D-1
-workspace 9 output DVI-D-1
-workspace 2 output DVI-D-0
-workspace 4 output DVI-D-0
-workspace 6 output DVI-D-0
-workspace 8 output DVI-D-0
-workspace 10 output DVI-D-0
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -188,16 +180,18 @@ bindsym $mod+Shift+r restart
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
 
 # volume stuff
-bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 1%- && pkill -RTMIN+12 i3blocks
-bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 1%+ && pkill -RTMIN+12 i3blocks
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- && pkill -RTMIN+12 i3blocks
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ && pkill -RTMIN+12 i3blocks
 bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+12 i3blocks
 
-bindsym XF86MonBrightnessUp exec xbacklight -inc 15
-bindsym XF86MonBrightnessDown exec xbacklight -dec 15
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
-#bindsym XF86AudioLowerVolume exec pactl set-sink-mute 1 false && pactl set-sink-volume 1 -1% && pkill -RTMIN+12 i3blocks
-#bindsym XF86AudioRaiseVolume exec pactl set-sink-mute 1 false && pactl set-sink-volume 1 +1% && pkill -RTMIN+12 i3blocks
-#bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle && pkill -RTMIN+12 i3blocks
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 # == MODES ==
 # ###########
@@ -250,33 +244,8 @@ mode $power {
 	bindsym Return exec echo "" > $HOME/.i3mode, mode "default"
 	bindsym Escape exec echo "" > $HOME/.i3mode, mode "default"
 }
-#bindsym $mod+p exec echo $power > $HOME/.i3mode, mode $power
+bindsym $mod+p exec echo $power > $HOME/.i3mode, mode $power
 
-# OUTER GAPS MODE
-set $mode_gaps_outer "outer gaps: (+/-) resize (0) none (d) default"
-mode $mode_gaps_outer {
-	bindsym plus	gaps outer current plus 5
-	bindsym minus	gaps outer current minus 5
-	bindsym 0		gaps outer current set 0, exec echo "" > $HOME/.i3mode, mode "default"
-	bindsym d		gaps outer current set $default_gaps_outer, exec echo "" > $HOME/.i3mode, mode "default"
-
-	bindsym Return	exec echo "" > $HOME/.i3mode, mode "default"
-	bindsym Escape	exec echo "" > $HOME/.i3mode, mode "default"
-}
-bindsym $mod+o mode $mode_gaps_outer, exec echo $mode_gaps_outer > $HOME/.i3mode
-
-# INNER GAPS MODE
-set $mode_gaps_inner "inner gaps: (+/-) resize (0) none (d) default"
-mode $mode_gaps_inner {
-	bindsym plus	gaps inner current plus 5
-	bindsym minus	gaps inner current minus 5
-	bindsym 0		gaps inner current set 0, exec echo "" > $HOME/.i3mode, mode "default"
-	bindsym d		gaps inner current set $default_gaps_inner, exec echo "" > $HOME/.i3mode, mode "default"
-
-	bindsym Return	exec echo "" > $HOME/.i3mode, mode "default"
-	bindsym Escape	exec echo "" > $HOME/.i3mode, mode "default"
-}
-bindsym $mod+i mode $mode_gaps_inner, exec echo $mode_gaps_inner > $HOME/.i3mode
 
 ## SCREENS MODE
 ## comment this mode if you don't have multiple screens, and swap in your own xrandr scripts if you do
@@ -297,12 +266,13 @@ bindsym $mod+i mode $mode_gaps_inner, exec echo $mode_gaps_inner > $HOME/.i3mode
 
 bar {
 	# start i3bar in transparency mode, use RRGGBBAA colors!
-	i3bar_command i3bar -t
-	status_command i3blocks
+	i3bar_command i3bar
+	status_command SCRIPT_DIR=/usr/lib/i3blocks i3blocks  -c /home/romain.sabathe/.i3blocks.conf
 	position top
-	font pango:Source Code Pro, FontAwesome 9
+	font pango:Source Code Pro, FontAwesome 15
 	separator_symbol "■"
-	height 30
+    tray_output primary
+	#height 30
 
 	colors {
 		background	#00000000
@@ -317,11 +287,6 @@ bar {
 		binding_mode		#00000000	#dcdcdcff	#262626ff
 	}
 }
-
-# Spotify shortcuts -- Make sure to install https://github.com/pwittchen/spotify-cli-linux
-bindsym $mod+n exec spotifycli --next
-bindsym $mod+p exec spotifycli --prev
-bindsym $mod+space exec spotifycli --playpause
 
 # == AUTOSTART ==
 # ===============
@@ -345,6 +310,5 @@ exec --no-startup-id dunst
 #exec --no-startup-id $HOME/scripts/wallpaper.sh
 exec_always --no-startup-id nitrogen --restore
 
-# Disable capslock system-wide
-exec_always --no-startup-id xmodmap -e "clear lock" #disable caps lock switch
-exec_always --no-startup-id xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
+# Disable caps lock, replace it with escape
+exec_always --no-startup-id setxkbmap -layout us -option caps:escape
