@@ -262,13 +262,24 @@ RUN export NVM_DIR="$HOME/.nvm" && \
 COPY .fonts $HOME/.fonts
 RUN fc-cache -f -v
 
-# Placing the dot files
-COPY .config $HOME/.config
-COPY .vifm $HOME/.vifm
-COPY .tmux.conf $HOME/.tmux.conf
-#COPY .bashrc $HOME/.bashrc
-#COPY .zshrc $HOME/.zshrc
+# Installing Antigen
+RUN mkdir -p $HOME/.config/zsh && \
+    curl -L git.io/antigen > $HOME/.config/zsh/antigen.zsh && \
+    echo 'source $HOME/.config/zsh/antigen.zsh' >> $HOME/.zshrc && \
+    echo 'antigen init ~/.config/zsh/antigenrc' >> $HOME/.zshrc
+#
+# It's important that the lines are in this order.
+COPY .config/zsh/antigenrc $HOME/.config/zsh/antigenrc
+RUN echo "export NVM_DIR='$HOME/.nvm'" >> $HOME/.zshrc && \
+    echo "export PATH='$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH'" >> $HOME/.zshrc && \
+    echo "[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh" >> $HOME/.zshrc && \
+    # Making zsh the default shell
+    chsh -s /bin/zsh && su - $USER && \
+    # Forcing the installation of antigen bundles.
+    /bin/zsh -c "source $HOME/.config/zsh/antigen.zsh && \
+                 antigen init $HOME/.config/zsh/antigenrc"
 
+COPY .config/nvim $HOME/.config/nvim
 # Installing the plugins
 RUN export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
@@ -286,7 +297,8 @@ RUN export NVM_DIR="$HOME/.nvm" && \
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all && \
     nvim -c "call dein#install()" -c "UpdateRemotePlugins" -c quitall && \
     nvim +'CocInstall -sync coc-pyright coc-git coc-vimtex' +qall && \
-    nvim +'call doge#install()' +qall
+    nvim +'call doge#install()' +qall && \
+    echo "let g:coc_node_path = '/usr/local/bin/node'" >> $HOME/.config/nvim/init.vim
     
 # Configuring git to commit directly from the container
 ARG USER_EMAIL
@@ -294,23 +306,10 @@ RUN git config --global user.name "Romain Sabathe" && \
     git config --global user.email $USER_EMAIL && \
     git config --global push.default simple
 
-# Installing Antigen
-RUN mkdir -p $HOME/.config/zsh && \
-    curl -L git.io/antigen > $HOME/.config/zsh/antigen.zsh && \
-    echo 'source $HOME/.config/zsh/antigen.zsh' >> $HOME/.zshrc && \
-    echo 'antigen init ~/.config/zsh/antigenrc' >> $HOME/.zshrc
-
-# It's important that the lines are in this order.
-RUN echo "export NVM_DIR='$HOME/.nvm'" >> $HOME/.zshrc && \
-    echo "export PATH='$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH'" >> $HOME/.zshrc && \
-    echo "[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh" >> $HOME/.zshrc && \
-    echo "let g:coc_node_path = '/usr/local/bin/node'" >> $HOME/.config/nvim/init.vim && \
-    # Making zsh the default shell
-    chsh -s /bin/zsh && su - $USER && \
-    # Forcing the installation of antigen bundles.
-    /bin/zsh -c "source $HOME/.config/zsh/antigen.zsh && \
-                 antigen init $HOME/.config/zsh/antigenrc"
-
+# Placing the dot files
+COPY .vifm $HOME/.vifm
+COPY .tmux.conf $HOME/.tmux.conf
+COPY .config $HOME/.config
 ENV TERM=xterm-256color
 WORKDIR $HOME
 ENTRYPOINT ["/bin/zsh"]

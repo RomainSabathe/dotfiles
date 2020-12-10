@@ -196,7 +196,7 @@ fileviewer *.flac soxi
 " Video
 filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.vob,*.flv,*.m2v,*.mov,*.webm,*.ts,*.m4v
         \ {View using mplayer}
-        \ mplayer --mute --loop-file=inf %f,
+        \ mplayer --mute=yes --loop-file=inf %f,
         \ {View using ffplay}
         \ ffplay -autoexit -loop 0 -stats -an %c,
         \ {View using vlc}
