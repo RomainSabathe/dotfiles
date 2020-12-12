@@ -110,6 +110,7 @@ RUN apt-get update && \
      ffmpeg \
      vlc \
      mplayer \
+     mpv \
      gimp \
      geeqie \
      # Other
@@ -310,6 +311,7 @@ RUN git config --global user.name "Romain Sabathe" && \
 COPY .vifm $HOME/.vifm
 COPY .tmux.conf $HOME/.tmux.conf
 COPY .config $HOME/.config
+RUN cat $HOME/.config/zsh/.zshrc_extra >> ~/.zshrc
 ENV TERM=xterm-256color
 WORKDIR $HOME
 ENTRYPOINT ["/bin/zsh"]
