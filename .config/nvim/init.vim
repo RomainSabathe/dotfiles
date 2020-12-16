@@ -429,6 +429,7 @@ map <leader>nn :NERDTreeToggle<cr>
 map <leader>nf :NERDTreeFind<cr>
 "autocmd vimenter * NERDTree  " automatically opens NERDTree when vim starts.
 "autocmd VimEnter * wincmd p  " the focus was on NERDTree. Now it's on the code.
+let g:NERDDefaultAlign = 'left'
 " }}}
 " Ack {{{
 " Don't jump to first result automatically
