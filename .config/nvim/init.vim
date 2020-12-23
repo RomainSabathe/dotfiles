@@ -80,6 +80,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
   call dein#add('easymotion/vim-easymotion')                  " like emac')s snipe
   call dein#add('chaoren/vim-wordmotion')                     " HelloYou counts as 2 words
+  call dein#add('jeetsukumaran/vim-pythonsense')       " Motion around python objects
 "   call dein#add('vifm/vifm.vim')                     " HelloYou counts as 2 words
 "  }}}
 "  Language specific {{{
