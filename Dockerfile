@@ -185,6 +185,7 @@ RUN  pip install --no-cache-dir \
       pep8-naming \
       black \
       mypy \
+      prospector \
       pyment \
       pynvim \
      # Other librairies to work with machine learning and computer vision
