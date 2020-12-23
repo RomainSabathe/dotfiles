@@ -39,7 +39,8 @@ if dein#load_state('~/.cache/dein')
 "  Typing assistance {{{
    call dein#add('machakann/vim-sandwich')          " surround text with delimiters.
    call dein#add('jiangmiao/auto-pairs')            " auto close brackets, parentheses...
-   call dein#add('kkoomen/vim-doge') 
+   call dein#add('kkoomen/vim-doge', { 'build': 'sh ./scripts/install.sh'})   " documentation generator
+  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
 "   call dein#add('w0rp/ale')                        " spell checker.
 "   call dein#add('SirVer/ultisnips')                " autoexpand preconfigured keystrokes
 "   call dein#add('honza/vim-snippets')              " bank of defaults for ultisnips
@@ -292,6 +293,9 @@ let g:ale_python_pylint_options = '--rcfile tox.ini'
 " autocmd CompleteDone * silent! pclose!
 "  deoplete tab-complete (default doesn't use tab)
 " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" }}}
+" Vim Doge {{{
+let g:doge_doc_standard_python = 'google'
 " }}}
 " Coc {{{
 " General {{{

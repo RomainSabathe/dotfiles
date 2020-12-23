@@ -83,6 +83,11 @@ RUN apt-get update && \
      # Latex,...
      texlive-full \
      inotify-tools \
+     # And requirements for Tectonic
+     libfontconfig1-dev \
+     libgraphite2-dev \
+     libharfbuzz-dev \
+     libicu-dev \
      # Other librairies to work with machine learning and computer vision
      # Plus a few handy python tools
      libjpeg-dev \
@@ -127,6 +132,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rust.sh &&
                   ripgrep \
                   dirscan \
                   rip \
+                  tectonic \
                   starship \
                   bat \
                   tokei \
@@ -298,7 +304,6 @@ RUN export NVM_DIR="$HOME/.nvm" && \
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all && \
     nvim -c "call dein#install()" -c "UpdateRemotePlugins" -c quitall && \
     nvim +'CocInstall -sync coc-pyright coc-git coc-vimtex' +qall && \
-    nvim +'call doge#install()' +qall && \
     echo "let g:coc_node_path = '/usr/local/bin/node'" >> $HOME/.config/nvim/init.vim
     
 # Configuring git to commit directly from the container
