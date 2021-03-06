@@ -31,5 +31,7 @@ test:
 
 $(LOCAL_DOTFILES): 
 	#@if [ -z $(shell rg -i password $(HOME)/$@) ]; then echo "No password found in $@"; else exit 1; fi
+	#@if [ -z $(shell rg -i secret $(HOME)/$@) ]; then echo "No secret found in $@"; else exit 1; fi
+	#@if [ -z $(shell rg -i token $(HOME)/$@) ]; then echo "No token found in $@"; else exit 1; fi
 	@mkdir -p $(dir $@)
 	cp -r $(HOME)/$@ $@

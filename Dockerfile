@@ -88,6 +88,12 @@ RUN apt-get update && \
      libgraphite2-dev \
      libharfbuzz-dev \
      libicu-dev \
+     # Requirements for Hunter
+     gcc \
+     libgstreamer-plugins-base1.0-dev \
+     gstreamer1.0-plugins-good \
+     libgstreamer-plugins-bad1.0-dev \
+     libsixel-bin \
      # Other librairies to work with machine learning and computer vision
      # Plus a few handy python tools
      libjpeg-dev \
@@ -128,26 +134,48 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rust.sh &&
     sh /tmp/rust.sh -y && \
     export PATH="$PATH:$HOME/.cargo/bin" && \
     echo 'export PATH="$PATH:$HOME/.cargo/bin"' >> .bashrc && \
-    cargo install exa \
-                  ripgrep \
-                  dirscan \
-                  rip \
-                  tectonic \
-                  starship \
-                  bat \
-                  tokei \
-                  fd \
-                  procs \
-                  imager \
-                  todor \
-                  xsv \
-                  amp \
-                  dust \
-                  gitui \
-                  clog-cli \
-                  git-delta \
-                  git-journal && \
-    rm /tmp/rust.sh
+    rustup default nightly && \
+    cargo install --force \
+        # Not needed in Docker version
+        #alacritty \
+        amp \
+        bat \
+        cargo-make \
+        clog-cli \
+        # Doesn't compile.
+        #dirscan \
+        dotr \
+        # Is not a true alternative to dust. 
+        # du-dust \  
+        exa \
+        fd-find \
+        git-delta \
+        git-journal \
+        gitui \
+        grex \
+        hyperfine \
+        imager \
+        just \
+        procs \
+        rm-improved \
+        ripgrep \
+        sd \
+        starship \
+        tealdeer \
+        tectonic \
+        tin-summer \
+        # Not available through cargo install
+        #todor \
+        tokei \
+        xsv \
+        ytop && \
+    rm /tmp/rust.sh && \
+    # Manually installing hunter (project not maintained; the latest version doesn't work)
+    git clone https://github.com/06kellyjac/hunter.git /tmp/hunter && \
+    cd /tmp/hunter && \
+    git checkout hunter_rust_stable && \
+    cargo install --path . && \
+    rm -rf /tmp/hunter
 
 # Pyenv
 RUN git clone --recursive \
@@ -202,7 +230,9 @@ RUN  pip install --no-cache-dir \
       pytest \
       Pillow \
       imageio \
-      dvc
+      dvc \
+     # Devops stuff.
+      boto3
 
 # # Installing VTE (requirement for Termite)
 # RUN git clone https://github.com/thestinger/vte-ng.git /tmp/vte && \
@@ -264,7 +294,7 @@ RUN export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && \
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
     npm install prettier --save-dev --save-exact && \
-    npm install pretty-quick husky --save-dev 
+    npm install pretty-quick husky --save-dev
 
 # Installing fonts
 COPY .fonts $HOME/.fonts
@@ -283,9 +313,18 @@ RUN echo "export NVM_DIR='$HOME/.nvm'" >> $HOME/.zshrc && \
     echo "[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh" >> $HOME/.zshrc && \
     # Making zsh the default shell
     chsh -s /bin/zsh && su - $USER && \
-    # Forcing the installation of antigen bundles.
+    # Forcing the installation of antigen bundles. 
     /bin/zsh -c "source $HOME/.config/zsh/antigen.zsh && \
                  antigen init $HOME/.config/zsh/antigenrc"
+
+# Installing pure.
+RUN mkdir -p "$HOME/.zsh" && \
+    git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure" && \
+    echo 'fpath+=$HOME/.zsh/pure' >> $HOME/.zshrc && \
+    echo 'autoload -U promptinit; promptinit' >> $HOME/.zshrc && \
+    echo 'prompt pure' >> $HOME/.zshrc && \
+    # Refreshing the cache of Tealdeer
+    /root/.cargo/bin/tldr --update
 
 COPY .config/nvim $HOME/.config/nvim
 # Installing the plugins
@@ -300,18 +339,25 @@ RUN export NVM_DIR="$HOME/.nvm" && \
     # Installing yarn
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
     export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH" && \
-    #nvim -c PluginInstall -c quitall
     # Installing fzf
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all && \
     nvim -c "call dein#install()" -c "UpdateRemotePlugins" -c quitall && \
-    nvim +'CocInstall -sync coc-pyright coc-git coc-vimtex' +qall && \
+    nvim +'CocInstall -sync coc-pyright coc-git coc-vimtex coc-rust-analyzer coc-snippets coc-markdownlint' +qall && \
     echo "let g:coc_node_path = '/usr/local/bin/node'" >> $HOME/.config/nvim/init.vim
     
 # Configuring git to commit directly from the container
 ARG USER_EMAIL
 RUN git config --global user.name "Romain Sabathe" && \
     git config --global user.email $USER_EMAIL && \
-    git config --global push.default simple
+    git config --global push.default simple && \
+    # Using git-delta
+    git config --global core.pager delta && \
+    #git config --global delta.plus-style "syntax #012800" && \
+    #git config --global delta.minus-style "syntax #340001" && \
+    #git config --global delta.syntax-theme "Monokai Extended" && \
+    #git config --global delta.side-by-side true && \
+    git config --global interactive.diffFilter "delta --color-only"
+
 
 # Placing the dot files
 COPY .vifm $HOME/.vifm

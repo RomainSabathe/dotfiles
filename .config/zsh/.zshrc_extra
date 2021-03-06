@@ -1,1 +1,2 @@
 alias ls='exa -s modified -G -F --git -h'
+eval "$(starship init zsh)"

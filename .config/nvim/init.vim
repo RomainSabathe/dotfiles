@@ -40,14 +40,14 @@ if dein#load_state('~/.cache/dein')
    call dein#add('machakann/vim-sandwich')          " surround text with delimiters.
    call dein#add('jiangmiao/auto-pairs')            " auto close brackets, parentheses...
    call dein#add('kkoomen/vim-doge', { 'build': 'sh ./scripts/install.sh'})   " documentation generator
-  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
 "   call dein#add('w0rp/ale')                        " spell checker.
-"   call dein#add('SirVer/ultisnips')                " autoexpand preconfigured keystrokes
-"   call dein#add('honza/vim-snippets')              " bank of defaults for ultisnips
+   call dein#add('SirVer/ultisnips')                " autoexpand preconfigured keystrokes
+   call dein#add('honza/vim-snippets')              " bank of defaults for ultisnips
 "    call dein#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins') }   " replaced by Coc
 "  Coc {{{
   call dein#add('neoclide/coc.nvim', {'merged': 0, 'rev': 'release'})
   call dein#add('neoclide/coc-python') ", {'build': 'yarn install --frozen-lockfile'})
+  call dein#add('neoclide/coc-rust-analyzer') ", {'build': 'yarn install --frozen-lockfile'})
 "   call dein#add('neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'})
 "   call dein#add('neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'})
 "  call dein#add('neoclide/coc-git')  
@@ -68,6 +68,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('vim-airline/vim-airline-themes')  " and themes.
   call dein#add('mhinz/vim-startify')              " a splash screen with recent files.
   call dein#add('junegunn/goyo.vim')               " zen mode.
+  call dein#add('junegunn/limelight.vim')
 "  }}}
 "  Tmux {{{
   call dein#add('christoomey/vim-tmux-navigator')  " intuitive Tmux integration.
@@ -90,7 +91,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('lervag/vimtex')                   " general tools for LaTeX
 "   call dein#add('PotatoesMaster/i3-vim-syntax')    " color syntaxing for .config/i3/config
 "   call dein#add('ekalinin/Dockerfile.vim')         " color syntaxing for Dockerfiles
-  call dein#add('plasticboy/vim-markdown')         " general tools for Markdown
+  "call dein#add('plasticboy/vim-markdown')         " general tools for Markdown
 "  }}}
 "  Journaling {{{
 "   call dein#add('vimwiki/vimwiki')                 " manage a personal wiki from Vim
@@ -111,10 +112,10 @@ if dein#load_state('~/.cache/dein')
   call dein#add('raimondi/delimitmate')            " auto close brackets, parentheses...
   call dein#add('rbgrouleff/bclose.vim')           " closing a buffer doesn')t close window
   call dein#add('godlygeek/tabular')
-"  }}}
+  "}}}
 
 "call plug#end()
-" }}}
+ "}}}
 
   call dein#end()
   call dein#save_state()
@@ -167,7 +168,7 @@ set encoding=utf-8  " utf9 as standard encoding and en_US as standard language.
 set ffs=unix,dos,mac  " unix as standard file type.
 " }}}
 " }}}
- 
+
 " General mappings  {{{
 " Buffers  {{{
 set hidden                          " a buffer becomes hidden when it is abandonned.
@@ -183,7 +184,7 @@ tnoremap <Esc> <C-\><C-n>            " escape terminal mode with Esc
 map <leader>pp :setlocal paste!<cr>  " togle paste mode.
 " }}}
 " }}}
- 
+
 " Language specific {{{
 " Python {{{
 " General {{{
@@ -227,12 +228,12 @@ let g:vimtex_compiler_latexmk = {
 let g:tex_flavor = 'latex'
 " }}}
 " Markdown {{{
-let g:markdown_folding = 1
-let g:vim_markdown_folding_level = 3
-let g:vim_markdown_folding_disabled = 1
+"let g:markdown_folding = 1
+"let g:vim_markdown_folding_level = 3
+"let g:vim_markdown_folding_disabled = 1
 " }}}
 " }}}
- 
+
 " Typing assistance  {{{
 " General  {{{
 nmap <silent> <leader>P oimport ipdb; ipdb.set_trace()<Enter>pass<Esc>:w<CR>
@@ -374,30 +375,30 @@ set signcolumn=yes
 " }}}
 " }}}
 " }}}
- 
+
 " Journaling {{{
 " Vimwiki {{{
 set nocompatible
 filetype plugin on
 syntax on
-let g:vimwiki_list = [{'path': '~/git/notes/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
-" Allowing for folds. Oh boy that was a ride :smirk:
-let g:pandoc#filetypes#handled = ["pandoc", "markdown"] 
-let g:pandoc#filetypes#pandoc_markdown = 1
-let g:pandoc#folding#mode = ["syntax"]
-let g:pandoc#modules#enabled = ["formatting", "folding"]
-let g:pandoc#formatting#mode = "h"
-                                                        
-let g:vimwiki_folding='expr'                            
-au FileType vimwiki set filetype=vimwiki.markdown       
+"let g:vimwiki_list = [{'path': '~/git/notes/vimwiki/',
+"                      \ 'syntax': 'markdown', 'ext': '.md'}]
+"" Allowing for folds. Oh boy that was a ride :smirk:
+"let g:pandoc#filetypes#handled = ["pandoc", "markdown"] 
+"let g:pandoc#filetypes#pandoc_markdown = 1
+"let g:pandoc#folding#mode = ["syntax"]
+"let g:pandoc#modules#enabled = ["formatting", "folding"]
+"let g:pandoc#formatting#mode = "h"
+                                                       
+"let g:vimwiki_folding='expr'                            
+"au FileType vimwiki set filetype=vimwiki.markdown       
 
-autocmd FileType vimwiki.markdown setlocal foldenable foldlevel=3
+"autocmd FileType vimwiki.markdown setlocal foldenable foldlevel=3
 
 let g:vimwiki_global_ext = 0
 " }}}
 " }}}
- 
+
 " Search, navigation {{{
 " General {{{
 set ignorecase   " ignore case whem searching
@@ -438,8 +439,9 @@ let g:NERDDefaultAlign = 'left'
 " }}}
 " Ack {{{
 " Don't jump to first result automatically
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+" TODO: use `rg` instead.
+"cnoreabbrev Ack Ack!
+"nnoremap <Leader>a :Ack!<Space>
 let g:ackprg = 'ag --nogroup --nocolor --column'  " Actually replacing Ack by Ag
 " }}}
 " fzf {{{
@@ -448,7 +450,7 @@ nmap <leader>F :Lines<CR>
 nmap <leader>b :Buffers<CR>  
 nmap <leader>B :BLines<CR>  
 " }}}
- 
+
 " Look {{{
 " Airline {{{
 let g:airline_theme='base16_ocean'
@@ -483,7 +485,7 @@ if exists('$TMUX')
 endif
 " }}}
 " }}}
- 
+
 " Tmux {{{
 " Vimux {{{
 let g:VimuxHeight = "15"  " change the default size of the window.
@@ -495,7 +497,7 @@ map <leader>rg :VimuxPromptCommand<cr>
 map <leader>rr :VimuxRunLastCommand<cr>
 " }}}
 " }}}
- 
+
 " Git {{{
 " General {{{
 " Turns backup off so avoid conflicts with git.
@@ -507,7 +509,7 @@ set noswapfile
 set diffopt+=vertical  " vertical Gdiff
 " }}}
 " }}}
- 
+
 " Other  {{{
 " Vimtest  {{{
 let test#strategy = "vimux"  " run the tests in the Vimux window
@@ -558,10 +560,19 @@ endif
 " }}}
 " }}}
 " }}}
- 
+
 let g:vifm_embed_term=1
 " Folds sections of this vimrc file.
 set modelines=1
 " vim:foldmethod=marker:foldlevel=0
 
 vnoremap yc "+y<cr>            " copy a selection to clipboard
+"let g:coc_disable_startup_warning = 1
+"let g:coc_node_path = '/home/romain.sabathe/.nvm/versions/node/v13.12.0/bin/node'
+
+" Remap for do codeAction of selected region
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@

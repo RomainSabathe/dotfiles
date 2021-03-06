@@ -92,6 +92,9 @@ bindsym $mod+Shift+Return exec $term --name __scratchpad
 #bindsym $mod+Control+l exec --no-startup-id $HOME/scripts/lock.sh
 bindsym $mod+Control+l exec --no-startup-id i3lock -c 333366
 
+# A window sticks to every workspace (needs to be floating).
+bindsym $mod+w sticky toggle
+
 # media mode: using Chrom(e/ium), put YouTube into fullscreen and execute this. Thanks Airblader! Wish it worked with Firefox though.
 # Values set for 1366x768 laptop since I have 2 screens on my desktop and thus don't really need it there.
 #bindsym $mod+y fullscreen disable; floating enable; resize set 300 200; sticky enable; move window to position 1060 6

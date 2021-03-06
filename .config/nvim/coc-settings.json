@@ -1,3 +1,7 @@
 {
-    "python.jediEnabled": false
+    "python.jediEnabled": false,
+    "markdownlint.config": {
+        "default": true,
+        "line_length": false
+    }
 }
