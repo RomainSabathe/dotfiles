@@ -423,8 +423,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Remap Vim's 0 to first non blank character
 map 0 ^
 " Easy navigation through long lines
-nmap j gj
-nmap k gk
+nmap <silent> j gj
+nmap <silent> k gk
 " }}}
 " NERDTree {{{
 let g:NERDTreeWinPos = "right"
