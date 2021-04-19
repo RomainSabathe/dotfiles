@@ -326,6 +326,17 @@ RUN mkdir -p "$HOME/.zsh" && \
     # Refreshing the cache of Tealdeer
     /root/.cargo/bin/tldr --update
 
+# Install lf.
+RUN echo 'deb http://download.opensuse.org/repositories/home:/Provessor/xUbuntu_20.04/ /' | tee /etc/apt/sources.list.d/home:Provessor.list \
+    && curl -fsSL https://download.opensuse.org/repositories/home:Provessor/xUbuntu_20.04/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/home_Provessor.gpg > /dev/null \
+    && apt update \
+    && apt install lf
+
+# Install nnn.
+RUN curl -LJ https://github.com/jarun/nnn/releases/download/v3.6/nnn_3.6-1_ubuntu20.04.amd64.deb -o /tmp/nnn.deb \
+    && dpkg -i /tmp/nnn.deb
+
+
 COPY .config/nvim $HOME/.config/nvim
 # Installing the plugins
 RUN export NVM_DIR="$HOME/.nvm" && \

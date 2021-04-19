@@ -14,7 +14,7 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Select theme.
-antigen theme sindresorhus/pure
+#antigen theme sindresorhus/pure
 
 # Tell Antigen that you're done.
 antigen apply

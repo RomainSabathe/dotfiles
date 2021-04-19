@@ -61,6 +61,8 @@ if dein#load_state('~/.cache/dein')
 "  }}}
 "  Git {{{
    call dein#add('tpope/vim-fugitive')              " git handling.
+   call dein#add('Odie/gitabra')                    " git handling.
+   call dein#add('jreybert/vimagit')              " git handling.
 "   call dein#add('airblade/vim-gitgutter')          " shows changes in gutter.
 "  }}}
 "  Look {{{
@@ -69,6 +71,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('mhinz/vim-startify')              " a splash screen with recent files.
   call dein#add('junegunn/goyo.vim')               " zen mode.
   call dein#add('junegunn/limelight.vim')
+  call dein#add('kyazdani42/nvim-web-devicons')
 "  }}}
 "  Tmux {{{
   call dein#add('christoomey/vim-tmux-navigator')  " intuitive Tmux integration.
@@ -92,6 +95,8 @@ if dein#load_state('~/.cache/dein')
 "   call dein#add('PotatoesMaster/i3-vim-syntax')    " color syntaxing for .config/i3/config
 "   call dein#add('ekalinin/Dockerfile.vim')         " color syntaxing for Dockerfiles
   "call dein#add('plasticboy/vim-markdown')         " general tools for Markdown
+  call dein#add('iamcco/markdown-preview.nvim', {'on_ft': ['markdown', 'pandoc.markdown', 'rmd'],
+					\ 'build': 'sh -c "cd app && yarn install"' })
 "  }}}
 "  Journaling {{{
 "   call dein#add('vimwiki/vimwiki')                 " manage a personal wiki from Vim
@@ -455,7 +460,10 @@ nmap <leader>B :BLines<CR>
 " Airline {{{
 let g:airline_theme='base16_ocean'
 let g:airline#extensions#tabline#enabled = 1  " shows the buffer name at the top.
-let g:airline#extensions#tabline#fnamemod = ':t'  " just keep the name of the file
+"let g:airline#extensions#tabline#fnamemod = ':t'  " just keep the name of the file
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#left_sep = ' '  " Straight bars as tab separators
+let g:airline#extensions#tabline#left_alt_sep = '|'
 " }}}
 " Colorscheme {{{
 set t_Co=256  " for 256 terminal colors
