@@ -1,0 +1,38 @@
+{
+    "editor.fontSize": 14,
+    "editor.wordWrapColumn": 88,
+    "editor.minimap.enabled": false,
+    "files.autoSave": "afterDelay",
+    "git.autofetch": true,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.hovers.currentLine.over": "line",
+    "git.confirmSync": false,
+    "bracketPairColorizer.depreciation-notice": false,
+    "[latex]": {
+        "editor.defaultFormatter": "nickfode.latex-formatter"
+    },
+
+    // Vim stuff
+    //
+    "vim.camelCaseMotion.enable": true,
+    "vim.easymotion": true,
+    "vim.leader": ",",
+    "vim.textwidth": 88,
+    // Mimiks NERDTree default keybinding.
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+          "before": ["<leader>", "n", "n"],
+          "commands": [
+              "workbench.action.toggleSidebarVisibility"
+            ]
+        }
+    ],
+
+    // Force to have 1 file per tab. This allows :q to properly mimik's
+    // Vim behaviour.
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.perEditorGroup": true,
+    "workbench.editor.limit.value": 1,
+    // Because of this, showing tabs is now useless. SAVE SCREENSPACE!!!
+    "workbench.editor.showTabs": false,
+}
