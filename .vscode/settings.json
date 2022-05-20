@@ -19,6 +19,14 @@
     "vim.leader": ",",
     "vim.textwidth": 88,
     // Mimiks NERDTree default keybinding.
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+          "before": ["<leader>", "c", "space"],
+           "commands": [
+               "editor.action.commentLine"
+             ]
+        },
+    ],
     "vim.normalModeKeyBindingsNonRecursive": [
         {
           "before": ["<leader>", "n", "n"],
@@ -31,6 +39,32 @@
           "commands": [
               "workbench.action.quickOpen"
             ]
+        },
+        {
+          "before": ["<leader>", "c", "space"],
+           "commands": [
+               "editor.action.commentLine"
+             ]
+        },
+        {
+            "before": ["L"],
+            "after": ["$"]
+        },
+        {
+            "before": ["H"],
+            "after": ["^"]
+        },
+        {
+            "before": ["w"],
+            "after": ["<leader>", "w"]
+        },
+        {
+            "before": ["b"],
+            "after": ["<leader>", "b"]
+        },
+        {
+            "before": ["c", "i", "w"],
+            "after": ["c", "i", "<leader>", "w"]
         }
     ],
 

@@ -1,6 +1,10 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
     {
+        "key": "shift+enter",
+        "command": "python.execInTerminal"
+    },
+    {
         "key": "ctrl+k",
         "command": "workbench.action.navigateUp"
     },
