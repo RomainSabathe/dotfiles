@@ -1,78 +1,113 @@
 {
-    "editor.fontSize": 14,
-    "editor.wordWrapColumn": 88,
-    "editor.minimap.enabled": false,
-    "files.autoSave": "afterDelay",
-    "git.autofetch": true,
-    "gitlens.currentLine.enabled": false,
-    "gitlens.hovers.currentLine.over": "line",
-    "git.confirmSync": false,
-    "bracketPairColorizer.depreciation-notice": false,
-    "[latex]": {
-        "editor.defaultFormatter": "nickfode.latex-formatter"
+  "editor.fontSize": 14,
+  "editor.wordWrapColumn": 88,
+  "editor.minimap.enabled": false,
+  "files.autoSave": "afterDelay",
+  "git.autofetch": true,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.hovers.currentLine.over": "line",
+  "git.confirmSync": false,
+  "bracketPairColorizer.depreciation-notice": false,
+  "[latex]": {
+    "editor.defaultFormatter": "nickfode.latex-formatter"
+  },
+
+  // Python stuff
+  "python.formatting.blackArgs": ["--line-length", "88"],
+  "python.formatting.provider": "black",
+
+  // // Workspace Settings
+
+  // "python.formatting.blackPath": "/absolute/path/to/venv/with/black",
+  // "python.formatting.blackArgs": [
+  //     "-l 120"
+  // ],
+
+  // Vim stuff
+  //
+  "vim.camelCaseMotion.enable": true,
+  "vim.easymotion": true,
+  "vim.leader": ",",
+  "vim.textwidth": 88,
+  // Mimiks NERDTree default keybinding.
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "c", "space"],
+      "commands": ["editor.action.commentLine"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "n", "n"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
     },
-
-    // Vim stuff
-    //
-    "vim.camelCaseMotion.enable": true,
-    "vim.easymotion": true,
-    "vim.leader": ",",
-    "vim.textwidth": 88,
-    // Mimiks NERDTree default keybinding.
-    "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "c", "space"],
+      "commands": ["editor.action.commentLine"]
+    },
+    {
+      "before": ["L"],
+      "after": ["$"]
+    },
+    {
+      "before": ["H"],
+      "after": ["^"]
+    },
+    {
+      "before": ["w"],
+      "after": ["<leader>", "w"]
+    },
+    {
+      "before": ["b"],
+      "after": ["<leader>", "b"]
+    },
+    {
+      "before": ["c", "i", "w"],
+      "after": ["c", "i", "<leader>", "w"]
+    },
+    {
+      "before": ["shift+l"],
+      "after": ["g", "t"]
+    },
+    {
+      "before": ["shift+h"],
+      "after": ["g", "T"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": ["workbench.action.closeEditorsInGroup"]
+    },
+    {
+      "before": ["<leader>", "shift+p"],
+      "commands": [
+        { "command": "cursorHome" },
         {
-          "before": ["<leader>", "c", "space"],
-           "commands": [
-               "editor.action.commentLine"
-             ]
-        },
-    ],
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-          "before": ["<leader>", "n", "n"],
-          "commands": [
-              "workbench.action.toggleSidebarVisibility"
-            ]
-        },
-        {
-          "before": ["<leader>", "f"],
-          "commands": [
-              "workbench.action.quickOpen"
-            ]
-        },
-        {
-          "before": ["<leader>", "c", "space"],
-           "commands": [
-               "editor.action.commentLine"
-             ]
-        },
-        {
-            "before": ["L"],
-            "after": ["$"]
-        },
-        {
-            "before": ["H"],
-            "after": ["^"]
-        },
-        {
-            "before": ["w"],
-            "after": ["<leader>", "w"]
-        },
-        {
-            "before": ["b"],
-            "after": ["<leader>", "b"]
-        },
-        {
-            "before": ["c", "i", "w"],
-            "after": ["c", "i", "<leader>", "w"]
+          "command": "editor.action.insertSnippet",
+          "args": { "snippet": "import ipdb; ipdb.set_trace()\npass\n" }
         }
-    ],
+      ],
+      "when": "editorTextFocus"
+    },
+    {
+      "before": ["<leader>", "n", "e"],
+      "commands": [
+        // "prettier.forceFormatDocument",
+        "editor.action.formatDocument",
+        "workbench.action.files.save"
+      ],
+      "when": "editorTextFocus"
+    }
+  ],
 
-    // Force to have 1 file per tab. This allows :q to properly mimik's
-    // Vim behaviour.
-    "workbench.editor.limit.enabled": true,
-    "workbench.editor.limit.perEditorGroup": true,
-    "workbench.editor.limit.value": 1,
-    // Because of this, showing tabs is now useless. SAVE SCREENSPACE!!!
-    "workbench.editor.showTabs": false,
+  // Force to have 1 file per tab. This allows :q to properly mimik's
+  // Vim behaviour.
+  "workbench.editor.limit.enabled": false,
+  "workbench.editor.limit.perEditorGroup": true,
+  "workbench.editor.limit.value": 1,
+  // Because of this, showing tabs is now useless. SAVE SCREENSPACE!!!
+  "workbench.editor.showTabs": true
 }
