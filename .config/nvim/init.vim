@@ -470,8 +470,8 @@ set t_Co=256  " for 256 terminal colors
 let g:neodark#use_256color = 1
 let g:neodark#solid_vertsplit = 1
 let g:neodark#background = '#202020'
-"colorscheme base16-gruvbox-dark-hard
-colorscheme ayu
+colorscheme base16-gruvbox-dark-hard
+" colorscheme ayu
 "colorscheme wal
 syntax on
 set background=dark
