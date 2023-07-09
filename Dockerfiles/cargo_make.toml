@@ -1,0 +1,25 @@
+[tasks.install-packages]
+dependencies = [
+    "du-dust",
+    "dua-cli",
+    "dust",
+    "erdpy",
+    "fclones",
+    "fd-find",
+    "fselect",
+    "joshuto",
+    "lfs",
+    "miniserve",
+    "ouch",
+    "procs",
+    "rip",
+    "ruff",
+    "starship",
+    "tin-summer",
+    "xcp",
+    "xplr",
+    "zoxide",
+]
+
+[config]
+skip_core_tasks = true
