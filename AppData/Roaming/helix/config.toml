@@ -1,0 +1,5 @@
+theme = "dark_plus"
+
+[editor]
+
+soft-wrap.enable = true
