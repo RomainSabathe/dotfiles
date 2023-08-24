@@ -1,10 +1,11 @@
+#theme = "gruvbox_dark_hard"
 theme = "dark_plus"
 
 [editor]
 line-number = "relative"
-soft-wrap.enable = true
 cursorline = true
 cursorcolumn = false
+#text-width = 88
 
 [editor.cursor-shape]
 insert = "bar"
