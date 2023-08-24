@@ -117,3 +117,9 @@ if ! shopt -oq posix; then
 fi
 
 export PATH=$PATH:$HOME/.cargo/bin
+
+# Replacing ls by exa
+alias ls="exa --long --header --tree -L 1"
+alias lss="exa --long --header --tree -L 2"
+alias lsss="exa --long --header --tree -L 3"
+alias lssss="exa --long --header --tree -L 4"
