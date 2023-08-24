@@ -1,0 +1,4 @@
+configuration {
+	font: "Iosevka Term SS05 11";
+}
+@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
