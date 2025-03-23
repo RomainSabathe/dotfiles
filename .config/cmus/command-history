@@ -1,9 +1,0 @@
-add ~/Downloads/DG2016-09-29London(EBR)Rick0725Remaster/
-update-cache -f
-live-filter 
-add ~/Downloads/DG2016-09-30London/
-q
-add ~/Downloads/
-add
-reload
-add ~/Downloads
