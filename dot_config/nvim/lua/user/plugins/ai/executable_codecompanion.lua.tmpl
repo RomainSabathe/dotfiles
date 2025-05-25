@@ -39,7 +39,7 @@ return {
 						formatted_name = "Groq",
 						url = "https://api.groq.com/openai/v1/chat/completions",
 						env = {
-							api_key = "{{ groq_api_key }}",
+							api_key = '{{ (bitwardenSecrets "bac3c661-dc9f-40ca-a2e7-b2e800d44270" .accessToken).value  }}',
 						},
 						roles = {
 							llm = "assistant",
