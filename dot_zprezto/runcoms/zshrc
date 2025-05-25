@@ -5,7 +5,8 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-# Including custom zsh completions
+# Including custom zsh completions. This must run
+# BEFORE we init zprezto.
 fpath+="${ZDOTDIR:-$HOME}/contrib/completions"
 
 # Source Prezto.
@@ -13,4 +14,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
+# Adding ~/.local/bin to the list of $PATH
+typeset -U path
+path=(${ZDOTDIR:-$HOME}/.local/bin $path)
+export PATH
+
