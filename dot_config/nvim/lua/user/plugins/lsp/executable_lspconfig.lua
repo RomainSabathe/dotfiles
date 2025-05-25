@@ -6,35 +6,10 @@ return {
 		"saghen/blink.cmp",
 	},
 	config = function()
-		local noop = function() end -- Empty function to bypass the initialization of certain servers
-
 		-- Setting up the language servers via Mason
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			ensure_installed = { "pyright", "lua_ls", "ruff" },
-			handlers = {
-				function(server_name)
-					-- Create base config with folding capabilities
-					local config = {
-						capabilities = {
-							textDocument = {
-								foldingRange = {
-									dynamicRegistration = false,
-									lineFoldingOnly = true,
-								},
-							},
-						},
-					}
-
-					-- Merge capabilities with blink.cmp capabilities
-					config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-
-					require("lspconfig")[server_name].setup(config)
-				end,
-
-				-- Disabling some servers
-				pylyzer = noop, -- Prefer to use pyright
-			},
 		})
 
 		-- Disable LSP's code formatter in favor of something else (e.g. conform.lua)
