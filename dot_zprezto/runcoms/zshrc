@@ -7,7 +7,7 @@
 
 # Including custom zsh completions. This must run
 # BEFORE we init zprezto.
-fpath+="${ZDOTDIR:-$HOME}/contrib/completions"
+fpath+="${ZDOTDIR:-$HOME}/.zprezto/contrib/completions"
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
