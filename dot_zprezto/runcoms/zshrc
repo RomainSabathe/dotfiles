@@ -24,3 +24,20 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Common exports
+export VISUAL="nvim"  # editor
+
+# Common aliases for quality of life
+# Using eza instead of ls
+# -----------------------
+# Detailed listing, all files, directories first, icons, headers, readable dates
+alias ls='eza -lh --group --group-directories-first --icons --sort=date --reverse --time-style=long-iso' 
+alias la='eza -alh --group --group-directories-first --icons --sort=date --reverse --time-style=long-iso' 
+# Tree view, 2 levels deep, icons
+alias lt='eza --tree --level=2 --icons'                     
+alias l='eza --icons'   # Default eza listing
+alias lh='eza -lh'      # Long listing, human sizes
+#
+# Other common aliases
+# -----------------------
+alias lg='lazygit'
