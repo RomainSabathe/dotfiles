@@ -37,11 +37,11 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
-  'completion' \
-  'history-substring-search' \
-  'prompt' \
   'syntax-highlighting' \
+  'history-substring-search' \
   'autosuggestions' \
+  'completion' \
+  'prompt' \
   'python' 
 
 #
@@ -49,7 +49,8 @@ zstyle ':prezto:load' pmodule \
 #
 
 # Set the query found color.
-zstyle ':prezto:module:autosuggestions:color' found ''
+# zstyle ':prezto:module:autosuggestions:color' found ''
+zstyle ':prezto:module:autosuggestions' color 'yes'
 
 #
 # Completions
@@ -125,7 +126,7 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 # zstyle ':prezto:module:history-substring-search' unique 'yes'
 
 # Enable prefixed search.
-# zstyle ':prezto:module:history-substring-search' prefixed 'yes'
+zstyle ':prezto:module:history-substring-search' prefixed 'yes'
 
 #
 # macOS
