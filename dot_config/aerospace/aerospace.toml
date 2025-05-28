@@ -7,8 +7,15 @@
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
 
-# Mouse follows focus when focused monitor changes
+# Mouse follows focus when focused monitor or window change
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+# on-focus-changed = ['move-mouse window-lazy-center']
+
+# Use JankyBorders to highlight the selected window
+after-startup-command = [
+  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+]
+
 
 [gaps]
     inner.horizontal = 10
@@ -103,3 +110,4 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
     right = 'resize width +50'
     enter = 'mode main'
     esc = 'mode main'
+
