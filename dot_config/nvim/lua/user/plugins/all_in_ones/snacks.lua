@@ -8,15 +8,15 @@ return {
     quickfile = { enabled = true },
     indent = { enabled = true },
     bigfile = { enabled = true },
-    scroll = { enabled = true },
+    statuscolumn = { enabled = true },
 
+    scroll = { enabled = false },
     dashboard = { enabled = false },
     explorer = { enabled = false },
     input = { enabled = false },
     notifier = { enabled = false },
     picker = { enabled = false },
     scope = { enabled = false },
-    statuscolumn = { enabled = true },
     words = { enabled = false },
   },
   keys = {
