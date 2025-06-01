@@ -22,14 +22,13 @@ return {
 		mason_lspconfig.setup({
 			ensure_installed = {
 				-- LSP servers
-				"pyright", -- Python
 				"ruff", -- Python (also)
+				-- "pyright", -- deprecated in favor of ruff
 				"lua_ls", -- Lua
-				"tsserver", -- TypeScript/JavaScript
 				"yamlls", -- YAML
 				"bashls", -- Bash/Shell
 				"jsonls", -- JSON
-				"nil_ls", -- Nix
+				-- "nil_ls", -- Nix - Can't it get to work with Mason right now.
 			},
 			automatic_installation = true,
 		})
@@ -38,9 +37,10 @@ return {
 			ensure_installed = {
 				-- Python tools
 				"ruff", -- Python linter
-				"pyright", -- Python LSP
-				"black", -- Python formatter
-				"isort", -- Python import sorter
+				-- All the following are deprecated in favor of ruff
+				-- "pyright", -- Python LSP
+				-- "black", -- Python formatter
+				-- "isort", -- Python import sorter
 
 				-- Lua tools
 				"lua_ls", -- Lua LSP
@@ -58,8 +58,6 @@ return {
 
 				-- YAML/JSON
 				"yamllint", -- YAML linter
-
-				-- Add more as needed...
 			},
 			auto_update = false,
 			run_on_start = true,
