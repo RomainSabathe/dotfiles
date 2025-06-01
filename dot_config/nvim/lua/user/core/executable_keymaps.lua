@@ -1,4 +1,4 @@
-vim.g.mapleader = " "     -- setting space as leader key.
+vim.g.mapleader = " " -- setting space as leader key.
 
 local keymap = vim.keymap -- shortcut
 
@@ -23,9 +23,9 @@ keymap.set("n", "<Down>", "gj", { noremap = true })
 keymap.set("n", "<Up>", "gk", { noremap = true })
 
 -- quicker exit
--- keymap.set("n", "<leader>qq", "<cmd>wq<cr>", { desc = "Save and close the split" })
-keymap.set("n", "<leader>Qq", "<cmd>q!<cr>", { desc = "Close the split without saving" })
+keymap.set("n", "<leader>qq", "<cmd>wq<cr>", { desc = "Save and close the split" })
 keymap.set("n", "<leader>qa", "<cmd>wqa<cr>", { desc = "Save all splits and buffers and exit vim" })
+keymap.set("n", "<leader>Qq", "<cmd>q!<cr>", { desc = "Close the split without saving" })
 keymap.set("n", "<leader>Qa", "<cmd>qa!<cr>", { desc = "Exit vim without saving" })
 
 -- quicker save
@@ -75,19 +75,19 @@ keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- adding "dp" and "dg" (diffput and diffget) to work in visual mode
 local function setup_diff_mappings()
-  if vim.opt.diff:get() then
-    vim.keymap.set("n", "dp", "dp", { buffer = true })
-    vim.keymap.set("v", "dp", ":diffput<CR>", { buffer = true })
-    vim.keymap.set("n", "dg", "do", { buffer = true })
-    vim.keymap.set("v", "dg", ":diffget<CR>", { buffer = true })
-  end
+	if vim.opt.diff:get() then
+		vim.keymap.set("n", "dp", "dp", { buffer = true })
+		vim.keymap.set("v", "dp", ":diffput<CR>", { buffer = true })
+		vim.keymap.set("n", "dg", "do", { buffer = true })
+		vim.keymap.set("v", "dg", ":diffget<CR>", { buffer = true })
+	end
 end
 
 vim.api.nvim_create_autocmd("OptionSet", {
-  pattern = "diff",
-  callback = setup_diff_mappings,
+	pattern = "diff",
+	callback = setup_diff_mappings,
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
-  callback = setup_diff_mappings,
+	callback = setup_diff_mappings,
 })
