@@ -14,6 +14,10 @@ return {
 
 		auto_session.setup({
 			auto_session_suppress_dirs = { "~/", "~/Downloads", "/" },
+			auto_save_enabled = true,
+			auto_restore_enabled = true,
+			session_lens = { load_on_setup = true },
+			git_use_branch_name = true,
 		})
 
 		-- Recommended by the author

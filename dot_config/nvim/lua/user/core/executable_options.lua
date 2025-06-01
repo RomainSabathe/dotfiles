@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Keymap (e.g. ZMK)
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "dst" },
+	pattern = { "dts" },
 	callback = function()
 		-- Disable automatic line breaks while typing
 		vim.opt_local.textwidth = 0
