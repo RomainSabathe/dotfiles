@@ -28,7 +28,7 @@ after-startup-command = [
 [mode.main.binding]
     # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
     alt-enter = '''exec-and-forget osascript -e '
-    tell application "Terminal"
+    tell application "ghostty"
         do script
         activate
     end tell'
@@ -72,16 +72,16 @@ after-startup-command = [
     # should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
     # alt-a = 'focus parent'
 
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
-    alt-5 = 'workspace 5'
-    alt-6 = 'workspace 6'
-    alt-7 = 'workspace 7'
-    alt-8 = 'workspace 8'
-    alt-9 = 'workspace 9'
-    alt-0 = 'workspace 10'
+    alt-1 = 'workspace --auto-back-and-forth 1'
+    alt-2 = 'workspace --auto-back-and-forth 2'
+    alt-3 = 'workspace --auto-back-and-forth 3'
+    alt-4 = 'workspace --auto-back-and-forth 4'
+    alt-5 = 'workspace --auto-back-and-forth 5'
+    alt-6 = 'workspace --auto-back-and-forth 6'
+    alt-7 = 'workspace --auto-back-and-forth 7'
+    alt-8 = 'workspace --auto-back-and-forth 8'
+    alt-9 = 'workspace --auto-back-and-forth 9'
+    alt-0 = 'workspace --auto-back-and-forth 10'
 
     alt-shift-1 = 'move-node-to-workspace 1'
     alt-shift-2 = 'move-node-to-workspace 2'
