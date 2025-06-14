@@ -14,6 +14,11 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Sourcing the API keys and such
+if [ -f "$HOME/.env" ]; then
+    source "$HOME/.env"
+fi
+
 # Adding ~/.local/bin to the list of $PATH
 typeset -U path
 path=(${ZDOTDIR:-$HOME}/.local/bin $path)

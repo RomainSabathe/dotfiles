@@ -6,7 +6,7 @@ return {
 		"hrsh7th/nvim-cmp",
 		"nvim-telescope/telescope.nvim",
 		"echasnovski/mini.diff",
-    "ravitemer/codecompanion-history.nvim",
+		"ravitemer/codecompanion-history.nvim",
 		{ "stevearc/dressing.nvim", opts = {} }, -- Optional: Improves `vim.ui.select`
 	},
 	opts = {
@@ -35,37 +35,37 @@ return {
 					make_slash_commands = true, -- Add prompts as /slash commands
 				},
 			},
-      history = {
-          enabled = true,
-          opts = {
-              -- Keymap to open history from chat buffer (default: gh)
-              keymap = "gh",
-              -- Keymap to save the current chat manually (when auto_save is disabled)
-              save_chat_keymap = "sc",
-              -- Save all chats by default (disable to save only manually using 'sc')
-              auto_save = true,
-              -- Number of days after which chats are automatically deleted (0 to disable)
-              expiration_days = 0,
-              -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
-              picker = "telescope",
-              ---Automatically generate titles for new chats
-              auto_generate_title = true,
-              title_generation_opts = {
-                  ---Adapter for generating titles (defaults to active chat's adapter) 
-                  adapter = "groq", -- e.g "copilot"
-                  ---Model for generating titles (defaults to active chat's model)
-                  model = "meta-llama/llama-4-scout-17b-16e-instruct", -- e.g "gpt-4o"
-              },
-              ---On exiting and entering neovim, loads the last chat on opening chat
-              continue_last_chat = false,
-              ---When chat is cleared with `gx` delete the chat from history
-              delete_on_clearing_chat = false,
-              ---Directory path to save the chats
-              dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
-              ---Enable detailed logging for history extension
-              enable_logging = false,
-          }
-      },
+			history = {
+				enabled = true,
+				opts = {
+					-- Keymap to open history from chat buffer (default: gh)
+					keymap = "gh",
+					-- Keymap to save the current chat manually (when auto_save is disabled)
+					save_chat_keymap = "sc",
+					-- Save all chats by default (disable to save only manually using 'sc')
+					auto_save = true,
+					-- Number of days after which chats are automatically deleted (0 to disable)
+					expiration_days = 0,
+					-- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
+					picker = "telescope",
+					---Automatically generate titles for new chats
+					auto_generate_title = true,
+					title_generation_opts = {
+						---Adapter for generating titles (defaults to active chat's adapter)
+						adapter = "groq", -- e.g "copilot"
+						---Model for generating titles (defaults to active chat's model)
+						model = "meta-llama/llama-4-scout-17b-16e-instruct", -- e.g "gpt-4o"
+					},
+					---On exiting and entering neovim, loads the last chat on opening chat
+					continue_last_chat = false,
+					---When chat is cleared with `gx` delete the chat from history
+					delete_on_clearing_chat = false,
+					---Directory path to save the chats
+					dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+					---Enable detailed logging for history extension
+					enable_logging = false,
+				},
+			},
 		},
 		adapters = {
 			anthropic = function()
@@ -76,14 +76,25 @@ return {
 						},
 					},
 					env = {
-						api_key = '{{ (bitwardenSecrets "f052506d-4a43-4598-8f1f-b2e800b3f96c" .accessToken).value }}',
+						api_key = os.getenv("ANTHROPIC_API_KEY") or "",
+					},
+				})
+			end,
 					},
 				})
 			end,
 			openai = function()
 				return require("codecompanion.adapters").extend("openai", {
 					env = {
-						api_key = '{{ (bitwardenSecrets "24eae837-1453-434b-ab6f-b2e800d3fe23" .accessToken).value }}',
+						api_key = os.getenv("OPENAI_API_KEY") or "",
+					},
+					schema = {
+						model = {
+							default = "gpt-4.1-2025-04-14",
+						},
+					},
+				})
+			end,
 					},
 				})
 			end,
@@ -93,7 +104,7 @@ return {
 					formatted_name = "Groq",
 					url = "https://api.groq.com/openai/v1/chat/completions",
 					env = {
-						api_key = '{{ (bitwardenSecrets "bac3c661-dc9f-40ca-a2e7-b2e800d44270" .accessToken).value  }}',
+						api_key = os.getenv("GROQ_API_KEY") or "",
 					},
 					roles = {
 						llm = "assistant",
