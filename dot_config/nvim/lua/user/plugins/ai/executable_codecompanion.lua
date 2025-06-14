@@ -80,6 +80,15 @@ return {
 					},
 				})
 			end,
+			gemini = function()
+				return require("codecompanion.adapters").extend("gemini", {
+					env = {
+						api_key = os.getenv("GEMINI_API_KEY") or "",
+					},
+					schema = {
+						model = {
+							default = "gemini-2.5-flash-preview-05-20",
+						},
 					},
 				})
 			end,
@@ -95,6 +104,15 @@ return {
 					},
 				})
 			end,
+			deepseek = function()
+				return require("codecompanion.adapters").extend("deepseek", {
+					env = {
+						api_key = os.getenv("DEEPSEEK_API_KEY") or "",
+					},
+					schema = {
+						model = {
+							default = "deepseek-reasoner",
+						},
 					},
 				})
 			end,
