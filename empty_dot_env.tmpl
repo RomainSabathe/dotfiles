@@ -3,4 +3,5 @@ export OPENAI_API_KEY='{{ (bitwardenSecrets "24eae837-1453-434b-ab6f-b2e800d3fe2
 export GROQ_API_KEY='{{ (bitwardenSecrets "bac3c661-dc9f-40ca-a2e7-b2e800d44270" .accessToken).value }}'
 export DEEPSEEK_API_KEY='{{ (bitwardenSecrets "e79a9ade-8b60-4860-b2d0-b2fc009ca212" .accessToken).value }}'
 export GEMINI_API_KEY='{{ (bitwardenSecrets "d69daadd-96ed-4e2c-8cfb-b2fc009c7643" .accessToken).value }}'
+export OPENROUTER_API_KEY='{{ (bitwardenSecrets "5c5e19a9-e740-44d0-ba94-b2fc01161fe1" .accessToken).value }}'
 export GOOGLE_API_KEY=$GEMINI_API_KEY
