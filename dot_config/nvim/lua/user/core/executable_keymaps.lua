@@ -8,6 +8,9 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set({ "i" }, "fd", "<Esc>")
 keymap.set({ "i" }, "fd", "<C-\\><C-n>")
 
+-- select all
+keymap.set({ "n" }, "<leader>A", "ggVG", { desc = "Select all", noremap = true })
+
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
 keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
