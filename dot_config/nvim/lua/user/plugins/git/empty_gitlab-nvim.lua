@@ -31,8 +31,7 @@ return {
           reply = "r",                         -- Reply to comment
           toggle_resolved = "-",               -- Toggle the resolved status of the whole discussion
           delete_comment = "x",                -- Toggle the resolved status of the whole discussion
-          jump_to_file = "a",                  -- Jump to comment location in file
-          jump_to_reviewer = "a",              -- Jump to the comment location in the reviewer window
+          jump_to_reviewer = "<return>",       -- Jump to the comment location in the reviewer window
           open_in_browser = "b",               -- Jump to the URL of the current note/discussion
           copy_node_url = "u",                 -- Copy the URL of the current node to clipboard
           switch_view = "c",                   -- Toggle between the notes and discussions views
