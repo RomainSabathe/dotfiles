@@ -32,6 +32,9 @@ export NVM_DIR="$HOME/.nvm"
 # Activating zoxide
 eval "$(zoxide init zsh --cmd cd)"
 
+# fzf shell integration
+source <(fzf --zsh)
+
 # Common exports
 export VISUAL="nvim"  # editor
 
