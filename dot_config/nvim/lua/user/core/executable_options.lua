@@ -33,6 +33,10 @@ vim.opt.splitbelow = true -- Open horizontal splits below
 -- File Handling
 vim.opt.swapfile = false -- Disable swap files
 
+-- Use LSP to handle folding
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+
 -- Open file at the last position it was edited earlier
 vim.api.nvim_create_autocmd("BufReadPost", {
 	desc = "Open file at the last position it was edited earlier",
