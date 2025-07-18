@@ -83,3 +83,9 @@ if vim.fn.has("wsl") == 1 then
 else
 	vim.opt.clipboard:append("unnamedplus") -- Use system clipboard as default register
 end
+
+-- Ensures that when exiting NeoVim, Zellij returns to normal mode
+vim.api.nvim_create_autocmd("VimLeave", {
+	pattern = "*",
+	command = "silent !zellij action switch-mode normal",
+})
