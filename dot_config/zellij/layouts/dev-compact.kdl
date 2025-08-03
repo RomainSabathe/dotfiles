@@ -5,9 +5,9 @@ layout {
     pane split_direction="horizontal" {
       pane command="nvim" size="70%" borderless=true focus=true name="editor"
       pane split_direction="vertical" {
-        pane size="60%" borderless=true name="runner"
+        pane size="70%" borderless=true name="runner"
         pane split_direction="horizontal" {
-          pane command="lazygit" borderless=true name="lazygit"
+          pane command="htop" borderless=true name="htop"
           // pane command="htop"
         }
       }

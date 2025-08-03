@@ -29,6 +29,18 @@ keybinds clear-defaults=true {
 
         // Easy access to copy/search mode with Ctrl+b
         bind "Ctrl b" { SwitchToMode "Scroll"; }
+
+        // Lazygit popup (mimics tmux C-g popup)
+        bind "Ctrl g" { 
+            Run "lazygit" {
+                close_on_exit true
+                floating true
+                x "5%"
+                y "5%"
+                width "92%"
+                height "94%"
+            }
+        }
     }
 
     shared {
@@ -42,6 +54,7 @@ keybinds clear-defaults=true {
 
         // Easy access to floating windows (mimicks i3/Glaze/aerospace behavior)
         bind "Ctrl Space" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+
     }
     
     pane {
