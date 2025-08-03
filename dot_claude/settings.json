@@ -23,45 +23,7 @@
       "Bash(gh pr list:*)",
       "Bash(gh pr view:*)",
       "Bash(gh pr diff:*)",
-      "WebFetch(domain:docs.litellm.ai)",
-      "WebFetch(domain:openai.com)",
-      "WebFetch(domain:anthropic.com)",
-      "WebFetch(domain:github.com)",
-      "mcp__tavily__tavily-extract",
-      "mcp__context7__resolve-library-id",
-      "mcp__context7__get-library-docs"
     ]
   },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "WebFetch",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "./.claude/hooks/tavily_extract.py"
-          }
-        ]
-      },
-      {
-        "matcher": "mcp__tavily__tavily-extract",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "./.claude/hooks/tavily_advanced.py"
-          }
-        ]
-      },
-      {
-        "matcher": "mcp__tavily__tavily-search",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "./.claude/hooks/tavily_search_redirect.py"
-          }
-        ]
-      }
-    ]
-  }
-}
+  "hooks": {}
 
