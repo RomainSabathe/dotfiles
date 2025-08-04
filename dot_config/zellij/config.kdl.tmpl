@@ -239,7 +239,7 @@ plugins {
         welcome_screen true
     }
     autolock location="file:{{ .chezmoi.homeDir }}/.config/zellij/plugins/zellij-autolock.wasm" {
-        triggers "nvim|vim|v|nv"  // Lock when any open these programs open. They are expected to unlock themselves when closed (e.g., using zellij.vim plugin).
+        triggers "nvim|vim|v|nv|uv"  // Lock when any open these programs open. They are expected to unlock themselves when closed (e.g., using zellij.vim plugin).
         watch_triggers "fzf|zoxide|atuin|atac"  // Lock when any of these open and monitor until closed.
         reaction_seconds "1"
     }
