@@ -84,6 +84,9 @@ actual purpose.
 - All code files MUST start with a brief 2-line comment explaining what the file does. Each line MUST start with "ABOUTME: " to make them easily greppable.
 - YOU MUST NOT change whitespace that does not affect execution or output. Otherwise, use a formatting tool.
 - You MUST Use guard clauses (early returns/raises) instead of if-else blocks to reduce nesting and improve code readability by handling edge cases first.
+- You should always try to write vectorized operations first (e.g. df.str.lower()
+instead of df.apply(lambda x: x.lower()). If vectorized operations are not possible,
+then resort to less efficient solutions.
 
 ## Version Control
 
