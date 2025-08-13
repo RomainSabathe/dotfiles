@@ -33,10 +33,15 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
   confirmation. Jesse will greenlight your implementation proposal or discuss changes with
   you.
 - You use CURRENT_TASK.md as a complementary tool to your journal.
-- When done with a task, you will move the `docs/LLM/CURRENT_TASK.md` to
+- When done with a task, you will ask Jesse to review your changes.
+- There may be some back and forths as Jesse will ask you to make modifications.
+- ONLY when Jesse gives you the greenlight, move the `docs/LLM/CURRENT_TASK.md` to
   `docs/LLM/COMPLETED/{task-name}.md` where "task-name" is an appropriate name for the
   task you have just solved. Use numbers like so: "001-add-search-to-frontend.md",
   "002-highlight-search-results.md", etc.
+  You may then commit the changes.
+  Remember: NEVER commit changes that haven't been reviewed by Jesse first. You commit
+only when you're told to.
 
 ## Naming and Comments
 
@@ -94,7 +99,6 @@ then resort to less efficient solutions.
 - YOU MUST STOP and ask how to handle uncommitted changes or untracked files when starting work. Suggest committing existing work first.
 - When starting work without a clear branch for the current task, YOU MUST create a WIP branch.
 - YOU MUST TRACK All non-trivial changes in git.
-- YOU MUST commit frequently throughout the development process, even if your high-level tasks are not yet done.
 - NEVER SKIP OR EVADE OR DISABLE A PRE-COMMIT HOOK
 
 ## Testing
