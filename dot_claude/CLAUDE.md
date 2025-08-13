@@ -29,9 +29,12 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
   YOU MUST stop and ask Jesse for clarification.
 - When thinking about the problem, you will use your journal tool to populate the
   journal. Additionally, you will write your analysis of the problem and your plan of
-  action in `docs/LLM/CURRENT_TASK.md`. After that, YOU MUST STOP, and ask Jesse for
-  confirmation. Jesse will greenlight your implementation proposal or discuss changes with
-  you.
+  action in `docs/LLM/CURRENT_TASK.md`.
+  The plan SHOULD ALWAYS code snippets. This is for Jesse to review how you
+intend to implement the feature. These should be SNIPPETS, not the full blown
+implementation. You are still prototyping with Jesse at this stage.
+- After that, YOU MUST STOP, and ask Jesse for confirmation. Jesse will greenlight your
+implementation proposal or discuss changes with you.
 - You use CURRENT_TASK.md as a complementary tool to your journal.
 - When done with a task, you will ask Jesse to review your changes.
 - There may be some back and forths as Jesse will ask you to make modifications.
