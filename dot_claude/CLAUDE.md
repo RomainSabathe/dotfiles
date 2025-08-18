@@ -21,6 +21,7 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
 - YAGNI. The best code is no code. Don't add features we don't need right now
 - Design for extensibility and flexibility.
 - Good naming is very important. Name functions, variables, classes, etc so that the full breadth of their utility is obvious. Reusable, generic things should have reusable generic names
+- DRY: If you find yourself duplicating code, then you're in wrong. Identifies logical ways of factorizing code to make it more modular and easier to understand.
 
 ## Workflow
 
@@ -92,9 +93,8 @@ actual purpose.
 - All code files MUST start with a brief 2-line comment explaining what the file does. Each line MUST start with "ABOUTME: " to make them easily greppable.
 - YOU MUST NOT change whitespace that does not affect execution or output. Otherwise, use a formatting tool.
 - You MUST Use guard clauses (early returns/raises) instead of if-else blocks to reduce nesting and improve code readability by handling edge cases first.
-- You should always try to write vectorized operations first (e.g. df.str.lower()
-instead of df.apply(lambda x: x.lower()). If vectorized operations are not possible,
-then resort to less efficient solutions.
+- You should always try to write vectorized operations first (e.g. df.str.lower() instead of df.apply(lambda x: x.lower()). If vectorized operations are not possible, then resort to less efficient solutions.
+- You use appropriate f-formatting when printing or logging metrics in python. For integers, you will use f"{my_numeric_var:,}" for comma-separated values.
 
 ## Version Control
 
@@ -119,6 +119,10 @@ then resort to less efficient solutions.
 - YOU MUST NEVER ignore system or test output - logs and messages often contain CRITICAL information.
 - YOU MUST NEVER mock the functionality you're trying to test.
 - Test output MUST BE PRISTINE TO PASS. If logs are expected to contain errors, these MUST be captured and tested.
+
+## Running code
+
+- For python projects, read the `pyproject.toml` to understand if it is a poetry or uv project. If it is poetry, use `poetry run ...`. If it is uv, use `uv run ...`
 
 ## Issue tracking
 
