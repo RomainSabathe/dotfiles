@@ -4,6 +4,16 @@ return {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "nvim-tree/nvim-web-devicons",
+    {
+      "isak102/telescope-git-file-history.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "tpope/vim-fugitive"
+      }
+    }, {
+    "fdschmidt93/telescope-egrepify.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" }
+  }
   },
   config = function()
     local telescope = require("telescope")
@@ -23,6 +33,8 @@ return {
     })
 
     telescope.load_extension("fzf")
+    telescope.load_extension("git_file_history")
+    telescope.load_extension("egrepify")
 
     -- Navigating files
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Fuzzy find files in cwd" })
@@ -62,5 +74,7 @@ return {
       builtin.git_bcommits,
       { desc = "List git commits related to current buffer" }
     )
+    vim.keymap.set("n", "<leader>fgh", telescope.extensions.git_file_history.git_file_history,
+      { desc = "List git file history" })
   end,
 }
