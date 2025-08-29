@@ -1,0 +1,16 @@
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[user]
+	name = Romain Sabathe
+{{- if .is_work_machine }}
+	email = {{ (bitwardenSecrets "4747c59a-a748-4053-9147-b3480087e4ed" .accessToken).value }}
+{{- else }}
+	email = {{ (bitwardenSecrets "5ccb3a85-3b2e-4584-ae27-b3480087d6af" .accessToken).value }}
+{{- end }}
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
