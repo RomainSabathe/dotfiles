@@ -5,6 +5,7 @@
 	process = git-lfs filter-process
 [user]
 	name = Romain Sabathe
+  editor = vim
 {{- if .is_work_machine }}
 	email = {{ (bitwardenSecrets "4747c59a-a748-4053-9147-b3480087e4ed" .accessToken).value }}
 {{- else }}
