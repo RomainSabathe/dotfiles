@@ -1,7 +1,7 @@
 # Setup
 
-- Download `bws` with `cargo install bws --locked`
-- Edit `$HOME/.config/chezmoi/.toml`:
+- Download `bws` with `cargo install --git https://github.com/bitwarden/sdk-sm bws --locked`
+- Edit `$HOME/.config/chezmoi/chezmoi.toml`:
 
 ```toml
 [data]
