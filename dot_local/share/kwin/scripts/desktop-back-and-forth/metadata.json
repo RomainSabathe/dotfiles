@@ -1,0 +1,17 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Romain"
+            }
+        ],
+        "Description": "Toggle between current and previous desktop (sway-style back_and_forth)",
+        "Name": "Desktop Back and Forth",
+        "Id": "desktop-back-and-forth",
+        "Version": "1.0",
+        "License": "GPLv3"
+    },
+    "KPackageStructure": "KWin/Script",
+    "X-Plasma-API": "javascript",
+    "X-Plasma-MainScript": "code/main.js"
+}
