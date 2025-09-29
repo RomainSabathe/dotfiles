@@ -5,10 +5,10 @@
                 "Name": "Romain"
             }
         ],
-        "Description": "Toggle between current and previous desktop (sway-style back_and_forth)",
+        "Description": "Toggle between current and previous desktop (sway-style back_and_forth). Creates 'Toggle Desktop N' shortcuts that switch to desktop N, or if already there, go back to the previous desktop.",
         "Name": "Desktop Back and Forth",
         "Id": "desktop-back-and-forth",
-        "Version": "1.0",
+        "Version": "2.0",
         "License": "GPLv3"
     },
     "KPackageStructure": "KWin/Script",
