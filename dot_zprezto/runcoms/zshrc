@@ -21,7 +21,7 @@ fi
 
 # Adding ~/.local/bin to the list of $PATH
 typeset -U path
-path=(${ZDOTDIR:-$HOME}/.local/bin $path)
+path=(${ZDOTDIR:-$HOME}/.local/bin $HOME/.cargo/bin $path)
 export PATH
 
 # Adding nvm to the list of path.
