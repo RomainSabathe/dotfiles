@@ -72,20 +72,40 @@ vim.api.nvim_create_autocmd("FileType", {
 -- System Integration
 -- WSL-specific clipboard configuration
 if vim.fn.has("wsl") == 1 then
-	vim.g.clipboard = {
-		name = "WslClipboard",
-		copy = {
-			["+"] = "clip.exe",
-			["*"] = "clip.exe",
-		},
-		paste = {
-			["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-			["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-		},
-		cache_enabled = 0,
-	}
+  vim.g.clipboard = {
+    name = "WslClipboard",
+    copy = {
+      ["+"] = "clip.exe",
+      ["*"] = "clip.exe",
+    },
+    paste = {
+      ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = 0,
+  }
 else
-	vim.opt.clipboard:append("unnamedplus") -- Use system clipboard as default register
+  -- Use OSC 52 for copy only
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+      ['+'] = { 'cat', '/dev/null' },
+      ['*'] = { 'cat', '/dev/null' },
+    },
+  }
+
+  -- Auto-copy yanked text to system clipboard without affecting paste
+  vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+      if vim.v.event.operator == 'y' then
+        vim.fn.setreg('+', vim.fn.getreg('"'))
+      end
+    end,
+  })
 end
 
 -- Ensures that when exiting NeoVim, Zellij returns to normal mode
