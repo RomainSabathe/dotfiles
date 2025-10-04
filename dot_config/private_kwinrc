@@ -1,5 +1,5 @@
 [Activities][LastVirtualDesktop]
-9a707ee6-896c-483b-a68c-86c0ff2db2ab=b71e537e-c88d-4a1b-96d8-f20fbb6eef71
+9a707ee6-896c-483b-a68c-86c0ff2db2ab=8ab95e33-be3b-49de-bf73-159c4ac8ec75
 
 [Desktops]
 Id_1=b71e537e-c88d-4a1b-96d8-f20fbb6eef71
@@ -17,6 +17,9 @@ Rows=3
 [Effect-diminactive]
 Strength=10
 
+[Effect-hidecursor]
+InactivityDuration=10
+
 [NightColor]
 Active=true
 LatitudeAuto=48.86
@@ -24,8 +27,13 @@ LongitudeAuto=2.35
 NightTemperature=3700
 
 [Plugins]
+blurEnabled=false
+desktop-back-and-forthEnabled=true
+desktopchangeosdEnabled=false
 diminactiveEnabled=true
+hidecursorEnabled=true
 krohnkiteEnabled=true
+metadataEnabled=true
 poloniumEnabled=false
 slideEnabled=false
 
@@ -34,7 +42,7 @@ PopupHideDelay=100
 TextOnly=true
 
 [Script-krohnkite]
-limitTileWidthRatio=1.9000000000000004
+limitTileWidthRatio=1.9
 monocleMaximize=false
 screenGapBetween=15
 screenGapBottom=10
