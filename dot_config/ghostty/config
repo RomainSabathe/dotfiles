@@ -1,7 +1,6 @@
-font-family = "Iosevka Nerd Font Mono"
-font-family = "FiraCode Nerd Font Mono"
-font-family = "SauceCodePro Nerd Font"
-font-family = "0xProto Nerd Font Mono"
+font-family = "Iosevka Term"
+font-size = 11.5
 
 font-thicken = true
-window-decoration = none
+# window-decoration = none
+keybind = ctrl+v=paste_from_clipboard
