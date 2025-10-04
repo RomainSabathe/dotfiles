@@ -41,6 +41,7 @@ screenGapBottom=10
 screenGapLeft=10
 screenGapRight=10
 screenGapTop=10
+tileLayoutInitialRotationAngle=2
 
 [Script-polonium]
 Borders=0
