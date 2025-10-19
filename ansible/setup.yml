@@ -1,0 +1,147 @@
+---
+- name: Configure Fedora Kinoite with NVIDIA, Ghostty, and Development Tools
+  hosts: localhost
+  become: true
+  vars:
+    reboot_timeout: 600
+    utils_container_packages:
+      - htop
+      - nvtop
+      - neovim
+      - helix
+      - lazygit
+      - vifm
+      - yazi
+      - zellij
+      - chezmoi
+
+  tasks:
+    # =====================================================
+    # PHASE 1: System Update
+    # =====================================================
+    - name: Update system with rpm-ostree
+      ansible.builtin.command:
+        cmd: rpm-ostree upgrade
+      register: rpm_ostree_upgrade
+      changed_when: "'No upgrade available' not in rpm_ostree_upgrade.stdout"
+
+    - name: Reboot after system update
+      ansible.builtin.reboot:
+        reboot_timeout: "{{ reboot_timeout }}"
+      when: rpm_ostree_upgrade.changed
+
+    # =====================================================
+    # PHASE 2: NVIDIA Drivers Installation
+    # =====================================================
+    - name: Add RPM Fusion repositories
+      ansible.builtin.command:
+        cmd: >
+          rpm-ostree install
+          https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
+          https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
+      register: rpmfusion_install
+      changed_when: "'No upgrade available' not in rpmfusion_install.stdout"
+      failed_when: false
+
+    - name: Reboot after RPM Fusion installation
+      ansible.builtin.reboot:
+        reboot_timeout: "{{ reboot_timeout }}"
+      when: rpmfusion_install.changed
+
+    - name: Install NVIDIA drivers with CUDA support
+      ansible.builtin.command:
+        cmd: rpm-ostree install akmod-nvidia xorg-x11-drv-nvidia-cuda xorg-x11-drv-nvidia-cuda-libs
+      register: nvidia_install
+      changed_when: "'No upgrade available' not in nvidia_install.stdout"
+
+    - name: Configure kernel parameters for NVIDIA
+      ansible.builtin.command:
+        cmd: >
+          rpm-ostree kargs
+          --append=rd.driver.blacklist=nouveau,nova_core
+          --append=modprobe.blacklist=nouveau,nova_core
+      register: nvidia_kargs
+      changed_when: true
+
+    - name: Reboot after NVIDIA driver installation
+      ansible.builtin.reboot:
+        reboot_timeout: "{{ reboot_timeout }}"
+      when: nvidia_install.changed or nvidia_kargs.changed
+
+    # =====================================================
+    # PHASE 3: Ghostty & Distrobox Installation (Combined)
+    # =====================================================
+    - name: Add Ghostty COPR repository
+      ansible.builtin.shell:
+        cmd: |
+          . /etc/os-release
+          curl -fsSL "https://copr.fedorainfracloud.org/coprs/scottames/ghostty/repo/fedora-${VERSION_ID}/scottames-ghostty-fedora-${VERSION_ID}.repo" | tee /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:scottames:ghostty.repo > /dev/null
+        creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:scottames:ghostty.repo
+
+    - name: Refresh rpm-ostree metadata
+      ansible.builtin.command:
+        cmd: rpm-ostree refresh-md
+      changed_when: false
+
+    - name: Install Ghostty and Distrobox together
+      ansible.builtin.command:
+        cmd: rpm-ostree install ghostty distrobox
+      register: ghostty_distrobox_install
+      changed_when: "'No upgrade available' not in ghostty_distrobox_install.stdout"
+
+    - name: Reboot after Ghostty and Distrobox installation
+      ansible.builtin.reboot:
+        reboot_timeout: "{{ reboot_timeout }}"
+      when: ghostty_distrobox_install.changed
+
+    # =====================================================
+    # PHASE 5: Distrobox Container Setup (as user)
+    # =====================================================
+    - name: Create utils distrobox container from Arch
+      become: false
+      ansible.builtin.command:
+        cmd: distrobox create --name utils --image archlinux:latest
+      register: distrobox_create
+      changed_when: "'Container utils already exists' not in distrobox_create.stderr"
+      failed_when: distrobox_create.rc != 0 and 'already exists' not in distrobox_create.stderr
+
+    - name: Wait for container initialization
+      ansible.builtin.pause:
+        seconds: 10
+      when: distrobox_create.changed
+
+    - name: Update Arch Linux package database in utils container
+      become: false
+      ansible.builtin.command:
+        cmd: distrobox enter utils -- sudo pacman -Sy --noconfirm
+      register: pacman_sync
+      changed_when: true
+
+    - name: Install packages in utils container
+      become: false
+      ansible.builtin.command:
+        cmd: distrobox enter utils -- sudo pacman -S --noconfirm --needed {{ utils_container_packages | join(' ') }}
+      register: packages_install
+      changed_when: "'reinstalling' not in packages_install.stdout"
+
+    # =====================================================
+    # COMPLETION
+    # =====================================================
+    - name: Display completion message
+      ansible.builtin.debug:
+        msg:
+          - "========================================="
+          - "Fedora Kinoite Setup Complete!"
+          - "========================================="
+          - "Installed components:"
+          - "  - System fully updated"
+          - "  - NVIDIA drivers with CUDA support"
+          - "  - Ghostty terminal emulator"
+          - "  - Distrobox with 'utils' Arch container"
+          - ""
+          - "Packages in 'utils' container:"
+          - "{{ utils_container_packages | join(', ') }}"
+          - ""
+          - "To enter the utils container, run:"
+          - "  distrobox enter utils"
+          - "========================================="
