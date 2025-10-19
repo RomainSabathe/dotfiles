@@ -1,0 +1,9 @@
+[Keyboard]
+RepeatDelay=300
+RepeatRate=45
+
+[Libinput][1133][49271][Logitech USB Optical Mouse]
+ScrollMethod=4
+
+[Libinput][26980][117][THH ID75 Rev1 Mouse]
+ScrollMethod=4
