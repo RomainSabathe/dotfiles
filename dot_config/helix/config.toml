@@ -1,0 +1,146 @@
+# Helix Editor Configuration with Keybindings
+# Location: ~/.config/helix/config.toml
+# Note: Helix uses Space as the default leader key
+
+theme = "catppuccin_mocha"
+
+[editor]
+# Line numbers and UI
+line-number = "relative"
+cursorline = true
+gutters = ["diagnostics", "line-numbers", "spacer", "diff"]
+scrolloff = 7
+scroll-lines = 1
+
+# Editor behavior  
+auto-save = false
+idle-timeout = 250
+completion-trigger-len = 1
+
+# Indentation
+indent-guides.render = true
+
+# Text width and wrapping
+soft-wrap.enable = true
+
+# Search behavior
+search.smart-case = true
+search.wrap-around = true
+
+# Cursor shape
+cursor-shape.insert = "bar"
+cursor-shape.normal = "block"
+cursor-shape.select = "underline"
+
+# Status line
+statusline.left = ["mode", "spinner", "file-name", "diagnostics"]
+statusline.center = []
+statusline.right = ["selections", "position", "file-encoding"]
+
+# LSP
+lsp.display-messages = true
+lsp.display-inlay-hints = false
+
+# File picker
+file-picker.hidden = false
+
+# ============================================================================
+# KEY BINDINGS
+# ============================================================================
+
+[keys.normal]
+# Page navigation - making PageUp/PageDown go half page
+pageup = "page_cursor_half_up"
+pagedown = "page_cursor_half_down"
+
+# Arrow keys for wrapped line navigation (j/k already work this way in Helix)
+down = "move_visual_line_down"
+up = "move_visual_line_up"
+
+# Navigate buffers with Shift+Arrow (similar to tab navigation)
+S-right = "goto_next_buffer"
+S-left = "goto_previous_buffer"
+
+# Split navigation (smart-splits style)
+C-h = "jump_view_left"
+C-j = "jump_view_down"
+C-k = "jump_view_up"
+C-l = "jump_view_right"
+C-left = "jump_view_left"
+C-down = "jump_view_down"
+C-up = "jump_view_up"
+C-right = "jump_view_right"
+"C-\\" = "rotate_view_reverse"  # Go to previous split
+
+# Note: Split resizing (C-S-h/j/k/l) is not available in Helix
+# Helix doesn't currently support dynamic split resizing
+
+# ============================================================================
+# SPACE MODE CUSTOMIZATIONS (Space is the leader)
+# ============================================================================
+
+[keys.normal.space]
+# Selection shortcuts
+A = "select_all"                # <space>A - Select all (% also works)
+
+# Increment/decrement with leader
+"+" = "increment"               # <space>+ to increment
+"-" = "decrement"               # <space>- to decrement
+
+# Format selection
+F = "format_selections"         # <space>F - Format selection
+
+# Note: w, q, Q, s, T are defined as sub-modes below
+
+# ============================================================================
+# WRITE/SAVE SHORTCUTS (Space + w + ...)
+# ============================================================================
+
+[keys.normal.space.w]
+w = ":write"                    # <space>ww - save
+q = ":write-quit"               # <space>wq - save and close
+a = ":write-all"                # <space>wa - save all
+
+# ============================================================================
+# QUIT SHORTCUTS (Space + q + ...)
+# ============================================================================
+
+[keys.normal.space.q]
+q = ":write-quit"               # <space>qq - save and quit
+a = ":write-quit-all"           # <space>qa - save all and quit
+
+# ============================================================================
+# FORCE QUIT SHORTCUTS (Space + Q + ...)
+# ============================================================================
+
+[keys.normal.space.Q]  
+q = ":quit!"                    # <space>Qq - quit without saving
+a = ":quit-all!"                # <space>Qa - quit all without saving
+
+# ============================================================================
+# SPLIT MANAGEMENT (Space + s + ...)
+# ============================================================================
+
+[keys.normal.space.s]
+v = "hsplit"                    # <space>sv - horizontal split (below)
+h = "vsplit"                    # <space>sh - vertical split (right)
+e = "wonly"                     # <space>se - keep only current window
+x = "wclose"                    # <space>sx - close current split
+
+# ============================================================================
+# TAB/BUFFER MANAGEMENT (Space + T + ...)
+# ============================================================================
+
+[keys.normal.space.T]
+o = ":new"                      # <space>To - open new buffer
+x = ":buffer-close"             # <space>Tx - close current buffer
+f = "goto_next_buffer"          # <space>Tf - next buffer
+
+# ============================================================================
+# SELECT/VISUAL MODE  
+# ============================================================================
+
+[keys.select]
+# Page navigation in visual/select mode
+pageup = "page_cursor_half_up"
+pagedown = "page_cursor_half_down"
