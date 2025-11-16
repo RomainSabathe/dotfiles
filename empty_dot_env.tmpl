@@ -8,3 +8,4 @@ export DEEPSEEK_API_KEY='{{ (bitwardenSecrets "e79a9ade-8b60-4860-b2d0-b2fc009ca
 export GEMINI_API_KEY='{{ (bitwardenSecrets "d69daadd-96ed-4e2c-8cfb-b2fc009c7643" .accessToken).value }}'
 export OPENROUTER_API_KEY='{{ (bitwardenSecrets "5c5e19a9-e740-44d0-ba94-b2fc01161fe1" .accessToken).value }}'
 export GOOGLE_API_KEY=$GEMINI_API_KEY
+export MISTRAL_API_KEY='{{ (bitwardenSecrets "a6a376b8-d43e-4d25-a4c5-b397014fa35d" .accessToken).value }}'
