@@ -9,3 +9,4 @@ export GEMINI_API_KEY='{{ (bitwardenSecrets "d69daadd-96ed-4e2c-8cfb-b2fc009c764
 export OPENROUTER_API_KEY='{{ (bitwardenSecrets "5c5e19a9-e740-44d0-ba94-b2fc01161fe1" .accessToken).value }}'
 export GOOGLE_API_KEY=$GEMINI_API_KEY
 export MISTRAL_API_KEY='{{ (bitwardenSecrets "a6a376b8-d43e-4d25-a4c5-b397014fa35d" .accessToken).value }}'
+export HUGGING_FACE_API_KEY='{{ (bitwardenSecrets "bb36db35-7ed7-43ff-bbe0-b3d10079cfeb" .accessToken).value }}'
