@@ -53,10 +53,8 @@ for (var i = 1; i <= 20; i++) {
 }
 
 // Track desktop changes to update lastDesktop
-workspace.currentDesktopChanged.connect(function(desktop) {
-    // Only update if we're actually switching to a different desktop
-    var current = workspace.currentDesktop;
-    if (lastDesktop !== current) {
-        lastDesktop = desktop;
-    }
+workspace.currentDesktopChanged.connect(function (desktop) {
+  var current = workspace.currentDesktop;
+  lastDesktop = desktop;
 });
+
