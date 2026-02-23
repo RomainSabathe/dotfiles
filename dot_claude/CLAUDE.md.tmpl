@@ -1,0 +1,23 @@
+# Global Preferences
+
+## Python / Package Management
+
+- **Always use `uv`** — never use raw `pip`, `pip install`, or `python3` directly.
+- For running scripts with dependencies: `uv run --with='dep1,dep2' script.py`
+- For inline scripts: use PEP 723 metadata headers so `uv run script.py` resolves deps automatically.
+- Never use `uv pip install` (system or otherwise) — prefer ephemeral `--with` environments.
+
+## Code Quality
+
+- **After writing or modifying Python code**, run `uv run ruff check` and `uv run basedpyright` on changed files and fix errors/warnings.
+- If `ruff` or `basedpyright` are not project dependencies, use `uv run --with 'ruff,basedpyright' ruff check ...` / `uv run --with 'ruff,basedpyright' basedpyright ...`.
+
+## System
+
+{{- if .is_work_machine }}
+{{- else }}
+- Running Arch Linux in distrobox on Fedora 42 (Wayland).
+- No sudo access from Claude — if a command requires sudo, show it to the user and let them run it manually.
+- Clipboard: `wl-copy` / `wl-paste` (wl-clipboard).
+{{- end }}
+
