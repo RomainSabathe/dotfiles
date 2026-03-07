@@ -3,13 +3,20 @@ layout {
     //     plugin location="tab-bar"
     // }
     pane split_direction="horizontal" {
-      pane command="nvim" size="70%" borderless=true focus=true name="editor"
-      pane split_direction="vertical" {
-        pane size="70%" borderless=true name="runner"
-        pane split_direction="horizontal" {
-          pane command="htop" borderless=true name="htop"
-          // pane command="htop"
+      pane split_direction="vertical" size="70%" {
+        pane command="uv" size="75%" borderless=true focus=true name="editor" {
+          args "run" "nvim"
         }
+        pane command="claude" borderless=true name="ai"
+      }
+      pane split_direction="vertical" {
+        // pane size="70%" borderless=true name="runner"
+        pane command="yazi" size="30%" borderless=true name="explorer"
+        pane command="bash" size="40%" borderless=true name="runner"
+        // pane split_direction="horizontal" {
+          pane command="btop" borderless=true name="monitor"
+          // pane command="htop"
+        // }
       }
     }
     // pane size=1 borderless=true {
