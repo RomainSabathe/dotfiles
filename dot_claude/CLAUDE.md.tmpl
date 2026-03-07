@@ -7,10 +7,23 @@
 - For inline scripts: use PEP 723 metadata headers so `uv run script.py` resolves deps automatically.
 - Never use `uv pip install` (system or otherwise) — prefer ephemeral `--with` environments.
 
+## Docker / uv in Containers
+
+- **Never use `uv run` as a Docker ENTRYPOINT.** `uv run` auto-syncs the environment at runtime, which re-downloads all packages if the working directory changes (e.g. Ray moves to `/tmp/ray/...`).
+- Instead, put the venv on PATH (`ENV PATH="/app/.venv/bin:$PATH"`) so `python`, `ray`, and all console scripts resolve directly — no uv involvement at runtime.
+- Use `uv sync --frozen --no-dev` (or `--locked`) at build time to install deps into `.venv`.
+- Use `--mount=type=cache,target=/root/.cache/uv` on the `RUN uv sync` layer to cache wheels across builds.
+- Add a sanity-check `RUN python -c "import <key_dep>; ..."` after install to catch missing packages at build time.
+
 ## Code Quality
 
 - **After writing or modifying Python code**, run `uv run ruff check` and `uv run basedpyright` on changed files and fix errors/warnings.
 - If `ruff` or `basedpyright` are not project dependencies, use `uv run --with 'ruff,basedpyright' ruff check ...` / `uv run --with 'ruff,basedpyright' basedpyright ...`.
+- **Never write "Default: value" in docstrings.** The function signature already documents defaults. Docstrings should describe _what_ and _why_, not repeat the signature.
+
+## Git
+
+- **NEVER commit on your own.** Stage changes and present them for review, but do not run `git commit` unless the user explicitly asks.
 
 ## System
 
