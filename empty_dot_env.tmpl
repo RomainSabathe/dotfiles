@@ -9,8 +9,13 @@ export GEMINI_API_KEY='{{ (bitwardenSecrets "d69daadd-96ed-4e2c-8cfb-b2fc009c764
 export OPENROUTER_API_KEY='{{ (bitwardenSecrets "5c5e19a9-e740-44d0-ba94-b2fc01161fe1" .accessToken).value }}'
 export GOOGLE_API_KEY=$GEMINI_API_KEY
 export MISTRAL_API_KEY='{{ (bitwardenSecrets "a6a376b8-d43e-4d25-a4c5-b397014fa35d" .accessToken).value }}'
+export CODESTRAL_API_KEY='{{ (bitwardenSecrets "f12b5419-f543-4206-8fb6-b406011a3552" .accessToken).value }}'
 export HF_TOKEN='{{ (bitwardenSecrets "bb36db35-7ed7-43ff-bbe0-b3d10079cfeb" .accessToken).value }}'
 
+export LOGFIRE_API_KEY='{{ (bitwardenSecrets "246b0887-3e76-4a2e-bd92-b406011ae35e" .accessToken).value }}'
 export LANGFUSE_SECRET_KEY='{{ (bitwardenSecrets "4ed6e1a0-1183-44b7-9e27-b3d10082bf11" .accessToken).value }}'
 export LANGFUSE_PUBLIC_KEY="pk-lf-7c8321b2-ad8f-4cac-a43a-f3083b601ed0"
 export LANGFUSE_BASE_URL="https://cloud.langfuse.com"
+
+export KAGI_API_KEY='{{ (bitwardenSecrets "0bfbc656-249e-4295-be73-b406011acfaa" .accessToken).value }}'
+export BRAVE_SEARCH_API_KEY='{{ (bitwardenSecrets "09667174-7a99-462b-a07a-b406011ad9ec" .accessToken).value }}'
