@@ -15,3 +15,12 @@
 	rebase = true
 [rebase]
 	autoStash = true
+[diff]
+	external = "{{ .chezmoi.config.diff.command }} -d"
+	renames = true
+[lfs]
+	concurrenttransfers = 3
+[lfs "customtransfer.xet"]
+	path = {{ .chezmoi.config.git.command }}-xet
+	args = transfer
+	concurrent = true
