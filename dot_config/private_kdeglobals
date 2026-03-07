@@ -21,22 +21,22 @@ IntensityAmount=0
 IntensityEffect=0
 
 [Colors:Button]
-BackgroundAlternate=30,87,116
-BackgroundNormal=41,44,48
+BackgroundAlternate=163,212,250
+BackgroundNormal=252,252,252
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
 ForegroundActive=61,174,233
-ForegroundInactive=161,169,177
-ForegroundLink=29,153,243
+ForegroundInactive=112,125,138
+ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=252,252,252
+ForegroundNormal=35,38,41
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Complementary]
-BackgroundAlternate=30,87,116
-BackgroundNormal=32,35,38
+BackgroundAlternate=27,30,32
+BackgroundNormal=42,46,50
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
 ForegroundActive=61,174,233
@@ -49,115 +49,116 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Header]
-BackgroundAlternate=32,35,38
-BackgroundNormal=41,44,48
+BackgroundAlternate=239,240,241
+BackgroundNormal=222,224,226
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
 ForegroundActive=61,174,233
-ForegroundInactive=161,169,177
-ForegroundLink=29,153,243
+ForegroundInactive=112,125,138
+ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=252,252,252
+ForegroundNormal=35,38,41
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Header][Inactive]
-BackgroundAlternate=41,44,48
-BackgroundNormal=32,35,38
+BackgroundAlternate=227,229,231
+BackgroundNormal=239,240,241
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
 ForegroundActive=61,174,233
-ForegroundInactive=161,169,177
-ForegroundLink=29,153,243
+ForegroundInactive=112,125,138
+ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=252,252,252
+ForegroundNormal=35,38,41
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Selection]
-BackgroundAlternate=30,87,116
+BackgroundAlternate=163,212,250
 BackgroundNormal=61,174,233
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
-ForegroundActive=252,252,252
-ForegroundInactive=161,169,177
+ForegroundActive=255,255,255
+ForegroundInactive=112,125,138
 ForegroundLink=253,188,75
 ForegroundNegative=176,55,69
 ForegroundNeutral=198,92,0
-ForegroundNormal=252,252,252
+ForegroundNormal=255,255,255
 ForegroundPositive=23,104,57
 ForegroundVisited=155,89,182
 
 [Colors:Tooltip]
-BackgroundAlternate=32,35,38
-BackgroundNormal=41,44,48
+BackgroundAlternate=239,240,241
+BackgroundNormal=247,247,247
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
 ForegroundActive=61,174,233
-ForegroundInactive=161,169,177
-ForegroundLink=29,153,243
+ForegroundInactive=112,125,138
+ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=252,252,252
+ForegroundNormal=35,38,41
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:View]
-BackgroundAlternate=29,31,34
-BackgroundNormal=20,22,24
+BackgroundAlternate=247,247,247
+BackgroundNormal=255,255,255
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
 ForegroundActive=61,174,233
-ForegroundInactive=161,169,177
-ForegroundLink=29,153,243
+ForegroundInactive=112,125,138
+ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=252,252,252
+ForegroundNormal=35,38,41
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Window]
-BackgroundAlternate=41,44,48
-BackgroundNormal=32,35,38
+BackgroundAlternate=227,229,231
+BackgroundNormal=239,240,241
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
 ForegroundActive=61,174,233
-ForegroundInactive=161,169,177
-ForegroundLink=29,153,243
+ForegroundInactive=112,125,138
+ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=252,252,252
+ForegroundNormal=35,38,41
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [General]
-ColorSchemeHash=2c3f86428c11011a7c64ee1e7f47c274d498ff10
+ColorSchemeHash=9f63c7711a13123582e720791ea0f8c0172977d2
 XftAntialias=true
 XftHintStyle=hintslight
 XftSubPixel=rgb
 
 [KDE]
-LookAndFeelPackage=org.kde.breezedark.desktop
+AutomaticLookAndFeel=false
+AutomaticLookAndFeelOnIdle=false
+LookAndFeelPackage=org.kde.breeze.desktop
 
 [KFileDialog Settings]
 Allow Expansion=false
 Automatically select filename extension=true
-Breadcrumb Navigation=true
+Breadcrumb Navigation=false
 Decoration position=2
-LocationCombo Completionmode=5
-PathCombo Completionmode=5
 Show Full Path=false
 Show Inline Previews=true
+Show Preview=false
 Show Speedbar=true
 Show hidden files=false
-Sort by=Name
+Sort by=Date
 Sort directories first=true
 Sort hidden files last=false
 Sort reversed=false
 Speedbar Width=140
-View Style=DetailTree
+View Style=Detail
 
 [KScreen]
 ScreenScaleFactors=eDP-1=1;
@@ -171,9 +172,9 @@ ShowHideHiddenFiles=Ctrl+H
 Up=
 
 [WM]
-activeBackground=39,44,49
-activeBlend=252,252,252
-activeForeground=252,252,252
-inactiveBackground=32,36,40
-inactiveBlend=161,169,177
-inactiveForeground=161,169,177
+activeBackground=227,229,231
+activeBlend=227,229,231
+activeForeground=35,38,41
+inactiveBackground=239,240,241
+inactiveBlend=239,240,241
+inactiveForeground=112,125,138
