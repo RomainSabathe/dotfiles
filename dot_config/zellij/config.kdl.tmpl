@@ -239,9 +239,11 @@ plugins {
         welcome_screen true
     }
     autolock location="file:{{ .chezmoi.homeDir }}/.config/zellij/plugins/zellij-autolock.wasm" {
-      triggers "nvim|vim|v|nv"
-      watch_triggers "fzf|zoxide|atuin|atac"
-      reaction_seconds "0.2"}
+        triggers "^(podman)?.*n?vim$"
+        watch_triggers "fzf|zoxide|atuin|atac"  // Lock when any of these open and monitor until closed.
+        reaction_seconds "0.1"
+        print_to_log false
+    }
 }
 
 // Plugins to load in the background when a new session starts
