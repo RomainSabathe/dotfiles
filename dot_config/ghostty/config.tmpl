@@ -1,0 +1,13 @@
+{{- if .is_work_machine }}
+font-family = "Iosevka Term"
+font-size = 11.5
+{{- else }}
+font-family = "Iosevka"
+font-size = 11
+{{- end }}
+
+font-thicken = true
+# window-decoration = none
+keybind = ctrl+v=paste_from_clipboard
+# Shift+Enter sends ESC+Enter (Alt+Enter) to the terminal
+keybind = shift+enter=text:\x1b\r
