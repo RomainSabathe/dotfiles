@@ -22,6 +22,7 @@ require("lazy").setup({
     { import = "user.plugins" },
     { import = "user.plugins.ai" },
     { import = "user.plugins.all_in_ones" },
+    { import = "user.plugins.build" },
     { import = "user.plugins.code_helpers" },
     { import = "user.plugins.git" },
     { import = "user.plugins.look" },
