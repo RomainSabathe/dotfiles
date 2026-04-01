@@ -214,7 +214,7 @@ keybinds clear-defaults=true {
         }
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
     }
-    
+
     renametab {
         bind "Ctrl c" { SwitchToMode "Normal"; }
         bind "Esc" { UndoRenameTab; SwitchToMode "Tab"; }
@@ -265,7 +265,7 @@ plugins {
         welcome_screen true
     }
     autolock location="file:{{ .chezmoi.homeDir }}/.config/zellij/plugins/zellij-autolock.wasm" {
-        triggers "^(podman)?.*n?vim$"
+        triggers "^(podman)?(uv)?.*n?vim$"
         watch_triggers "fzf|zoxide|atuin|atac"  // Lock when any of these open and monitor until closed.
         reaction_seconds "0.1"
         print_to_log false
