@@ -31,7 +31,7 @@ keybinds clear-defaults=true {
         bind "Ctrl b" { SwitchToMode "Scroll"; }
 
         // Lazygit popup (mimics tmux C-g popup)
-        bind "Ctrl g" { 
+        bind "Ctrl g" {
             Run "lazygit" {
                 close_on_exit true
                 floating true
@@ -41,6 +41,21 @@ keybinds clear-defaults=true {
                 height "94%"
             }
         }
+
+        // Direct tab jump (no prefix needed, disabled in nvim via autolock)
+        bind "Ctrl Shift 1" { GoToTab 1; }
+        bind "Ctrl Shift 2" { GoToTab 2; }
+        bind "Ctrl Shift 3" { GoToTab 3; }
+        bind "Ctrl Shift 4" { GoToTab 4; }
+        bind "Ctrl Shift 5" { GoToTab 5; }
+        bind "Ctrl Shift 6" { GoToTab 6; }
+        bind "Ctrl Shift 7" { GoToTab 7; }
+        bind "Ctrl Shift 8" { GoToTab 8; }
+        bind "Ctrl Shift 9" { GoToTab 9; }
+
+        // Tab cycling
+        bind "Ctrl Shift [" { GoToPreviousTab; }
+        bind "Ctrl Shift ]" { GoToNextTab; }
     }
 
     shared {
@@ -186,6 +201,17 @@ keybinds clear-defaults=true {
         bind "8" { GoToTab 8; SwitchToMode "Normal"; }
         bind "9" { GoToTab 9; SwitchToMode "Normal"; }
         bind "Tab" { ToggleTab; }
+        bind "w" {
+            Run "gwt" {
+                close_on_exit true
+                floating true
+                x "10%"
+                y "10%"
+                width "80%"
+                height "80%"
+            }
+            SwitchToMode "Normal";
+        }
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
     }
     

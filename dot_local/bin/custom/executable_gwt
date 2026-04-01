@@ -1,0 +1,506 @@
+#!/usr/bin/env -S uv run --script
+#
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["typer", "rich"]
+# ///
+#
+# gwt — Git Worktree + Zellij Tab manager.
+#
+# One command to create a git worktree and open a fully-equipped Zellij tab
+# (nvim + claude + yazi + terminal + btop) named after the feature branch.
+# Optionally auto-dispatches a Claude agent with a prompt.
+#
+# Worktrees are stored at ~/worktrees/<repo>/<branch>/.
+# Inside Zellij, each worktree gets its own tab with the dev-compact layout.
+# Outside Zellij, it just creates the worktree and prints the path.
+#
+# Quick tour:
+#   gwt list                                        # see all worktrees + tab status
+#   gwt add my-feature                              # worktree + Zellij tab in one shot
+#   gwt add my-feature --base origin/main           # branch from a specific ref
+#   gwt spawn my-feature "implement blur detection"  # same, but also sends prompt to Claude
+#   gwt switch my-feature                           # jump to that tab
+#   gwt switch                                      # fzf picker across worktrees
+#   gwt                                             # same as gwt switch (fzf)
+#   gwt remove my-feature                           # remove worktree
+#   gwt remove my-feature -D                        # remove worktree + delete branch
+#
+# Zellij keybindings (added to config.kdl):
+#   Ctrl+Shift+1..9    jump directly to tab N
+#   Ctrl+Shift+[ / ]   cycle between tabs
+#   Ctrl+t w           open gwt fzf picker in a floating pane
+#
+# Requirements:
+#   - git, zellij, fzf (for interactive picker)
+#   - must be run from inside a git repository
+
+from __future__ import annotations
+
+import logging
+import os
+import shutil
+import subprocess
+import tempfile
+import time
+from pathlib import Path
+
+import typer
+from rich.console import Console
+from rich.table import Table
+
+WORKTREE_BASE = Path.home() / "worktrees"
+DEFAULT_LAYOUT = Path.home() / ".config/zellij/layouts/dev-compact.kdl"
+LOG_FILE = Path("/tmp/gwt.log")
+
+logging.basicConfig(
+    filename=str(LOG_FILE),
+    level=logging.DEBUG,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+log = logging.getLogger("gwt")
+
+console = Console()
+app = typer.Typer(
+    help="Git Worktree + Zellij Tab manager.",
+    invoke_without_command=True,
+    no_args_is_help=False,
+)
+
+
+def run(cmd: list[str], *, check: bool = True, capture: bool = True) -> subprocess.CompletedProcess[str]:
+    log.debug("run: %s", " ".join(cmd))
+    result = subprocess.run(cmd, check=check, capture_output=capture, text=True)
+    if result.returncode != 0:
+        log.warning("exit %d: %s | stderr: %s", result.returncode, " ".join(cmd), result.stderr.strip())
+    return result
+
+
+def git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+    return run(["git", *args], check=check)
+
+
+def zellij_action(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+    return run(["zellij", "action", *args], check=check)
+
+
+def make_worktree_layout(wt_path: Path, layout_path: Path) -> str:
+    """Read a layout file and patch it for use as a worktree tab.
+
+    Strips the `tab name="..."` wrapper and adds the worktree path as yazi arg.
+    """
+    lines = layout_path.read_text().splitlines()
+    out: list[str] = []
+    tab_brace_removed = False
+
+    for line in lines:
+        stripped = line.strip()
+        # Skip the tab wrapper line
+        if not tab_brace_removed and stripped.startswith("tab ") and 'name="' in stripped:
+            tab_brace_removed = True
+            continue
+        # Patch yazi: add args with worktree path
+        if 'command="yazi"' in line and "name=" in line:
+            out.append(line.rstrip() + " {")
+            out.append(f'          args "{wt_path}"')
+            out.append("        }")
+            continue
+        out.append(line)
+
+    # Remove the closing brace that belonged to the tab wrapper
+    if tab_brace_removed:
+        for i in range(len(out) - 1, -1, -1):
+            if out[i].strip() == "}":
+                for j in range(i - 1, -1, -1):
+                    if out[j].strip() == "}":
+                        out.pop(j)
+                        break
+                break
+
+    return "\n".join(out) + "\n"
+
+
+def open_worktree_tab(wt_path: Path, branch: str) -> None:
+    """Open a new Zellij tab using dev-compact.kdl, patched for the worktree."""
+    if not DEFAULT_LAYOUT.exists():
+        console.print(f"[red]Error:[/] layout file not found: {DEFAULT_LAYOUT}")
+        raise typer.Exit(code=1)
+
+    layout_content = make_worktree_layout(wt_path, DEFAULT_LAYOUT)
+    log.debug("Generated layout for branch '%s':\n%s", branch, layout_content)
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".kdl", delete=False) as f:
+        f.write(layout_content)
+        tmp_layout = f.name
+    log.debug("Temp layout written to %s", tmp_layout)
+    zellij_action("new-tab", "--layout", tmp_layout, "--cwd", str(wt_path), "--name", branch)
+    time.sleep(0.5)
+    Path(tmp_layout).unlink(missing_ok=True)
+
+
+def in_zellij() -> bool:
+    return bool(os.environ.get("ZELLIJ_SESSION_NAME"))
+
+
+def repo_name() -> str:
+    # --git-common-dir always points to the main repo's .git, even from a worktree
+    result = git("rev-parse", "--git-common-dir")
+    common_dir = Path(result.stdout.strip()).resolve()
+    # common_dir is e.g. /path/to/my-repo/.git -> parent is the repo root
+    return common_dir.parent.name
+
+
+def sanitize_branch(branch: str) -> str:
+    return branch.replace("/", "-")
+
+
+def worktree_path(branch: str) -> Path:
+    return WORKTREE_BASE / repo_name() / sanitize_branch(branch)
+
+
+def branch_exists_locally(branch: str) -> bool:
+    return git("show-ref", "--verify", "--quiet", f"refs/heads/{branch}", check=False).returncode == 0
+
+
+def branch_exists_remotely(branch: str) -> bool:
+    return git("ls-remote", "--exit-code", "--heads", "origin", branch, check=False).returncode == 0
+
+
+def remote_tracking_ref_exists(branch: str) -> bool:
+    """Check if origin/<branch> exists in already-fetched refs (no network)."""
+    return git("show-ref", "--verify", "--quiet", f"refs/remotes/origin/{branch}", check=False).returncode == 0
+
+
+def all_branches() -> list[str]:
+    """All available branches: local, worktree, and remote-tracking (no network).
+
+    Worktree branches appear first, then remaining local, then remote-only.
+    """
+    wt_set = set(worktree_branches())
+
+    local: set[str] = set()
+    result = git("branch", "--format=%(refname:short)", check=False)
+    if result.returncode == 0:
+        local = {b for b in result.stdout.splitlines() if b}
+
+    remote_only: set[str] = set()
+    result = git("branch", "-r", "--format=%(refname:short)", check=False)
+    if result.returncode == 0:
+        for ref in result.stdout.splitlines():
+            ref = ref.strip()
+            if ref.startswith("origin/") and not ref.endswith("/HEAD"):
+                name = ref[len("origin/"):]
+                if name not in local:
+                    remote_only.add(name)
+
+    return sorted(wt_set) + sorted((local | remote_only) - wt_set)
+
+
+def get_tab_names() -> set[str]:
+    if not in_zellij():
+        return set()
+    result = zellij_action("query-tab-names", check=False)
+    if result.returncode != 0:
+        return set()
+    return {line.strip() for line in result.stdout.splitlines() if line.strip()}
+
+
+def parse_worktrees() -> list[dict[str, str]]:
+    result = git("worktree", "list", "--porcelain", check=False)
+    if result.returncode != 0:
+        return []
+    worktrees: list[dict[str, str]] = []
+    current: dict[str, str] = {}
+    for line in result.stdout.splitlines():
+        if line.startswith("worktree "):
+            current = {"path": line[len("worktree "):]}
+        elif line.startswith("branch refs/heads/"):
+            current["branch"] = line[len("branch refs/heads/"):]
+        elif line == "" and current:
+            if "branch" in current:
+                worktrees.append(current)
+            current = {}
+    if current and "branch" in current:
+        worktrees.append(current)
+    return worktrees
+
+
+def worktree_branches() -> list[str]:
+    """Return branch names that have worktrees (excluding the main worktree)."""
+    worktrees = parse_worktrees()
+    # The first entry is the main worktree — skip it
+    return [wt["branch"] for wt in worktrees[1:]]
+
+
+def complete_worktree_branch(incomplete: str) -> list[str]:
+    return [b for b in worktree_branches() if b.startswith(incomplete)]
+
+
+def complete_git_branch(incomplete: str) -> list[str]:
+    return [b for b in all_branches() if b.startswith(incomplete)]
+
+
+def ensure_git_repo() -> None:
+    result = git("rev-parse", "--git-dir", check=False)
+    if result.returncode != 0:
+        console.print("[red]Error:[/] not inside a git repository")
+        raise typer.Exit(code=1)
+
+
+def do_add(branch: str, base: str | None, dry_run: bool, *, allow_new: bool = True) -> None:
+    """Shared add logic used by both `add`, `spawn`, and `switch`."""
+    ensure_git_repo()
+    wt_path = worktree_path(branch)
+
+    if wt_path.exists():
+        console.print(f"Worktree already exists at [cyan]{wt_path}[/]")
+        if in_zellij():
+            tab_names = get_tab_names()
+            if branch in tab_names:
+                console.print(f"Switching to tab [green]{branch}[/]...")
+                if not dry_run:
+                    zellij_action("go-to-tab-name", branch)
+            else:
+                console.print(f"Opening Zellij tab [green]{branch}[/]...")
+                if not dry_run:
+                    open_worktree_tab(wt_path, branch)
+        return
+
+    if branch_exists_locally(branch):
+        console.print(f"Checking out existing local branch [green]{branch}[/]...")
+        if not dry_run:
+            wt_path.parent.mkdir(parents=True, exist_ok=True)
+            git("worktree", "add", str(wt_path), branch)
+    elif remote_tracking_ref_exists(branch):
+        console.print(f"Checking out remote-tracking branch [green]{branch}[/]...")
+        if not dry_run:
+            wt_path.parent.mkdir(parents=True, exist_ok=True)
+            git("worktree", "add", str(wt_path), branch)
+    elif branch_exists_remotely(branch):
+        console.print(f"Fetching and checking out remote branch [green]{branch}[/]...")
+        if not dry_run:
+            git("fetch", "origin", branch)
+            wt_path.parent.mkdir(parents=True, exist_ok=True)
+            git("worktree", "add", str(wt_path), branch)
+    elif allow_new:
+        base_ref = base or "HEAD"
+        console.print(f"Creating new branch [green]{branch}[/] from [cyan]{base_ref}[/]...")
+        if not dry_run:
+            wt_path.parent.mkdir(parents=True, exist_ok=True)
+            git("worktree", "add", "-b", branch, str(wt_path), base_ref)
+    else:
+        console.print(f"[yellow]Branch '{branch}' not found locally or remotely.[/]")
+        raise typer.Exit(code=1)
+
+    if dry_run:
+        console.print(f"[dim]dry-run: would create worktree at {wt_path}[/]")
+        if in_zellij():
+            console.print(f"[dim]dry-run: would open Zellij tab '{branch}'[/]")
+        return
+
+    if in_zellij():
+        console.print(f"Opening Zellij tab [green]{branch}[/]...")
+        open_worktree_tab(wt_path, branch)
+    else:
+        console.print(f"Worktree created at: [cyan]{wt_path}[/]")
+        console.print(f"  cd {wt_path}")
+
+
+@app.callback()
+def callback(ctx: typer.Context) -> None:
+    """Git Worktree + Zellij Tab manager."""
+    if ctx.invoked_subcommand is None:
+        if in_zellij():
+            ctx.invoke(switch, branch=None)
+        else:
+            console.print(ctx.get_help())
+
+
+@app.command()
+def add(
+    branch: str = typer.Argument(autocompletion=complete_git_branch),
+    base: str | None = typer.Option(None, help="Base ref for new branch"),
+    dry_run: bool = False,
+) -> None:
+    """Create a worktree and open a Zellij tab."""
+    do_add(branch, base, dry_run)
+
+
+@app.command()
+def spawn(
+    branch: str = typer.Argument(autocompletion=complete_git_branch),
+    prompt: str = typer.Argument(),
+    base: str | None = typer.Option(None, help="Base ref for new branch"),
+    dry_run: bool = False,
+) -> None:
+    """Create a worktree, open a Zellij tab, and send a prompt to Claude."""
+    if not in_zellij():
+        console.print("[red]Error:[/] gwt spawn requires running inside Zellij")
+        raise typer.Exit(code=1)
+
+    do_add(branch, base, dry_run)
+
+    if dry_run:
+        console.print(f"[dim]dry-run: would send prompt to Claude: {prompt!r}[/]")
+        return
+
+    console.print("Waiting for Claude to initialize...")
+    time.sleep(3)
+
+    # Navigate to Claude pane (right of editor in top row) and send prompt
+    zellij_action("move-focus", "right")
+    zellij_action("write-chars", prompt)
+    zellij_action("write-chars", "\n")
+    zellij_action("move-focus", "left")
+    console.print(f"Prompt sent to Claude in tab [green]{branch}[/]")
+
+
+@app.command(name="list")
+def list_cmd() -> None:
+    """Show worktrees with tab status."""
+    ensure_git_repo()
+    worktrees = parse_worktrees()
+    tab_names = get_tab_names()
+
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("Branch", style="green")
+    table.add_column("Path", style="cyan")
+    table.add_column("Tab")
+
+    for wt in worktrees:
+        tab_status = "[green]open[/]" if wt["branch"] in tab_names else "-"
+        table.add_row(wt["branch"], wt["path"], tab_status)
+
+    console.print(table)
+
+
+@app.command()
+def remove(
+    branch: str | None = typer.Argument(default=None, autocompletion=complete_worktree_branch),
+    delete_branch: bool = typer.Option(False, "-D", help="Also delete the git branch"),
+    force: bool = typer.Option(False, "-f", "--force", help="Force removal even with modified/untracked files"),
+    dry_run: bool = False,
+) -> None:
+    """Remove a worktree and optionally delete the branch. Defaults to current branch."""
+    ensure_git_repo()
+
+    if branch is None:
+        result = git("branch", "--show-current", check=False)
+        branch = result.stdout.strip()
+        if not branch:
+            console.print("[red]Error:[/] could not detect current branch. Pass a branch name.")
+            raise typer.Exit(code=1)
+        # Make sure we're not trying to remove the main worktree
+        main_toplevel = Path(git("rev-parse", "--git-common-dir").stdout.strip()).resolve().parent
+        current_toplevel = Path(git("rev-parse", "--show-toplevel").stdout.strip()).resolve()
+        if main_toplevel == current_toplevel:
+            console.print(f"[red]Error:[/] you're in the main worktree ({branch}), not a gwt worktree.")
+            raise typer.Exit(code=1)
+        console.print(f"Defaulting to current branch [green]{branch}[/]")
+
+    wt_path = worktree_path(branch)
+
+    if not wt_path.exists():
+        console.print(f"[red]Error:[/] no worktree found at {wt_path}")
+        raise typer.Exit(code=1)
+
+    tab_open = in_zellij() and branch in get_tab_names()
+
+    if dry_run:
+        if tab_open:
+            console.print(f"[dim]dry-run: would close tab '{branch}'[/]")
+        console.print(f"[dim]dry-run: would remove worktree at {wt_path}[/]")
+        if delete_branch:
+            console.print(f"[dim]dry-run: would delete branch '{branch}'[/]")
+        return
+
+    # Remove worktree BEFORE closing the tab — if we close the tab first,
+    # we kill our own process (the script runs in that tab's pane).
+    console.print(f"Removing worktree at [cyan]{wt_path}[/]...")
+    remove_args = ["worktree", "remove"]
+    if force:
+        remove_args.append("--force")
+    remove_args.append(str(wt_path))
+    result = git(*remove_args, check=False)
+    if result.returncode != 0:
+        stderr = result.stderr.strip()
+        if "modified or untracked" in stderr:
+            console.print(f"[yellow]Worktree has modified/untracked files.[/] Use [bold]-f[/] to force removal.")
+        else:
+            console.print(f"[red]Error:[/] {stderr}")
+        raise typer.Exit(code=1)
+
+    git("worktree", "prune")
+
+    if tab_open:
+        console.print(f"Closing tab [green]{branch}[/]...")
+        zellij_action("go-to-tab", "1", check=False)
+        zellij_action("go-to-tab-name", branch)
+        zellij_action("close-tab")
+
+    if delete_branch:
+        console.print(f"Deleting branch [green]{branch}[/]...")
+        git("branch", "-D", branch)
+
+    # Clean up empty repo directory
+    repo_dir = WORKTREE_BASE / repo_name()
+    if repo_dir.exists() and not any(repo_dir.iterdir()):
+        repo_dir.rmdir()
+
+    console.print("[green]Done.[/]")
+
+
+@app.command()
+def switch(branch: str | None = typer.Argument(default=None, autocompletion=complete_git_branch)) -> None:
+    """Jump to a worktree tab. Opens fzf picker if no branch given."""
+    if not in_zellij():
+        console.print("[red]Error:[/] gwt switch requires running inside Zellij")
+        raise typer.Exit(code=1)
+
+    if not branch:
+        # Interactive fzf picker
+        ensure_git_repo()
+        branches = all_branches()
+
+        if not branches:
+            console.print("No worktrees found for this repository.")
+            raise typer.Exit(code=1)
+
+        fzf = shutil.which("fzf")
+        if not fzf:
+            console.print("[red]Error:[/] fzf not found. Install it or pass a branch name.")
+            raise typer.Exit(code=1)
+
+        result = subprocess.run(
+            [fzf, "--prompt=Switch to branch> ", "--height=40%", "--reverse"],
+            input="\n".join(branches),
+            capture_output=True,
+            text=True,
+        )
+        branch = result.stdout.strip()
+        if not branch:
+            return
+
+    # Check if this is the main worktree branch — its tab is named "main"
+    ensure_git_repo()
+    worktrees = parse_worktrees()
+    if worktrees and worktrees[0].get("branch") == branch:
+        zellij_action("go-to-tab-name", "main")
+        return
+
+    tab_names = get_tab_names()
+    if branch not in tab_names:
+        wt_path = worktree_path(branch)
+        if wt_path.exists():
+            console.print(f"Tab '{branch}' not found. Reopening from existing worktree...")
+            open_worktree_tab(wt_path, branch)
+        else:
+            # No worktree yet — create one if the branch exists somewhere
+            do_add(branch, base=None, dry_run=False, allow_new=False)
+    else:
+        zellij_action("go-to-tab-name", branch)
+
+
+if __name__ == "__main__":
+    app()
