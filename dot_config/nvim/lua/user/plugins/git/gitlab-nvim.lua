@@ -9,6 +9,32 @@ return {
   },
   build = function() require("gitlab.server").build(true) end, -- Builds the Go binary
   config = function()
+    -- Replace gitlab.nvim's reviewer.open with CodeDiff.
+    -- This makes choose_merge_request (with open_reviewer=true) and
+    -- start_review both open CodeDiff + discussion tree automatically.
+    local reviewer = require("gitlab.reviewer")
+    local original_open = reviewer.open
+    reviewer.open = function()
+      local state = require("gitlab.state")
+      if not state.INFO or not state.INFO.diff_refs then
+        -- Fall back to diffview if no diff refs (shouldn't happen)
+        return original_open()
+      end
+      local refs = state.INFO.diff_refs
+      if refs.base_sha == "" or refs.head_sha == "" then
+        vim.notify("MR contains no changes", vim.log.levels.ERROR)
+        return
+      end
+      vim.cmd(string.format("CodeDiff %s %s", refs.base_sha, refs.head_sha))
+      -- Open the discussion tree
+      vim.schedule(function()
+        local discussions = require("gitlab.actions.discussions")
+        if not discussions.split_visible then
+          require("gitlab").toggle_discussions()
+        end
+      end)
+    end
+
     require("gitlab").setup({
       discussion_tree = {           -- The discussion tree that holds all comments
         draft_mode = true,          -- Whether comments are posted as drafts as part of a review
@@ -22,15 +48,15 @@ return {
           add_label = "<leader>rl",
           create_note = "<leader>rN",          -- Create a note (comment not linked to a specific line)
           publish_all_drafts = "<leader>rp",   -- Publish all draft comments/notes
-          choose_merge_request = "<leader>rr", -- Start review for the currently checked-out branch
-          start_review = "<leader>rs",         -- Start review for the currently checked-out branch
+          choose_merge_request = "<leader>rr", -- Choose MR → auto-opens CodeDiff + discussions
+          start_review = "<leader>rs",         -- Review current branch's MR → opens CodeDiff + discussions
         },
         discussion_tree = {
           disable_all = false,                 -- Disable all default mappings for the discussion tree window
           edit_comment = "e",                  -- Edit comment
           reply = "r",                         -- Reply to comment
           toggle_resolved = "-",               -- Toggle the resolved status of the whole discussion
-          delete_comment = "x",                -- Toggle the resolved status of the whole discussion
+          delete_comment = "x",                -- Delete comment
           jump_to_reviewer = "<return>",       -- Jump to the comment location in the reviewer window
           open_in_browser = "b",               -- Jump to the URL of the current note/discussion
           copy_node_url = "u",                 -- Copy the URL of the current node to clipboard
@@ -58,5 +84,7 @@ return {
         }
       }
     })
+
+    require("user.codediff_gitlab_bridge").setup()
   end,
 }
