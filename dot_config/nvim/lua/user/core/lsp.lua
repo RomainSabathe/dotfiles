@@ -69,12 +69,22 @@ vim.lsp.codelens.enable()
 -- updates automatically. Only activates for LSP servers that support it.
 vim.lsp.linked_editing_range.enable(true)
 
--- LSP keybindings: we rely on Neovim 0.12's built-in defaults:
---   K          → hover docs
+-- LSP keybindings: we mostly rely on Neovim 0.12's built-in defaults:
 --   <C-s>      → signature help (insert mode)
 --   grn        → rename
 --   gra        → code action
---   grr        → references
---   gri        → implementation
---   grt        → type definition
+--   grr        → references (overridden by Telescope in telescope.lua)
+--   gri        → implementation (overridden by Telescope in telescope.lua)
+--   grt        → type definition (overridden by Telescope in telescope.lua)
 --   gd         → go to definition (overridden by Telescope in telescope.lua)
+--
+-- K (hover) needs an explicit mapping because Python's ftplugin sets
+-- keywordprg to "python3 -m pydoc", which prevents the built-in LSP
+-- default from being applied.
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    vim.keymap.set("n", "K", function()
+      vim.lsp.buf.hover({ border = 'rounded' })
+    end, { buffer = args.buf, desc = "LSP: hover docs" })
+  end,
+})
