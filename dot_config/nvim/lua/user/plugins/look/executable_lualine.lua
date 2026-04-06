@@ -1,10 +1,15 @@
-return {
-	"nvim-lualine/lualine.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-	opts = {
-		options = {
-			theme = "gruvbox_dark",
-		},
-	},
-	config = true,
-}
+-- Disabled: trying Neovim 0.12's default statusline which now includes
+-- diagnostic counts and LSP progress out of the box. Re-enable by
+-- uncommenting below if the default doesn't cut it.
+--
+-- return {
+--   "nvim-lualine/lualine.nvim",
+--   dependencies = { "nvim-tree/nvim-web-devicons" },
+--   opts = {
+--     options = {
+--       theme = "gruvbox_dark",
+--     },
+--   },
+--   config = true,
+-- }
+return {}
