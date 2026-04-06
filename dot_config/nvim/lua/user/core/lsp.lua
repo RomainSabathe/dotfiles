@@ -61,6 +61,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+-- CodeLens: shows actionable hints above functions (e.g. "Run test", "Debug").
+-- Displayed as virtual lines. Press grx to run the lens at cursor.
+vim.lsp.codelens.enable()
+
+-- Linked editing: when you rename an opening HTML/XML tag, the closing tag
+-- updates automatically. Only activates for LSP servers that support it.
+vim.lsp.linked_editing_range.enable(true)
+
 -- LSP keybindings: we rely on Neovim 0.12's built-in defaults:
 --   K          → hover docs
 --   <C-s>      → signature help (insert mode)
