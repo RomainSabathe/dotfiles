@@ -1,5 +1,6 @@
 require("user.core.options")
 require("user.core.keymaps")
+require("user.core.lsp")
 
 -- Auto-open CodeDiff when inside a gwt worktree (~/worktrees/...)
 vim.api.nvim_create_autocmd("VimEnter", {
