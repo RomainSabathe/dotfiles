@@ -48,21 +48,12 @@ return {
     vim.keymap.set("n", "<leader>fs", builtin.live_grep, { desc = "Find string in cwd" })
     vim.keymap.set("n", "<leader>fc", builtin.grep_string, { desc = "Find string under cursor in cwd" })
 
-    -- Leveraging LSP for go-to etc.
-    vim.keymap.set("n", "gd", builtin.lsp_definitions, { desc = "Go to definition of word under cursor" })
-    vim.keymap.set(
-      "n",
-      "gi",
-      builtin.lsp_implementations,
-      { desc = "List LSP implementations for word under cursor" }
-    )
-    vim.keymap.set("n", "gr", builtin.lsp_references, { desc = "List LSP references for word under cursor" })
-    vim.keymap.set(
-      "n",
-      "gt",
-      builtin.lsp_type_definitions,
-      { desc = "Go to definition of type of word under cursor" }
-    )
+    -- Override Neovim 0.12's built-in LSP mappings with Telescope pickers
+    -- (shows results in a fuzzy finder instead of a quickfix/split).
+    vim.keymap.set("n", "gd", builtin.lsp_definitions, { desc = "Go to definition" })
+    vim.keymap.set("n", "grr", builtin.lsp_references, { desc = "List references" })
+    vim.keymap.set("n", "gri", builtin.lsp_implementations, { desc = "List implementations" })
+    vim.keymap.set("n", "grt", builtin.lsp_type_definitions, { desc = "Go to type definition" })
     vim.keymap.set("n", "<leader>fS", builtin.lsp_workspace_symbols, { desc = "List LSP document symbols in cwd" })
 
     -- Git
