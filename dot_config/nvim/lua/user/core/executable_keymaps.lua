@@ -8,6 +8,31 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set({ "i" }, "fd", "<Esc>")
 keymap.set({ "i" }, "fd", "<C-\\><C-n>")
 
+-- Incremental treesitter selection (Neovim 0.12). The built-in keys (an/in)
+-- conflict with mini.ai's text object prefix, so we remap to +/-.
+-- In visual mode: + expands to the parent AST node, - shrinks to child node.
+-- Example on `data` in `process(data, key="name")`:
+--   v    → select `data`
+--   +    → expand to `data, key="name"` (argument list)
+--   +    → expand to `process(data, key="name")` (full call)
+--   -    → shrink back down
+vim.keymap.del({ 'x', 'o' }, 'an')
+vim.keymap.del({ 'x', 'o' }, 'in')
+keymap.set('x', '+', function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require('vim.treesitter._select').select_parent(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(vim.v.count1)
+  end
+end, { desc = 'Incremental selection: expand to parent node' })
+keymap.set('x', '-', function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require('vim.treesitter._select').select_child(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(-vim.v.count1)
+  end
+end, { desc = 'Incremental selection: shrink to child node' })
+
 -- select all
 keymap.set({ "n" }, "<leader>A", "ggVG", { desc = "Select all", noremap = true })
 
