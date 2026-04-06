@@ -61,19 +61,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- Keybindings (set per-buffer when any LSP server attaches)
-vim.api.nvim_create_autocmd("LspAttach", {
-  desc = "LSP actions",
-  callback = function(event)
-    local function opts(desc)
-      return { buffer = event.buf, desc = "LSP: " .. desc }
-    end
-
-    local keymap = vim.keymap
-
-    keymap.set("n", "<leader>hd", vim.lsp.buf.hover, opts("Show hover documentation"))
-    keymap.set("n", "<leader>hs", vim.lsp.buf.signature_help, opts("Show signature help"))
-    keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename symbol"))
-    keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts("Code actions"))
-  end,
-})
+-- LSP keybindings: we rely on Neovim 0.12's built-in defaults:
+--   K          → hover docs
+--   <C-s>      → signature help (insert mode)
+--   grn        → rename
+--   gra        → code action
+--   grr        → references
+--   gri        → implementation
+--   grt        → type definition
+--   gd         → go to definition (overridden by Telescope in telescope.lua)
