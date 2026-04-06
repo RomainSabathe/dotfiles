@@ -1,6 +1,10 @@
 -- File Explorer
 vim.cmd("let g:netrw_liststyle = 3") -- Show nested tree in vim's file explorer
 
+-- Experimental message/cmdline UI (Neovim 0.12). Replaces the classic "Press
+-- ENTER" prompts with collapsible messages. Remove this line to revert.
+require('vim._core.ui2').enable({ msg = { timeout = 4000 } })
+
 -- Editor UI
 vim.opt.number = true         -- Show absolute line number at cursor
 vim.opt.relativenumber = true -- Show relative line numbers
