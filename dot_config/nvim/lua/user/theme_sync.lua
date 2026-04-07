@@ -328,22 +328,11 @@ function M.create_picker(opts)
   local before_ghostty = last_ghostty_sync
   local selected = false
 
-  -- Filter out Neovim's built-in colorschemes (no TS/LSP support).
-  local builtin = {
-    blue = true, darkblue = true, default = true, delek = true,
-    desert = true, elflord = true, evening = true, habamax = true,
-    industry = true, koehler = true, lunaperche = true, morning = true,
-    murphy = true, pablo = true, peachpuff = true, quiet = true,
-    retrobox = true, ron = true, shine = true, slate = true,
-    sorbet = true, torte = true, unokai = true, vim = true,
-    wildcharm = true, zaibatsu = true, zellner = true,
-  }
-  local colors = {}
-  for _, c in ipairs(vim.fn.getcompletion("", "color")) do
-    if not builtin[c] then
-      colors[#colors + 1] = c
-    end
-  end
+  -- Use the theme list exported by colorscheme.lua. This includes all
+  -- themes from all installed plugins, even lazy-loaded ones that haven't
+  -- registered their colors/ dirs yet. When a theme is selected for
+  -- preview, :colorscheme triggers lazy.nvim to load the plugin on demand.
+  local colors = _G._colorscheme_list or {}
 
   local picker = pickers.new(opts, {
     prompt_title = "Colorscheme",
