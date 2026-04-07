@@ -120,6 +120,9 @@ return {
     lazy = false,
     priority = 1000,
   },
+
+  -- ── New additions ──────────────────────────────────────────────
+
   -- Cyberdream — dark/light, high-contrast futuristic
   {
     "scottmckendry/cyberdream.nvim",

@@ -32,9 +32,6 @@ return {
         "prettier",
         "eslint_d",
 
-        -- Nix
-        "alejandra",
-
         -- Shell
         "shfmt",
 
