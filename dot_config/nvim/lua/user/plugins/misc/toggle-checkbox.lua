@@ -1,7 +1,7 @@
 return {
   'opdavies/toggle-checkbox.nvim',
-  config = function()
-    -- require("toggleterm").setup()
-    vim.keymap.set("n", "<leader>tt", ":lua require('toggle-checkbox').toggle()<CR>")
-  end,
+  ft = "markdown",
+  keys = {
+    { "<leader>tc", function() require('toggle-checkbox').toggle() end, ft = "markdown", desc = "Toggle checkbox" },
+  },
 }
