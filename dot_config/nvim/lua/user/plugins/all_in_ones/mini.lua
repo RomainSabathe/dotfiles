@@ -4,6 +4,12 @@ return {
   config = function()
     require("mini.diff").setup({})
     require("mini.align").setup({})
+    require("mini.ai").setup()
+    require("mini.cursorword").setup()
+    require("mini.pairs").setup()
+    -- require("mini.animate").setup()
+
+
     -- require('mini.basics').setup({
     --   options = { basic = false },
     --   mappings = {

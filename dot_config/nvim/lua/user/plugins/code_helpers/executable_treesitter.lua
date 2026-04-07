@@ -26,7 +26,7 @@ return {
       require("nvim-treesitter").install({
         -- Essential
         "python", "markdown", "markdown_inline", "yaml", "toml",
-        "json", "json5", "jsonc", "csv", "bash", "dockerfile",
+        "json", "json5", "csv", "bash", "dockerfile",
         "git_rebase", "gitcommit", "gitignore",
         -- Development tools
         "ini", "sql", "html", "css", "javascript", "regex", "vim", "lua",
