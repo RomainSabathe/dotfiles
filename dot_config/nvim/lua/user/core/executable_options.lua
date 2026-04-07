@@ -42,6 +42,9 @@ vim.o.foldmethod = "expr"
 vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
 
 -- Open file at the last position it was edited earlier
+-- Autocommand group: prevents duplicate autocmds if the config is re-sourced.
+-- clear=true wipes any previously registered autocmds in this group first.
+local misc_augroup = vim.api.nvim_create_augroup("UserMisc", { clear = true })
 vim.api.nvim_create_autocmd("BufReadPost", {
 	desc = "Open file at the last position it was edited earlier",
 	group = misc_augroup,

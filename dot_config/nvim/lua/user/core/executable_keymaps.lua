@@ -5,7 +5,7 @@ local keymap = vim.keymap -- shortcut
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
 -- Quick exit when using standard QWERTY keyboard
-keymap.set({ "i" }, "fd", "<Esc>")
+-- <C-\><C-n> works in both normal buffers and terminal buffers
 keymap.set({ "i" }, "fd", "<C-\\><C-n>")
 
 -- Incremental treesitter selection (Neovim 0.12). The built-in keys (an/in)
@@ -53,7 +53,7 @@ keymap.set("n", "<Down>", "gj", { noremap = true })
 keymap.set("n", "<Up>", "gk", { noremap = true })
 
 -- quicker exit
-keymap.set("n", "<leader>qq", "<cmd>wq<cr>", { desc = "Save and close the split" })
+-- <leader>qq is mapped to Snacks.bufdelete() in snacks.lua
 keymap.set("n", "<leader>qa", "<cmd>wqa<cr>", { desc = "Save all splits and buffers and exit vim" })
 keymap.set("n", "<leader>Qq", "<cmd>q!<cr>", { desc = "Close the split without saving" })
 keymap.set("n", "<leader>Qa", "<cmd>qa!<cr>", { desc = "Exit vim without saving" })
@@ -70,11 +70,11 @@ keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
 
 -- tabs management
-keymap.set("n", "<leader>To", "<cmd>tabnew<CR>", { desc = "Open new tab" })
-keymap.set("n", "<leader>Tx", "<cmd>tabclose<CR>", { desc = "Close new tab" })
-keymap.set("n", "<S-Right>", "<cmd>tabn<CR>", { desc = "Go to next tab" })
-keymap.set("n", "<S-Left>", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
-keymap.set("n", "<leader>Tf", "<cOpen new tabmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
+keymap.set("n", "gtn", "<cmd>tabnew<CR>", { desc = "New tab" })
+keymap.set("n", "gtx", "<cmd>tabclose<CR>", { desc = "Close tab" })
+keymap.set("n", "gtf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
+keymap.set("n", "<S-h>", "<cmd>tabp<CR>", { desc = "Previous tab" })
+keymap.set("n", "<S-l>", "<cmd>tabn<CR>", { desc = "Next tab" })
 
 -- code formatting
 keymap.set("v", "<leader>F", "gq", { desc = "Format the seleted text" })
