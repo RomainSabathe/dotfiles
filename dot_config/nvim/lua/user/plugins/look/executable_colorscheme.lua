@@ -188,7 +188,7 @@ local schemes = {
   },
   -- Bamboo -- dark/light, multiplex, vulgaris
   {
-    spec = { "ribru17/bamboo.nvim" },
+    spec = { "ribru17/bamboo.nvim", opts = {} },
     themes = { "bamboo", "bamboo-multiplex", "bamboo-vulgaris" },
   },
   -- Bluloco -- dark/light
@@ -199,7 +199,7 @@ local schemes = {
   -- Everviolet (formerly rose pine inspired)
   {
     spec = { "everviolet/nvim", name = "everviolet" },
-    themes = { "everviolet" },
+    themes = { "evergarden", "evergarden-fall", "evergarden-spring", "evergarden-summer", "evergarden-winter" },
   },
   -- Mellifluous -- multiple sub-themes
   {
