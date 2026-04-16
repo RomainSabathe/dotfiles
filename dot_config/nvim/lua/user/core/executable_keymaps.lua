@@ -75,6 +75,8 @@ keymap.set("n", "gtx", "<cmd>tabclose<CR>", { desc = "Close tab" })
 keymap.set("n", "gtf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
 keymap.set("n", "<S-h>", "<cmd>tabp<CR>", { desc = "Previous tab" })
 keymap.set("n", "<S-l>", "<cmd>tabn<CR>", { desc = "Next tab" })
+keymap.set("n", "<S-Left>", "<cmd>tabp<CR>", { desc = "Previous tab" })
+keymap.set("n", "<S-Right>", "<cmd>tabn<CR>", { desc = "Next tab" })
 
 -- code formatting
 keymap.set("v", "<leader>F", "gq", { desc = "Format the seleted text" })
